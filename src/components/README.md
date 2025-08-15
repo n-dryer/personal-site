@@ -1,17 +1,17 @@
 # Components Directory
 
-This directory contains all reusable UI components for the application.
+This directory contains reusable UI components.
 
 ## Structure
 
 Each component resides in its own subdirectory, which typically includes:
 
--   `ComponentName.tsx`: The component source file.
--   `ComponentName.test.tsx`: Unit and integration tests for the component.
--   `index.ts`: A barrel file re-exporting the component.
--   `README.md`: Documentation specific to the component, its props, and usage examples.
+- `ComponentName.tsx`: The component source file.
+- `ComponentName.test.tsx`: Unit and integration tests for the component.
+- `index.ts`: A barrel file re-exporting the component.
+- `README.md`: Documentation specific to the component, its props, and usage examples.
 
-This directory utilizes a barrel export (`index.ts`) to make importing components more convenient from other parts of the application.
+This directory utilizes a barrel export (`index.ts`) for convenient imports.
 
 ## Component Types
 
@@ -25,4 +25,4 @@ Components can be imported from the main barrel file:
 import { MyComponent, AnotherComponent } from '@/components';
 ```
 
-Or, if preferred, directly from their respective directories, though the barrel export is the recommended approach for consistency. 
+Or import directly from the specific component directory.
