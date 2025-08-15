@@ -4,7 +4,6 @@
 .pnp.js
 
 # Build output
-/build
 /dist
 /out
 
@@ -57,8 +56,11 @@ aws-credentials*
 .DS_Store
 *.tsbuildinfo
 
-# Vercel
+# Vercel / Netlify
 .vercel
+.netlify
 
-# Cursor IDE
+# IDEs
 .cursor/
+.idea/
+.vscode/

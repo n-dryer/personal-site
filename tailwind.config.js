@@ -4,8 +4,8 @@
 
 export default {
   content: [
+    "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}",
-    "./public/index.html",
   ],
   darkMode: ['class', '[data-theme="graphite-dark"]'],
   theme: {
