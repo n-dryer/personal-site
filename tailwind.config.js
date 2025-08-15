@@ -1,7 +1,8 @@
 /** @type {import('tailwindcss').Config} */
-const plugin = require('tailwindcss/plugin');
+/** @type {import('tailwindcss').Config} */
+// ESM-compatible export for Vite environment
 
-module.exports = {
+export default {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "./public/index.html",
