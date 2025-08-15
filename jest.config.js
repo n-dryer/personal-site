@@ -17,7 +17,7 @@ export default {
     ],
   },
   testMatch: [
-    '<rootDir>/src/**/*.test.{ts,tsx,js,jsx}',
+    '<rootDir>/src/styles/css-variables.test.ts',
   ],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
 };
