@@ -37,7 +37,7 @@
     "ci:guard:lockfile": "test ! -f package-lock.json || (echo 'package-lock.json detected. Use Yarn only.' && exit 1)",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d dist -b gh-pages",
-    "test:e2e": "playwright test",
+    
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\""
@@ -56,18 +56,15 @@
     ]
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.10.2",
+    
     "@babel/core": "^7.24.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-env": "^7.24.0",
     "@babel/preset-react": "^7.24.0",
     "@babel/preset-typescript": "^7.24.0",
     "@eslint/js": "9.23.0",
-    "@playwright/test": "^1.52.0",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.3.0",
-    "@types/jest": "^30.0.0",
+    
+    
     "@types/node": "^24.3.0",
     "@types/react-copy-to-clipboard": "^5.0.7",
     "@typescript-eslint/eslint-plugin": "8.35.1",
@@ -84,7 +81,6 @@
     "globals": "15.15.0",
     
     "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
     
     "postcss": "8.4.31",
     "serve": "^14.2.4",
