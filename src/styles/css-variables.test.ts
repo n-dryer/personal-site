@@ -31,15 +31,15 @@ describe('CSS Variables', () => {
     // If compiled CSS is not available, fall back to the source CSS file
     if (!cssContent) {
       // Fallback to built Tailwind output which includes tokens via @import
-      const buildCssPath = path.resolve(__dirname, '../../build/static/css');
-      const files = fs.existsSync(buildCssPath)
-        ? fs.readdirSync(buildCssPath).filter(f => f.endsWith('.css'))
-        : [];
-      if (files.length > 0) {
-        cssContent = fs.readFileSync(path.resolve(buildCssPath, files[0]), 'utf8');
-      } else {
-        throw new Error('No CSS found to validate tokens');
-      }
+const distAssetsPath = path.resolve(__dirname, '../../dist/assets');
+const files = fs.existsSync(distAssetsPath)
+  ? fs.readdirSync(distAssetsPath).filter(f => f.endsWith('.css'))
+  : [];
+if (files.length > 0) {
+  cssContent = fs.readFileSync(path.resolve(distAssetsPath, files[0]), 'utf8');
+} else {
+  throw new Error('No compiled CSS file found in dist/assets to validate tokens');
+}
     }
   });
 
