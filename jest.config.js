@@ -17,7 +17,7 @@ export default {
     ],
   },
   testMatch: [
-    '<rootDir>/src/**/*.test.(ts|tsx|js|jsx)',
+    '<rootDir>/src/**/*.test.{ts,tsx,js,jsx}',
   ],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
 };
