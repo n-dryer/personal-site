@@ -12,18 +12,18 @@ React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Jest (minimal) | P
 
 1. `git clone https://github.com/n-dryer/personal-site.git`
 2. `cd personal-site && yarn install`
-3. `yarn start` (Vite dev server on http://localhost:4000)
+3. `yarn start` (Vite dev server on `http://localhost:4000`)
 
 **Tests:**
-- Unit: `yarn test` (Jest) — focused on a few interaction tests (ThemeToggle, CommandMenu, FloatingCommandButton)
-- E2E: `yarn test:e2e` (Playwright) — single Desktop project: page loads, a11y checks (contrast, target-size)
+- **Unit**: `yarn test` (Jest) — minimal interaction tests (`ThemeToggle`, `CommandMenu`, `FloatingCommandButton`)
+- **E2E**: `yarn test:e2e` (Playwright) — desktop smoke + a11y (contrast, target-size)
 
 > Note: This project uses Yarn (v1). Please do not commit `package-lock.json`. Use `yarn` for all install and script commands.
 
 ## Build & Preview
 
 - Build production bundle: `yarn build` (outputs to `dist/`)
-- Preview production bundle: `yarn preview` (serves `dist/` on http://localhost:4000)
+- Preview production bundle: `yarn preview` (serves `dist/` on `http://localhost:4000`)
 
 ## Deploy (GitHub Pages)
 
@@ -31,6 +31,11 @@ Uses `gh-pages` and Vite output.
 
 1. **Setup:** already configured. Ensure `homepage` in `package.json` points to your domain.
 2. **Deploy:** `yarn deploy` (publishes `dist/` to `gh-pages` branch)
+
+### Base URL
+
+- If deploying to a custom domain (for example, `https://nathandryer.com`), Vite's default `base: '/'` is correct.
+- If deploying under a repository subpath (for example, `https://<user>.github.io/personal-site/`), set `base: '/personal-site/'` in `vite.config.ts` so assets resolve correctly.
 
 ## Branching & Releases
 
