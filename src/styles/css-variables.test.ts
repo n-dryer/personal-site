@@ -30,16 +30,15 @@ describe('CSS Variables', () => {
 
     // If compiled CSS is not available, fall back to the source CSS file
     if (!cssContent) {
-      try {
-        const sourceCssPath = path.resolve(__dirname, './tokens.css'); // Updated path to check tokens.css directly
-        if (fs.existsSync(sourceCssPath)) {
-          cssContent = fs.readFileSync(sourceCssPath, 'utf8');
-        } else {
-          throw new Error('Source CSS file (tokens.css) not found in src/styles/');
-        }
-      } catch (error) {
-        console.error('Error reading CSS files:', error);
-        throw new Error('Neither compiled nor source CSS files could be found');
+      // Fallback to built Tailwind output which includes tokens via @import
+      const buildCssPath = path.resolve(__dirname, '../../build/static/css');
+      const files = fs.existsSync(buildCssPath)
+        ? fs.readdirSync(buildCssPath).filter(f => f.endsWith('.css'))
+        : [];
+      if (files.length > 0) {
+        cssContent = fs.readFileSync(path.resolve(buildCssPath, files[0]), 'utf8');
+      } else {
+        throw new Error('No CSS found to validate tokens');
       }
     }
   });

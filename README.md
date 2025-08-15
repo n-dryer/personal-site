@@ -6,7 +6,7 @@ React portfolio site.
 
 ## Tech
 
-React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Jest | Playwright | Yarn
+React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Jest (minimal) | Playwright (smoke + a11y) | Yarn
 
 ## Run Locally
 
@@ -14,7 +14,9 @@ React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Jest | Playwright 
 2. `cd personal-site && yarn install`
 3. `yarn start` (Vite dev server on http://localhost:4000)
 
-**Tests:** `yarn test` (Jest), `yarn playwright test`
+**Tests:**
+- Unit: `yarn test` (Jest) — focused on a few interaction tests (ThemeToggle, CommandMenu, FloatingCommandButton)
+- E2E: `yarn test:e2e` (Playwright) — single Desktop project: page loads, a11y checks (contrast, target-size)
 
 > Note: This project uses Yarn (v1). Please do not commit `package-lock.json`. Use `yarn` for all install and script commands.
 

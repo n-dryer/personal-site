@@ -45,15 +45,8 @@ export default defineConfig({
     timeout: 10000,
   },
 
-  // Simplified viewport testing - focus on mobile and desktop
+  // Single desktop project for faster smoke runs
   projects: [
-    {
-      name: 'Mobile',
-      use: {
-        ...devices['iPhone 13'],
-        viewport: { width: 375, height: 667 },
-      },
-    },
     {
       name: 'Desktop',
       use: {
