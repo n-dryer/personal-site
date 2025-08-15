@@ -36,7 +36,22 @@ const files = fs.existsSync(distAssetsPath)
   ? fs.readdirSync(distAssetsPath).filter(f => f.endsWith('.css'))
   : [];
 if (files.length > 0) {
-  cssContent = fs.readFileSync(path.resolve(distAssetsPath, files[0]), 'utf8');
+  // Find the first CSS file that contains both required tokens
+  let found = false;
+  for (const file of files) {
+    const content = fs.readFileSync(path.resolve(distAssetsPath, file), 'utf8');
+    if (
+      content.includes('--space-component:') &&
+      content.includes('--space-section:')
+    ) {
+      cssContent = content;
+      found = true;
+      break;
+    }
+  }
+  if (!found) {
+    throw new Error('No CSS file in dist/assets contains the required tokens (--space-component and --space-section)');
+  }
 } else {
   throw new Error('No compiled CSS file found in dist/assets to validate tokens');
 }
