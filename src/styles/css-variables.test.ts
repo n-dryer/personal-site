@@ -31,7 +31,9 @@ describe('CSS Variables', () => {
     // If compiled CSS is not available, fall back to the source CSS file
     if (!cssContent) {
       // Fallback to built Tailwind output which includes tokens via @import
-const distAssetsPath = path.resolve(__dirname, '../../dist/assets');
+const distAssetsPath = process.env.DIST_ASSETS_PATH
+  ? path.resolve(process.env.DIST_ASSETS_PATH)
+  : path.resolve(__dirname, '../../dist/assets');
 const files = fs.existsSync(distAssetsPath)
   ? fs.readdirSync(distAssetsPath).filter(f => f.endsWith('.css'))
   : [];
