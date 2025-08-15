@@ -4,13 +4,15 @@
 .pnp.js
 
 # Build output
-/dist
-/out
+dist/
+out/
+build/
 
 # Test and coverage reports
-/coverage
-/test-results
-/playwright-report
+coverage/
+test-results/
+playwright-report/
+playwright/.cache/
 
 # Logs
 npm-debug.log*
@@ -49,12 +51,18 @@ aws-credentials*
 
 # Temporary files
 *.temp.config.ts
+*.tmp
+*.swp
+*.swo
+*.log
 
 # Editor and OS specific
 .vscode/
 .idea/
 .DS_Store
 *.tsbuildinfo
+Thumbs.db
+node_modules/.cache/
 
 # Vercel / Netlify
 .vercel
