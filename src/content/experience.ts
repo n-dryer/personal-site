@@ -1,4 +1,5 @@
 import { Experience } from '../types';
+import { Brain, Car, BarChart3, Pill, Banknote } from 'lucide-react';
 
 export const experienceData: Experience[] = [
   {
@@ -9,7 +10,7 @@ export const experienceData: Experience[] = [
     date: 'Jan 2022 - Present',
     description:
       'Developing custom AI solutions and chatbot interfaces for multiple clients.',
-    icon: require('lucide-react').Brain,
+    icon: Brain,
     achievements: [
       'Delivered fine-tuned LLM and chatbot deployments saving clients over $300K annually',
       'Enhanced AI/ML expertise through targeted training and certifications during family-care career break',
@@ -31,7 +32,7 @@ export const experienceData: Experience[] = [
     date: 'Jan 2021 - Oct 2022',
     description:
       "Led Lyft's Collaboration Tools initiative and launched an AI-powered resource hub.",
-    icon: require('lucide-react').Car,
+    icon: Car,
     achievements: [
       'Formed the first Collaboration Tools team and secured $500K in funding',
       'Boosted sprint velocity by 11% and raised internal tool NPS by 40 points',
@@ -52,7 +53,7 @@ export const experienceData: Experience[] = [
     date: 'Mar 2018 - Dec 2020',
     description:
       'Expanded mobile access and integrated AI-driven analytics into customer experience products.',
-    icon: require('lucide-react').BarChart3,
+    icon: BarChart3,
     achievements: [
       'Consolidated seven mobile apps to grow usage from 20% to 70% across 120K users',
       'Integrated sentiment analysis and predictive analytics to increase active users by 166%',
@@ -73,7 +74,7 @@ export const experienceData: Experience[] = [
     date: 'Jan 2015 - Mar 2018',
     description:
       'Managed healthcare product lines and drove user growth with targeted UX updates.',
-    icon: require('lucide-react').Pill,
+    icon: Pill,
     achievements: [
       'Saved $1M in support costs by revamping onboarding experiences',
       'Increased monthly active users by 35% through UX improvements',
@@ -94,7 +95,7 @@ export const experienceData: Experience[] = [
     date: 'Jun 2009 - Jan 2015',
     description:
       "Led the bank's first native mobile apps and accelerated feature delivery via Agile.",
-    icon: require('lucide-react').Banknote,
+    icon: Banknote,
     achievements: [
       'Increased daily active mobile users from 20K to 400K in one year',
       'Achieved $100M in annual mobile deposits within two years',

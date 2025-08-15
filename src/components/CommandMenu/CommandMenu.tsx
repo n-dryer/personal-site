@@ -5,6 +5,7 @@ import { motion, AnimatePresence, LayoutGroup, easeIn, easeOut, easeInOut } from
 import { Mail, Download, Eye, Code, Linkedin, Github, X, Check } from 'lucide-react';
 import { useReducedMotion } from 'hooks/useReducedMotion';
 import FocusTrap from 'focus-trap-react';
+import { userData as contentUserData } from 'content/user';
 
 /**
  * Props for the CommandMenu component.
@@ -96,9 +97,7 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
 
   const handleCopyEmail = useCallback(async (): Promise<void> => {
     try {
-      // Prefer content source of truth
-      const { userData } = await import('content/user');
-      await navigator.clipboard.writeText(userData.email);
+      await navigator.clipboard.writeText(contentUserData.email);
       setCopied(true);
     } catch (error) {
       console.error('Failed to copy email:', error);
@@ -193,9 +192,9 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
       ...(() => {
         // Centralize external links from content
         try {
-          // dynamic require avoids ESM top-level import interference with test mocks
-          const { userData } = require('content/user');
-          const byName = Object.fromEntries(userData.socialLinks.map((l: { name: string; url: string }) => [l.name.toLowerCase(), l.url]));
+          const byName = Object.fromEntries(
+            contentUserData.socialLinks.map((link) => [link.name.toLowerCase(), link.url])
+          );
           return [
             {
               id: 'linkedin',

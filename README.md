@@ -12,7 +12,7 @@ React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Jest | Playwright 
 
 1. `git clone https://github.com/n-dryer/personal-site.git`
 2. `cd personal-site && yarn install`
-3. `yarn start` (Vite dev server on http://localhost:3000)
+3. `yarn start` (Vite dev server on http://localhost:4000)
 
 **Tests:** `yarn test` (Jest), `yarn playwright test`
 
@@ -21,7 +21,7 @@ React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Jest | Playwright 
 ## Build & Preview
 
 - Build production bundle: `yarn build` (outputs to `dist/`)
-- Preview production bundle: `yarn preview` (serves `dist/` on http://localhost:3000)
+- Preview production bundle: `yarn preview` (serves `dist/` on http://localhost:4000)
 
 ## Deploy (GitHub Pages)
 
