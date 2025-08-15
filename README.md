@@ -15,8 +15,8 @@ React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Jest (minimal) | P
 3. `yarn start` (Vite dev server on `http://localhost:4000`)
 
 **Tests:**
-- **Unit**: `yarn test` (Jest) — minimal interaction tests (`ThemeToggle`, `CommandMenu`, `FloatingCommandButton`)
-- **E2E**: `yarn test:e2e` (Playwright) — desktop smoke + a11y (contrast, target-size)
+- **Unit (minimal)**: `yarn test` — runs a single CSS tokens test to ensure design variables are present in compiled CSS.
+- **E2E (optional)**: `yarn test:e2e` — desktop smoke + a11y (contrast, target-size).
 
 > Note: This project uses Yarn (v1). Please do not commit `package-lock.json`. Use `yarn` for all install and script commands.
 

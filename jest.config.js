@@ -3,7 +3,7 @@
  * Uses babel-jest with React, TypeScript, and modern JS presets.
  */
 export default {
-  testEnvironment: 'jsdom',
+  testEnvironment: 'node',
   transform: {
     '^.+\\.(t|j)sx?$': [
       'babel-jest',
