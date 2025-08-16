@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ feat/vite-migration-react19 ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build
+        run: yarn build
+
+      - name: Run unit tests
+        run: yarn test --ci --runInBand
+        env:
+          CI: true
+
+      # Optional: uncomment to run quick Playwright checks in CI later
+      # - name: Install Playwright browsers
+      #   run: npx playwright install --with-deps
+      # - name: E2E smoke + a11y
+      #   run: yarn test:e2e

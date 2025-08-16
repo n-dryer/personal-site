@@ -6,24 +6,42 @@ React portfolio site.
 
 ## Tech
 
-React | TypeScript | Tailwind CSS | Framer Motion | Jest | Playwright | Yarn
+React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Jest (minimal) | Playwright (smoke + a11y) | Yarn
 
 ## Run Locally
 
-1. `git clone https://github.com/your-username/your-repo-name.git`
-2. `cd your-repo-name && yarn install`
-3. `yarn start` (localhost:3000)
+1. `git clone https://github.com/n-dryer/personal-site.git`
+2. `cd personal-site && yarn install`
+3. `yarn start` (Vite dev server on `http://localhost:4000`)
 
-**Tests:** `yarn test`, `yarn playwright test`
+**Tests:**
+- **Unit (minimal)**: `yarn test` — runs a single CSS tokens test to ensure design variables are present in compiled CSS.
+- **E2E (optional)**: `yarn test:e2e` — desktop smoke + a11y (contrast, target-size).
 
 > Note: This project uses Yarn (v1). Please do not commit `package-lock.json`. Use `yarn` for all install and script commands.
 
+## Build & Preview
+
+- Build production bundle: `yarn build` (outputs to `dist/`)
+- Preview production bundle: `yarn preview` (serves `dist/` on `http://localhost:4000`)
+
 ## Deploy (GitHub Pages)
 
-Uses `gh-pages`.
+Uses `gh-pages` and Vite output.
 
-1. **Setup:** `yarn add -D gh-pages`, update `package.json` (`homepage` & deploy scripts).
-2. **Deploy:** `yarn deploy`
+1. **Setup:** already configured. Ensure `homepage` in `package.json` points to your domain.
+2. **Deploy:** `yarn deploy` (publishes `dist/` to `gh-pages` branch)
+
+### Base URL
+
+- If deploying to a custom domain (for example, `https://nathandryer.com`), Vite's default `base: '/'` is correct.
+- If deploying under a repository subpath (for example, `https://<user>.github.io/personal-site/`), set `base: '/personal-site/'` in `vite.config.ts` so assets resolve correctly.
+
+## Branching & Releases
+
+- Baseline snapshot: `baseline/2025-08-15` (tag: `baseline-2025-08-15`)
+- First feature: `feat/vite-migration-react19` → PR into `main`
+- Use conventional commits (feat, fix, chore, docs) and small PRs
 
 ## Content Schema (Skills & Timeline)
 

@@ -1,10 +1,11 @@
 /** @type {import('tailwindcss').Config} */
-const plugin = require('tailwindcss/plugin');
+/** @type {import('tailwindcss').Config} */
+// ESM-compatible export for Vite environment
 
-module.exports = {
+export default {
   content: [
+    "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}",
-    "./public/index.html",
   ],
   darkMode: ['class', '[data-theme="graphite-dark"]'],
   theme: {

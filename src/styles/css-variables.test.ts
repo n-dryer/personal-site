@@ -30,17 +30,33 @@ describe('CSS Variables', () => {
 
     // If compiled CSS is not available, fall back to the source CSS file
     if (!cssContent) {
-      try {
-        const sourceCssPath = path.resolve(__dirname, './tokens.css'); // Updated path to check tokens.css directly
-        if (fs.existsSync(sourceCssPath)) {
-          cssContent = fs.readFileSync(sourceCssPath, 'utf8');
-        } else {
-          throw new Error('Source CSS file (tokens.css) not found in src/styles/');
-        }
-      } catch (error) {
-        console.error('Error reading CSS files:', error);
-        throw new Error('Neither compiled nor source CSS files could be found');
-      }
+      // Fallback to built Tailwind output which includes tokens via @import
+const distAssetsPath = process.env.DIST_ASSETS_PATH
+  ? path.resolve(process.env.DIST_ASSETS_PATH)
+  : path.resolve(__dirname, '../../dist/assets');
+const files = fs.existsSync(distAssetsPath)
+  ? fs.readdirSync(distAssetsPath).filter(f => f.endsWith('.css'))
+  : [];
+if (files.length > 0) {
+  // Find the first CSS file that contains both required tokens
+  let found = false;
+  for (const file of files) {
+    const content = fs.readFileSync(path.resolve(distAssetsPath, file), 'utf8');
+    if (
+      content.includes('--space-component:') &&
+      content.includes('--space-section:')
+    ) {
+      cssContent = content;
+      found = true;
+      break;
+    }
+  }
+  if (!found) {
+    throw new Error('No CSS file in dist/assets contains the required tokens (--space-component and --space-section)');
+  }
+} else {
+  throw new Error('No compiled CSS file found in dist/assets to validate tokens');
+}
     }
   });
 
