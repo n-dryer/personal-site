@@ -134,7 +134,8 @@ const ScrollDownButtonComponent = (): React.ReactElement | null => {
           style={{
             width: 'clamp(1rem, 2.5vw, 1.5rem)',
             height: 'clamp(1rem, 2.5vw, 1.5rem)',
-            color: 'var(--on-accent)',
+            // Inherit from parent (text-on-accent) for contrast in both themes
+            color: 'currentColor',
           }}
         />
       </motion.button>
