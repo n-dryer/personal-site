@@ -19,4 +19,4 @@ This directory contains global stylesheets and design token definitions for the 
 
 - Keep token definitions in `tokens.css`.
 - Global styles and Tailwind setup in `global.css`.
-- Component-specific CSS that cannot be achieved with Tailwind utilities should be carefully considered and ideally refactored (like `timeline.css`). 
+- Component-specific CSS that cannot be achieved with Tailwind utilities should be carefully considered and ideally refactored (like `timeline.css`).

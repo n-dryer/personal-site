@@ -18,7 +18,7 @@ Uses `Experience` from `src/types`:
 import { Timeline } from '@/components/Timeline';
 import { experienceData } from '@/__mocks__/data.mock';
 
-<Timeline experienceData={experienceData} />
+<Timeline experienceData={experienceData} />;
 ```
 
 ## Accessibility

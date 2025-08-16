@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Command } from 'cmdk';
-import { motion, AnimatePresence, LayoutGroup, easeIn, easeOut, easeInOut } from 'framer-motion';
+import { motion, AnimatePresence, LayoutGroup, easeIn, easeOut } from 'framer-motion';
 // Clipboard handled via native API
 import { Mail, Download, Eye, Code, Linkedin, Github, X, Check } from 'lucide-react';
 import { useReducedMotion } from 'hooks/useReducedMotion';
@@ -119,7 +119,7 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
         }, 180);
       }
     },
-    [setIsOpen]
+    [setIsOpen],
   );
 
   const handleDownloadResume = useCallback((): void => {
@@ -148,7 +148,7 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
         setIsOpen(false);
       }, 180);
     },
-    [setIsOpen]
+    [setIsOpen],
   );
 
   const commandGroups: {
@@ -160,7 +160,7 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
       {
         id: 'resume',
         name: 'Download Resume',
-        icon: <Download className='h-5 w-5' />,
+        icon: <Download className="h-5 w-5" />,
         keywords: 'resume cv download pdf',
         action: handleDownloadResume,
       },
@@ -169,14 +169,14 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
       {
         id: 'experience',
         name: 'View Timeline',
-        icon: <Eye className='h-5 w-5' />,
+        icon: <Eye className="h-5 w-5" />,
         keywords: 'experience timeline history career work jobs',
         action: () => scrollToSection('timeline'),
       },
       {
         id: 'skills',
         name: 'View Skills',
-        icon: <Code className='h-5 w-5' />,
+        icon: <Code className="h-5 w-5" />,
         keywords: 'skills expertise abilities technologies',
         action: () => scrollToSection('skills'),
       },
@@ -185,7 +185,7 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
       {
         id: 'email',
         name: 'Copy Email',
-        icon: <Mail className='h-5 w-5' />,
+        icon: <Mail className="h-5 w-5" />,
         keywords: 'contact mail reach',
         action: handleCopyEmail,
       },
@@ -193,26 +193,26 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
         // Centralize external links from content
         try {
           const byName = Object.fromEntries(
-            contentUserData.socialLinks.map((link) => [link.name.toLowerCase(), link.url])
+            contentUserData.socialLinks.map((link) => [link.name.toLowerCase(), link.url]),
           );
           return [
             {
               id: 'linkedin',
               name: 'LinkedIn Profile',
-              icon: <Linkedin className='h-5 w-5' />,
+              icon: <Linkedin className="h-5 w-5" />,
               keywords: 'social network professional connect',
               action: () => openLink(byName['linkedin'] ?? 'https://linkedin.com'),
             },
             {
               id: 'github',
               name: 'GitHub Profile',
-              icon: <Github className='h-5 w-5' />,
+              icon: <Github className="h-5 w-5" />,
               keywords: 'code repository projects source',
               action: () => openLink(byName['github'] ?? 'https://github.com'),
             },
           ];
         } catch {
-          return [] as any[];
+          return [] as CommandItem[];
         }
       })(),
     ],
@@ -224,16 +224,16 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
       opacity: 1,
       transition: {
         duration: shouldReduceMotion ? 0.01 : 0.2,
-        ease: easeOut
-      }
+        ease: easeOut,
+      },
     },
     exit: {
       opacity: 0,
       transition: {
         duration: shouldReduceMotion ? 0.01 : 0.15,
-        ease: easeIn
-      }
-    }
+        ease: easeIn,
+      },
+    },
   };
 
   const containerVariants = {
@@ -251,9 +251,9 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
         ease: easeOut,
         layout: {
           duration: shouldReduceMotion ? 0.01 : 0.3,
-          ease: easeOut
-        }
-      }
+          ease: easeOut,
+        },
+      },
     },
     exit: {
       scale: shouldReduceMotion ? 1 : 0.95,
@@ -264,10 +264,10 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
         ease: easeOut,
         layout: {
           duration: shouldReduceMotion ? 0.01 : 0.2,
-          ease: easeIn
-        }
-      }
-    }
+          ease: easeIn,
+        },
+      },
+    },
   };
 
   if (!isOpen) {
@@ -279,7 +279,7 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className='bg-bg-primary/60 dark:bg-bg-primary/50 fixed inset-0 z-50 flex items-end backdrop-blur-3xl md:items-start md:justify-center md:p-4 md:pt-[15vh]'
+            className="bg-bg-primary/60 dark:bg-bg-primary/50 fixed inset-0 z-50 flex items-end backdrop-blur-3xl md:items-start md:justify-center md:p-4 md:pt-[15vh]"
             variants={backdropVariants}
             initial="hidden"
             animate="visible"
@@ -289,10 +289,10 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
               if (Date.now() - openedAtRef.current < 200) return;
               setIsOpen(false);
             }}
-            role='dialog'
-            aria-modal='true'
-            aria-labelledby='command-menu-title'
-            aria-describedby='command-menu-description'
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="command-menu-title"
+            aria-describedby="command-menu-description"
           >
             <FocusTrap
               focusTrapOptions={{
@@ -303,60 +303,63 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
             >
               <motion.div
                 ref={containerRef}
-                className='border-text-secondary/10 bg-surface/50 dark:bg-surface/40 glass-surface relative h-full w-full overflow-y-auto border-t shadow-lg md:h-auto md:max-h-[80vh] md:max-w-lg md:rounded-lg md:border lg:max-w-xl xl:max-w-2xl'
+                className="border-text-secondary/10 bg-surface/50 dark:bg-surface/40 glass-surface relative h-full w-full overflow-y-auto border-t shadow-lg md:h-auto md:max-h-[80vh] md:max-w-lg md:rounded-lg md:border lg:max-w-xl xl:max-w-2xl"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
                 layout={!shouldReduceMotion}
-                onClick={e => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()}
                 tabIndex={-1}
               >
-                <h2 id='command-menu-title' className='sr-only'>Command Menu</h2>
-                <div className='absolute right-0 top-0 p-2'>
+                <h2 id="command-menu-title" className="sr-only">
+                  Command Menu
+                </h2>
+                <div className="absolute right-0 top-0 p-2">
                   <motion.button
-                    className='hover:bg-text-secondary/10 rounded-full p-2 text-text-secondary'
+                    className="hover:bg-text-secondary/10 rounded-full p-2 text-text-secondary"
                     onClick={() => setIsOpen(false)}
-                    aria-label='Close command menu'
+                    aria-label="Close command menu"
                     whileHover={{ scale: 1.1, rotate: 90 }}
                     whileTap={{ scale: 0.9, rotate: 0 }}
                   >
-                    <X className='lucide h-5 w-5' />
+                    <X className="lucide h-5 w-5" />
                   </motion.button>
                 </div>
-                <Command className='w-full' role='menu' aria-labelledby='command-menu-title'>
-                  <p id='command-menu-description' className='sr-only'>
-                    Choose an action to perform. Use arrow keys to navigate, Enter to select, or Escape to close.
+                <Command className="w-full" role="menu" aria-labelledby="command-menu-title">
+                  <p id="command-menu-description" className="sr-only">
+                    Choose an action to perform. Use arrow keys to navigate, Enter to select, or
+                    Escape to close.
                   </p>
 
                   {copied && (
-                    <div className='border-accent/20 bg-accent/10 border-b px-4 py-3'>
-                      <div className='flex items-center text-accent'>
-                        <Check className='mr-2 h-4 w-4' />
-                        <p className='text-sm font-medium'>
-                          Email copied to clipboard
-                        </p>
+                    <div className="border-accent/20 bg-accent/10 border-b px-4 py-3">
+                      <div className="flex items-center text-accent">
+                        <Check className="mr-2 h-4 w-4" />
+                        <p className="text-sm font-medium">Email copied to clipboard</p>
                       </div>
                     </div>
                   )}
 
-                  <motion.div
-                    layout={!shouldReduceMotion}
-                  >
-                    <Command.List className='p-[var(--space-2)]'>
+                  <motion.div layout={!shouldReduceMotion}>
+                    <Command.List className="p-[var(--space-2)]">
                       {Object.entries(commandGroups).map(([groupName, commands], index) => (
                         <Command.Group
                           key={groupName}
                           className={`pt-2 ${index > 0 ? 'border-text-primary/10 mt-2 border-t' : ''}`}
-                          heading={<span className='px-[var(--space-2)] pb-[var(--space-3)] text-sm font-semibold uppercase tracking-wider text-text-secondary'>{groupName}</span>}
+                          heading={
+                            <span className="px-[var(--space-2)] pb-[var(--space-3)] text-sm font-semibold uppercase tracking-wider text-text-secondary">
+                              {groupName}
+                            </span>
+                          }
                         >
                           {commands.map((command) => (
                             <Command.Item
                               key={command.id}
                               onSelect={command.action}
-                              className='mt-1 flex w-full cursor-pointer items-center justify-between rounded-md p-[var(--space-2)] text-sm text-text-primary hover:bg-accent hover:text-on-accent'
+                              className="mt-1 flex w-full cursor-pointer items-center justify-between rounded-md p-[var(--space-2)] text-sm text-text-primary hover:bg-accent hover:text-on-accent"
                             >
-                              <div className='flex items-center gap-[var(--space-2)]'>
+                              <div className="flex items-center gap-[var(--space-2)]">
                                 {command.icon}
                                 <span>{command.name}</span>
                               </div>
@@ -380,4 +383,4 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
  * Memoized CommandMenu component.
  * @see CommandMenuComponent
  */
-export const CommandMenu = React.memo(CommandMenuComponent); 
+export const CommandMenu = React.memo(CommandMenuComponent);

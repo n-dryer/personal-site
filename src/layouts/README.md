@@ -18,14 +18,10 @@ Layouts are typically used at the top level of the application, often wrapping r
 import { Layout } from '@/layouts'; // Or the correct relative path
 
 const App = () => {
-  return (
-    <Layout>
-      {/* Page content goes here */}
-    </Layout>
-  );
-}
+  return <Layout>{/* Page content goes here */}</Layout>;
+};
 ```
 
 ## Testing
 
-Each layout component should have a corresponding test file (e.g., `Layout.test.tsx`) co-located within this directory. Tests should focus on ensuring its structural integrity, responsiveness, and correct rendering of children, rather than aiming for a strict percentage of line coverage. 
+Each layout component should have a corresponding test file (e.g., `Layout.test.tsx`) co-located within this directory. Tests should focus on ensuring its structural integrity, responsiveness, and correct rendering of children, rather than aiming for a strict percentage of line coverage.

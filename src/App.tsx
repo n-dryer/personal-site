@@ -9,7 +9,7 @@ import {
   FloatingCommandButton,
   Timeline,
   Skills,
-  CommandMenu
+  CommandMenu,
 } from './components';
 
 // Import the useTheme hook
@@ -30,7 +30,11 @@ import { Layout } from './layouts/Layout';
  */
 const App = () => {
   const { darkMode, toggleTheme } = useTheme(); // Use the theme hook
-  const { isOpen: isCommandMenuOpenFromHook, setIsOpen: setIsCommandMenuOpenFromHook, toggle: toggleCommandMenuFromHook } = useCommandMenu();
+  const {
+    isOpen: isCommandMenuOpenFromHook,
+    setIsOpen: setIsCommandMenuOpenFromHook,
+    toggle: toggleCommandMenuFromHook,
+  } = useCommandMenu();
 
   return (
     <Layout>
@@ -42,31 +46,22 @@ const App = () => {
       />
       <main>
         <ErrorBoundary
-          fallback={
-            <div className='text-red-500'>
-              Something went wrong with the Timeline.
-            </div>
-          }
+          fallback={<div className="text-red-500">Something went wrong with the Timeline.</div>}
         >
           <Timeline experienceData={experienceData} />
         </ErrorBoundary>
         <ErrorBoundary
           fallback={
-            <div className='text-red-500'>
-              Something went wrong with the Skills section.
-            </div>
+            <div className="text-red-500">Something went wrong with the Skills section.</div>
           }
         >
-          <div className='container mx-auto px-4'>
+          <div className="container mx-auto px-4">
             <Skills skillsData={skillsData} />
           </div>
         </ErrorBoundary>
       </main>
       <Footer userData={userData} />
-      <CommandMenu
-        isOpen={isCommandMenuOpenFromHook}
-        setIsOpen={setIsCommandMenuOpenFromHook}
-      />
+      <CommandMenu isOpen={isCommandMenuOpenFromHook} setIsOpen={setIsCommandMenuOpenFromHook} />
       <ScrollDownButton />
       <FloatingCommandButton toggleCommandMenu={toggleCommandMenuFromHook} />
     </Layout>

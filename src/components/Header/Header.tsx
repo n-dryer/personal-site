@@ -27,7 +27,7 @@ const availableCommands = [
   'download resume',
   'copy email',
   'go to LinkedIn Profile',
-  'go to GitHub Profile'
+  'go to GitHub Profile',
 ];
 
 /**
@@ -69,16 +69,14 @@ const HeaderComponent = ({
     return () => clearInterval(cycleInterval);
   }, [prefersReducedMotion]);
 
-
-
   return (
     <header
-      className='relative flex min-h-screen items-center justify-center bg-bg-primary pb-20 pt-[var(--space-section)] text-text-primary md:pb-32'
-      id='top'
+      className="relative flex min-h-screen items-center justify-center bg-bg-primary pb-20 pt-[var(--space-section)] text-text-primary md:pb-32"
+      id="top"
     >
       {/* Theme Toggle - Positioned in top-right corner */}
       <motion.div
-        className='absolute right-4 top-4 z-20 sm:right-6 sm:top-6'
+        className="absolute right-4 top-4 z-20 sm:right-6 sm:top-6"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.3 }}
@@ -86,17 +84,17 @@ const HeaderComponent = ({
         <ThemeToggle darkMode={darkMode} toggleTheme={toggleTheme} />
       </motion.div>
 
-      <div className='container relative z-10 mx-auto px-6 py-8'>
-        <div className='flex h-full flex-col items-center justify-center text-center'>
+      <div className="container relative z-10 mx-auto px-6 py-8">
+        <div className="flex h-full flex-col items-center justify-center text-center">
           {/* Name and Subtitle - Above Command Prompt */}
           <motion.div
-            className='mb-8 text-center'
+            className="mb-8 text-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
             <motion.h1
-              className='mb-2 font-display text-[clamp(1.75rem,9vw,5rem)] font-bold tracking-tight text-text-primary'
+              className="mb-2 font-display text-[clamp(1.75rem,9vw,5rem)] font-bold tracking-tight text-text-primary"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
@@ -109,51 +107,52 @@ const HeaderComponent = ({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <p className='md:whitespace-nowrap text-[clamp(1rem,2.2vw,2rem)] md:text-[clamp(1.25rem,2.6vw,2.25rem)] font-medium text-text-secondary'>
+              <p className="text-[clamp(1rem,2.2vw,2rem)] font-medium text-text-secondary md:whitespace-nowrap md:text-[clamp(1.25rem,2.6vw,2.25rem)]">
                 {userData.bioLine}
               </p>
             </motion.div>
           </motion.div>
 
           {/* Command Prompt Container */}
-          <div className='w-full max-w-md'>
+          <div className="w-full max-w-md">
             {/* Modern Pill-Shaped Command Prompt Field */}
             <motion.div
-              className='relative w-full'
+              className="relative w-full"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
               <motion.div
-                className='flex cursor-pointer items-center rounded-full bg-accent px-4 py-3 text-on-accent shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-opacity-75'
+                className="flex cursor-pointer items-center rounded-full bg-accent px-4 py-3 text-on-accent shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-opacity-75"
                 onClick={toggleCommandMenu}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98, y: 0 }}
-                aria-label='Open command palette'
+                aria-label="Open command palette"
                 aria-keyshortcuts={isMac ? 'Meta+K' : 'Control+K'}
               >
-                <Command size={18} className='mr-3' style={{ color: '#111111' }} />
-                <div className='relative flex-1 overflow-hidden text-left' style={{ minHeight: '1.2em' }}>
+                <Command size={18} className="mr-3" style={{ color: 'currentColor' }} />
+                <div
+                  className="relative flex-1 overflow-hidden text-left"
+                  style={{ minHeight: '1.2em' }}
+                >
                   <span>Click to </span>
-                  <AnimatePresence mode='wait'>
+                  <AnimatePresence mode="wait">
                     <motion.span
                       key={currentCommandIndex}
                       initial={{ y: 15, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       exit={{ y: -15, opacity: 0 }}
                       transition={{ duration: 0.3, ease: easeInOut }}
-                      className='inline-block'
+                      className="inline-block"
                     >
                       {availableCommands[currentCommandIndex]}
                     </motion.span>
                   </AnimatePresence>
                 </div>
-                <span className='bg-surface/20 hidden items-center justify-center rounded px-2 py-1 text-xs md:flex'>
+                <span className="bg-surface/20 hidden items-center justify-center rounded px-2 py-1 text-xs md:flex">
                   {`Search (${isMac ? '⌘K' : 'Ctrl+K'})`}
                 </span>
               </motion.div>
-
-
             </motion.div>
           </div>
         </div>
@@ -166,4 +165,4 @@ const HeaderComponent = ({
  * Memoized Header component.
  * @see HeaderComponent
  */
-export const Header = React.memo(HeaderComponent); 
+export const Header = React.memo(HeaderComponent);

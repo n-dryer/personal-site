@@ -12,9 +12,9 @@ The `Footer` component displays copyright information and social media links at 
 import { Footer } from '@/components/Footer'; // Or the correct relative path
 import { userData } from '@/data.mock'; // Or your actual data source
 
-<Footer userData={userData} />
+<Footer userData={userData} />;
 ```
 
 ## Props
 
-- `userData`: `UserData` - An object containing user information, including `fullName` and `socialLinks`, used to populate the footer content. 
+- `userData`: `UserData` - An object containing user information, including `fullName` and `socialLinks`, used to populate the footer content.

@@ -14,18 +14,20 @@ import { userData } from '@/data.mock'; // Or your actual data source
 
 const App = () => {
   const [darkMode, setDarkMode] = React.useState(false);
-  const toggleTheme = () => setDarkMode(p => !p);
-  const toggleCommandMenu = () => { /* ... */ };
+  const toggleTheme = () => setDarkMode((p) => !p);
+  const toggleCommandMenu = () => {
+    /* ... */
+  };
 
   return (
-    <Header 
-      userData={userData} 
-      toggleCommandMenu={toggleCommandMenu} 
-      darkMode={darkMode} 
-      toggleTheme={toggleTheme} 
+    <Header
+      userData={userData}
+      toggleCommandMenu={toggleCommandMenu}
+      darkMode={darkMode}
+      toggleTheme={toggleTheme}
     />
   );
-}
+};
 ```
 
 ## Props
@@ -33,4 +35,4 @@ const App = () => {
 - `userData`: `UserData` - An object containing the user's full name and bioline.
 - `toggleCommandMenu`: `() => void` - Callback function to open/close the command menu.
 - `darkMode`: `boolean` - Current state of dark mode.
-- `toggleTheme`: `() => void` - Callback function to toggle the theme. 
+- `toggleTheme`: `() => void` - Callback function to toggle the theme.

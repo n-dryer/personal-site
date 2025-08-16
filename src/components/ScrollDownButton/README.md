@@ -12,9 +12,9 @@ It appears with an animation and then disappears after the first scroll event or
 ```tsx
 import { ScrollDownButton } from '@/components/ScrollDownButton'; // Or the correct relative path
 
-<ScrollDownButton />
+<ScrollDownButton />;
 ```
 
 ## Props
 
-This component does not accept any props. It manages its own visibility based on scroll events and relies on DOM element IDs (e.g., scrolling to `#timeline`) for its primary action. 
+This component does not accept any props. It manages its own visibility based on scroll events and relies on DOM element IDs (e.g., scrolling to `#timeline`) for its primary action.

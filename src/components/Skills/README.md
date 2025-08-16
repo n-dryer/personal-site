@@ -21,7 +21,7 @@ Skills use `Skill` from `src/types` with the following relevant fields:
 import { Skills } from '@/components/Skills';
 import { skillsData } from '@/__mocks__/data.mock';
 
-<Skills skillsData={skillsData} />
+<Skills skillsData={skillsData} />;
 ```
 
 ## Accessibility

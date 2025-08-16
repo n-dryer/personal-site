@@ -3,14 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#4f46e5" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F5F5F7" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1C1C1C" />
     <meta name="description" content="Nathan Dryer - AI/ML Builder & Product Manager" />
+    <meta property="og:title" content="Nathan Dryer | AI/ML Builder & Product Manager" />
+    <meta
+      property="og:description"
+      content="AI/ML product leader with a track record of shipping agentic systems and impactful products."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nathandryer.com/" />
+    <meta property="og:site_name" content="Nathan Dryer" />
+    <meta property="og:image" content="https://nathandryer.com/og-card.jpg" />
+    <link rel="canonical" href="https://nathandryer.com/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nathan Dryer | AI/ML Builder & Product Manager" />
+    <meta
+      name="twitter:description"
+      content="AI/ML product leader with a track record of shipping agentic systems and impactful products."
+    />
+    <meta name="twitter:image" content="https://nathandryer.com/og-card.jpg" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/logo192.png" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="preload"
+      as="style"
+      onload="this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
     <title>Nathan Dryer | Portfolio</title>
     <script>
       (function () {
@@ -22,7 +51,9 @@
           d.dataset.theme = isDark ? 'graphite-dark' : 'graphite-light';
           d.classList[isDark ? 'add' : 'remove']('dark');
           d.style.colorScheme = isDark ? 'dark' : 'light';
-        } catch (e) { /* no-op */ }
+        } catch (e) {
+          /* no-op */
+        }
       })();
     </script>
   </head>

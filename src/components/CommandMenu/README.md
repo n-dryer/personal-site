@@ -20,10 +20,10 @@ const App = () => {
       <CommandMenu isOpen={isCommandMenuOpen} setIsOpen={setCommandMenuOpen} />
     </>
   );
-}
+};
 ```
 
 ## Props
 
 - `isOpen`: `boolean` - Controls the visibility of the command menu.
-- `setIsOpen`: `(open: boolean) => void` - Callback function to update the visibility state of the command menu. 
+- `setIsOpen`: `(open: boolean) => void` - Callback function to update the visibility state of the command menu.

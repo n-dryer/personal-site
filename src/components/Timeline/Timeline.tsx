@@ -66,25 +66,28 @@ const TimelineComponent = ({ experienceData }: TimelineProps) => {
   }, []);
 
   const toggleExpand = useCallback((id: string): void => {
-    setExpandedId(prev => prev === id ? null : id);
+    setExpandedId((prev) => (prev === id ? null : id));
   }, []);
 
-  const announceStateChange = useCallback((id: string, isExpanding: boolean): void => {
-    const item = experienceData.find(exp => exp.id === id);
-    if (!item) return;
-    const message = isExpanding
-      ? `Expanded details for ${item.title} at ${item.company}`
-      : `Collapsed details for ${item.title} at ${item.company}`;
-    const announcement = document.createElement('div');
-    announcement.setAttribute('aria-live', 'polite');
-    announcement.setAttribute('aria-atomic', 'true');
-    announcement.className = 'sr-only';
-    announcement.textContent = message;
-    document.body.appendChild(announcement);
-    setTimeout(() => {
-      document.body.removeChild(announcement);
-    }, 1000);
-  }, [experienceData]);
+  const announceStateChange = useCallback(
+    (id: string, isExpanding: boolean): void => {
+      const item = experienceData.find((exp) => exp.id === id);
+      if (!item) return;
+      const message = isExpanding
+        ? `Expanded details for ${item.title} at ${item.company}`
+        : `Collapsed details for ${item.title} at ${item.company}`;
+      const announcement = document.createElement('div');
+      announcement.setAttribute('aria-live', 'polite');
+      announcement.setAttribute('aria-atomic', 'true');
+      announcement.className = 'sr-only';
+      announcement.textContent = message;
+      document.body.appendChild(announcement);
+      setTimeout(() => {
+        document.body.removeChild(announcement);
+      }, 1000);
+    },
+    [experienceData],
+  );
 
   const handleKeyDown = (e: React.KeyboardEvent, id: string): void => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -99,13 +102,13 @@ const TimelineComponent = ({ experienceData }: TimelineProps) => {
       }
     } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault();
-      const currentIndex = experienceData.findIndex(item => item.id === id);
+      const currentIndex = experienceData.findIndex((item) => item.id === id);
       const nextIndex =
         e.key === 'ArrowDown'
           ? Math.min(currentIndex + 1, experienceData.length - 1)
           : Math.max(currentIndex - 1, 0);
       const nextButton = document.querySelector(
-        `button[aria-describedby="timeline-content-${experienceData[nextIndex].id}"]`
+        `button[aria-describedby="timeline-content-${experienceData[nextIndex].id}"]`,
       ) as HTMLButtonElement;
       if (nextButton) {
         nextButton.focus();
@@ -143,25 +146,24 @@ const TimelineComponent = ({ experienceData }: TimelineProps) => {
     };
   }, []);
 
-  const setTimelineRef = (id: string) => (el: HTMLDivElement | null): void => {
-    timelineRefs.current[id] = el;
-  };
+  const setTimelineRef =
+    (id: string) =>
+    (el: HTMLDivElement | null): void => {
+      timelineRefs.current[id] = el;
+    };
 
   return (
-    <section
-      id='timeline'
-      className='bg-[var(--bg-surface-subtle)] px-4 py-[var(--space-section)]'
-    >
-      <div className='container mx-auto w-full'>
-        <h2 className='mb-6 text-center font-display text-4xl font-semibold tracking-tight'>
+    <section id="timeline" className="bg-[var(--bg-surface-subtle)] px-4 py-[var(--space-section)]">
+      <div className="container mx-auto w-full">
+        <h2 className="mb-6 text-center font-display text-4xl font-semibold tracking-tight">
           Professional Timeline
         </h2>
         <motion.div
           ref={timelineContainerRef}
-          className='relative mx-auto grid w-full max-w-none grid-cols-1 gap-4 px-4 md:max-w-6xl md:grid-cols-[1fr_min-content_1fr] md:px-8'
+          className="relative mx-auto grid w-full max-w-none grid-cols-1 gap-4 px-4 md:max-w-6xl md:grid-cols-[1fr_min-content_1fr] md:px-8"
           variants={shouldReduceMotion ? undefined : timelineContainerVariants}
           initial={shouldReduceMotion ? undefined : 'hidden'}
-          animate={shouldReduceMotion ? undefined : (isInView ? 'visible' : 'hidden')}
+          animate={shouldReduceMotion ? undefined : isInView ? 'visible' : 'hidden'}
         >
           {experienceData.map((item, index) => (
             <TimelineItem
@@ -189,4 +191,4 @@ const TimelineComponent = ({ experienceData }: TimelineProps) => {
  * Memoized Timeline component.
  * @see TimelineComponent
  */
-export const Timeline = React.memo(TimelineComponent); 
+export const Timeline = React.memo(TimelineComponent);

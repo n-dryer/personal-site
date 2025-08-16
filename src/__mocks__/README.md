@@ -25,4 +25,4 @@ import { userData, experienceData } from '@/__mocks__/data.mock'; // Or the corr
 ## Organization
 
 - Mock files should be clearly named to indicate what they are mocking (e.g., `data.mock.ts`, `api.mock.ts`).
-- If mocking specific modules, follow Jest's conventions by placing them in a `__mocks__` directory adjacent to the module being mocked, or globally in `src/__mocks__` for project-wide mocks. 
+- If mocking specific modules, follow Jest's conventions by placing them in a `__mocks__` directory adjacent to the module being mocked, or globally in `src/__mocks__` for project-wide mocks.

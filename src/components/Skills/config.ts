@@ -1,10 +1,11 @@
 export const TIER_ORDER = ['Expert', 'Proficient', 'Familiar'] as const;
 
-export const TIER_META: Record<(typeof TIER_ORDER)[number], { color: string; ariaLabel: string }> = {
-  Expert: { color: 'var(--accent)', ariaLabel: 'Expert level' },
-  Proficient: { color: 'var(--text-primary)', ariaLabel: 'Proficient level' },
-  Familiar: { color: 'var(--text-secondary)', ariaLabel: 'Familiar level' },
-};
+export const TIER_META: Record<(typeof TIER_ORDER)[number], { color: string; ariaLabel: string }> =
+  {
+    Expert: { color: 'var(--accent)', ariaLabel: 'Expert level' },
+    Proficient: { color: 'var(--text-primary)', ariaLabel: 'Proficient level' },
+    Familiar: { color: 'var(--text-secondary)', ariaLabel: 'Familiar level' },
+  };
 
 export type CategoryKey =
   | 'languages_runtimes'
@@ -23,7 +24,7 @@ export const CATEGORY_FILTERS: Array<{ id: 'all' | CategoryKey; label: string }>
 ];
 
 export const mapLegacyTierToDepth = (
-  tier: 'Expert' | 'Proficient' | 'Familiar' | 'Advanced' | 'Intermediate' | undefined
+  tier: 'Expert' | 'Proficient' | 'Familiar' | 'Advanced' | 'Intermediate' | undefined,
 ): (typeof TIER_ORDER)[number] => {
   if (tier === 'Expert') return 'Expert';
   if (tier === 'Advanced') return 'Proficient';
@@ -31,5 +32,3 @@ export const mapLegacyTierToDepth = (
   if (tier === 'Proficient' || tier === 'Familiar') return tier;
   return 'Familiar';
 };
-
-

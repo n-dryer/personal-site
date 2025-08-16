@@ -19,7 +19,7 @@ const availableCommands = [
   'Download Resume',
   'Copy Email',
   'LinkedIn Profile',
-  'GitHub Profile'
+  'GitHub Profile',
 ];
 
 /**
@@ -33,7 +33,9 @@ const availableCommands = [
  * @returns {React.ReactElement | null} The rendered FloatingCommandButton, or null if not visible.
  * @see React.memo
  */
-const FloatingCommandButtonComponent = ({ toggleCommandMenu }: FloatingCommandButtonProps): React.ReactElement | null => {
+const FloatingCommandButtonComponent = ({
+  toggleCommandMenu,
+}: FloatingCommandButtonProps): React.ReactElement | null => {
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [isMac, setIsMac] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -124,15 +126,15 @@ const FloatingCommandButtonComponent = ({ toggleCommandMenu }: FloatingCommandBu
           type: 'spring',
           stiffness: 300,
           damping: 20,
-          duration: 0.5
+          duration: 0.5,
         },
         y: {
           type: 'spring',
           stiffness: 300,
           damping: 20,
-          duration: 1.0 // 1s slide-up
-        }
-      }
+          duration: 1.0, // 1s slide-up
+        },
+      },
     },
     hidden: {
       opacity: 0,
@@ -140,8 +142,8 @@ const FloatingCommandButtonComponent = ({ toggleCommandMenu }: FloatingCommandBu
       y: 16, // Synchronized initial position (translate-y-4 = 16px)
       transition: {
         duration: 0.2,
-        ease: easeIn
-      }
+        ease: easeIn,
+      },
     },
     pulse: {
       scale: [1, 1.02, 1], // Using --token-scale-pulse-min (1) and --token-scale-pulse-max (1.02)
@@ -149,8 +151,8 @@ const FloatingCommandButtonComponent = ({ toggleCommandMenu }: FloatingCommandBu
         duration: 3.0, // Using --duration-pulse (3s)
         repeat: Infinity,
         repeatType: 'loop' as const,
-        ease: easeInOut
-      }
+        ease: easeInOut,
+      },
     },
     hover: {
       scale: [1.05, 1.02, 1.05],
@@ -158,13 +160,13 @@ const FloatingCommandButtonComponent = ({ toggleCommandMenu }: FloatingCommandBu
         duration: 1.5,
         repeat: Infinity,
         repeatType: 'loop',
-        ease: easeInOut
-      }
+        ease: easeInOut,
+      },
     },
     tap: {
       scale: 0.95, // From --token-scale-tap
-      transition: { duration: 0.15 } // 150ms from --duration-fast
-    }
+      transition: { duration: 0.15 }, // 150ms from --duration-fast
+    },
   };
 
   return (
@@ -189,14 +191,17 @@ const FloatingCommandButtonComponent = ({ toggleCommandMenu }: FloatingCommandBu
                 className="bg-surface absolute bottom-full right-0 mb-4 whitespace-nowrap rounded-lg px-4 py-2 text-sm text-text-primary shadow-lg"
               >
                 <div className="flex items-center gap-2">
-                  <div className="relative overflow-hidden font-medium" style={{ minWidth: '140px', height: '1.2em' }}>
+                  <div
+                    className="relative overflow-hidden font-medium"
+                    style={{ minWidth: '140px', height: '1.2em' }}
+                  >
                     <AnimatePresence mode="wait">
                       <motion.span
                         key={currentCommandIndex}
                         initial={{
                           y: prefersReducedMotion ? 0 : 20,
                           opacity: 0,
-                          rotateX: prefersReducedMotion ? 0 : -90
+                          rotateX: prefersReducedMotion ? 0 : -90,
                         }}
                         animate={{
                           y: 0,
@@ -204,8 +209,8 @@ const FloatingCommandButtonComponent = ({ toggleCommandMenu }: FloatingCommandBu
                           rotateX: 0,
                           transition: {
                             duration: prefersReducedMotion ? 0.01 : 0.4,
-                            ease: easeOut // Spring easing from design tokens
-                          }
+                            ease: easeOut, // Spring easing from design tokens
+                          },
                         }}
                         exit={{
                           y: prefersReducedMotion ? 0 : -20,
@@ -213,22 +218,20 @@ const FloatingCommandButtonComponent = ({ toggleCommandMenu }: FloatingCommandBu
                           rotateX: prefersReducedMotion ? 0 : 90,
                           transition: {
                             duration: prefersReducedMotion ? 0.01 : 0.3,
-                            ease: easeIn
-                          }
+                            ease: easeIn,
+                          },
                         }}
                         className="absolute inset-0 flex items-center"
                         style={{
                           transformStyle: prefersReducedMotion ? 'flat' : 'preserve-3d',
-                          perspective: prefersReducedMotion ? 'none' : '1000px'
+                          perspective: prefersReducedMotion ? 'none' : '1000px',
                         }}
                       >
                         {availableCommands[currentCommandIndex]}
                       </motion.span>
                     </AnimatePresence>
                   </div>
-                  <span className="text-text-primary/70 text-xs">
-                    {isMac ? '⌘K' : 'Ctrl+K'}
-                  </span>
+                  <span className="text-text-primary/70 text-xs">{isMac ? '⌘K' : 'Ctrl+K'}</span>
                 </div>
                 <div
                   className="absolute bottom-0 right-4 h-2 w-2 translate-y-1/2 rotate-45 transform"
@@ -269,7 +272,7 @@ const FloatingCommandButtonComponent = ({ toggleCommandMenu }: FloatingCommandBu
               style={{
                 width: 'clamp(1rem, 2.5vw, 1.5rem)',
                 height: 'clamp(1rem, 2.5vw, 1.5rem)',
-                color: '#111111'  // Use consistent dark color for icon in both themes
+                color: 'currentColor',
               }}
             />
           </motion.button>
@@ -283,4 +286,4 @@ const FloatingCommandButtonComponent = ({ toggleCommandMenu }: FloatingCommandBu
  * Memoized FloatingCommandButton component.
  * @see FloatingCommandButtonComponent
  */
-export const FloatingCommandButton = React.memo(FloatingCommandButtonComponent); 
+export const FloatingCommandButton = React.memo(FloatingCommandButtonComponent);
