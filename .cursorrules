@@ -17,7 +17,7 @@
 # Vite & Pages Base
 - vite.config.ts: base must match hosting:
   - Custom domain or user site (recommended here): base: '/'
-  - Project page (URL ends with /personal-site/): base: '/personal-site/'
+  - Project pages (https://<user>.github.io/<repo>/): base: '/<repo>/' (note trailing slash)
 - Add or edit base only if asked; otherwise leave as documented.
 
 # Paths & Imports
