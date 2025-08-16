@@ -10,11 +10,20 @@ React portfolio site.
 
 React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Yarn | Prettier
 
+## Main Features
+
+- Interactive Timeline: chronological overview of experience with roles and achievements
+- Skills Showcase: categorized skills with proficiency badges
+- Ship Log: recent updates and milestones
+- Command Menu: quick command palette (Cmd/Ctrl+K or floating button) for navigation and social links
+- Theme Toggle: light/dark mode with token-driven contrast
+- Responsive Design: mobile-first, accessible, performant
+
 ## Run Locally
 
 1. `git clone https://github.com/n-dryer/personal-site.git`
-2. `cd personal-site && yarn install`
-3. `yarn start` (Vite dev server on `http://localhost:4000`)
+1. `cd personal-site && yarn install`
+1. `yarn start` (Vite dev server on `http://localhost:4000`)
 
 **Quality gates (no heavy test suites):**
 
@@ -29,9 +38,22 @@ React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Yarn | Prettier
 - Build production bundle: `yarn build` (outputs to `dist/`)
 - Preview production bundle: `yarn preview` (serves `dist/` on `http://localhost:4000`)
 
+## Project Structure
+
+```
+public/                  # static assets and index.html
+src/
+  components/            # UI components (Header, Timeline, Skills, etc.)
+  content/               # content data (experience.ts, skills.ts, user.ts)
+  hooks/                 # custom React hooks
+  layouts/               # application layout components
+  styles/                # global styles & design tokens (tokens.css, global.css)
+  main.tsx               # app bootstrap
+```
+
 ## CI & Artifact Preview
 
-- Every push/PR runs CI (format check, lint, type-check, build, minimal E2E curl smoke) and uploads the built `dist/` as an artifact.
+- Every push/PR runs CI (format check, lint, type-check via `yarn tsc --noEmit`, build, minimal E2E curl smoke) and uploads the built `dist/` as an artifact.
 - To preview the artifact locally:
 
 ```bash
@@ -41,16 +63,26 @@ npx serve -s dist -l 4000
 # open http://localhost:4000
 ```
 
+### CI logs & artifacts
+
+- View workflow runs and logs under the **Actions** tab.
+- Download the `dist/` artifact from the run summary to preview the exact build produced by CI.
+
 ## Deploy (when ready)
 
-- This project is not auto-deploying yet. When ready, prefer GitHub Actions Pages (`.github/workflows/deploy-pages.yml`).
-- Ensure `vite.config.ts` `base` is `/` for custom domains (current setup), or set it to your repo subpath if deploying under `https://<user>.github.io/<repo>/`.
+- Not auto-deploying yet; prefer GitHub Pages via `.github/workflows/deploy-pages.yml` when enabled.
+- Vite `base` must match hosting:
+  - Custom domain/user site: `base: '/'`
+  - Project pages (`https://<user>.github.io/<repo>/`): `base: '/<repo>/'` (note trailing slash)
 
-## Branching & Releases
+## Branching & PRs
 
-- Baseline snapshot: `baseline/2025-08-15` (tag: `baseline-2025-08-15`)
-- First feature: `feat/vite-migration-react19` → PR into `main`
-- Use conventional commits (feat, fix, chore, docs) and small PRs
+- Trunk-based flow. Create small, focused PRs into `main`.
+- Branch names:
+  - UI improvements: `ui/<feature>` (e.g., `ui/vertical-timeline`, `ui/skills`, `ui/command-menu`)
+  - Non-UI/performance: `perf/optimizations`
+- Use conventional commits (feat, fix, chore, docs).
+- Baseline snapshot is kept as a tag: `checkpoint/baseline-2025-08-15`.
 
 ## Content Schema (Skills & Timeline)
 
@@ -58,6 +90,18 @@ npx serve -s dist -l 4000
 - Timeline entries standardize: role (`title`), `company`, `date`, succinct achievements and technologies.
 
 Update guidelines are documented in `src/components/Skills/README.md` and `src/components/Timeline/README.md`.
+
+## Scripts
+
+| Command                 | Purpose                                   |
+|-------------------------|-------------------------------------------|
+| `yarn start`            | Vite dev server (<http://localhost:4000>)   |
+| `yarn build`            | Production build to `dist/`               |
+| `yarn preview`          | Serves `dist/` at <http://localhost:4000>   |
+| `yarn lint`             | ESLint on `src/`                          |
+| `yarn tsc --noEmit`     | TypeScript type-check                     |
+| `yarn format`           | Prettier write                            |
+| `yarn format:check`     | Prettier check                            |
 
 ## Formatting & Editor setup
 
@@ -77,3 +121,8 @@ yarn format:check
   - `.prettierrc`: pins formatting rules (singleQuote, trailingComma, printWidth)
   - `.editorconfig`: cross-editor settings (LF line endings, UTF-8, 2-space indents)
   - Node version: `.nvmrc` (v20) and `engines.node: ">=20"` in `package.json`
+
+## Agents & Automation
+
+- See `AGENTS.md` for agent/editor guidance (planning, branching, scripts, CI expectations).
+- See `.cursorrules` for additional editor/agent conventions and guardrails.

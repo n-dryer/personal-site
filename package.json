@@ -22,14 +22,15 @@
     "react-scroll-parallax": "^3.4.5"
   },
   "scripts": {
-    "start": "vite",
+    "start": "vite --port 4000",
     "build": "vite build",
-    "preview": "vite preview",
+    "preview": "vite preview --port 4000",
     "format:check": "prettier --check .",
     "ci:guard:lockfile": "test ! -f package-lock.json || (echo 'package-lock.json detected. Use Yarn only.' && exit 1)",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "tsc": "tsc -p tsconfig.json"
   },
   "homepage": "https://nathandryer.com",
   "license": "MIT",
