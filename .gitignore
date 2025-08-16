@@ -72,3 +72,8 @@ node_modules/.cache/
 .cursor/
 .idea/
 .vscode/
+
+# Local AI tooling (keep only locally)
+.cursorrules
+AGENTS.md
+GEMINI.md
