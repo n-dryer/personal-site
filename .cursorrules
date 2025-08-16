@@ -3,7 +3,7 @@
 # Project Summary
 - Stack: Vite + React 19 + TypeScript + Tailwind; React-SWC plugin.
 - Node: 20. Package manager: Yarn v1 only (yarn.lock is source of truth).
-- Tests: minimal unit tests only (css tokens); keep fast and green.
+- Tests: minimal unit tests only (CSS tokens); keep fast and green.
 - CI: single job “CI / build-and-test” on pull_request (yarn install → build → test).
 - Deploy: manual GitHub Pages workflow (“Deploy (GitHub Pages)”), publishes dist/.
 - Branch protection (main): PR required; required check “CI / build-and-test (pull_request)”; Squash only; auto-delete branches ON.
