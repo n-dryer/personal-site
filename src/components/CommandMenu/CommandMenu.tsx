@@ -212,7 +212,7 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
             },
           ];
         } catch {
-          return [] as CommandItem[];
+          return EMPTY_COMMAND_ITEMS;
         }
       })(),
     ],
