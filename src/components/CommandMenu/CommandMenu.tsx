@@ -151,6 +151,9 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
     [setIsOpen],
   );
 
+  // Typed empty list for safe fallbacks
+  const EMPTY_COMMAND_ITEMS: CommandItem[] = [];
+
   const commandGroups: {
     resume: CommandItem[];
     navigate: CommandItem[];
