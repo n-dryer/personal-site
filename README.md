@@ -93,15 +93,15 @@ Update guidelines are documented in `src/components/Skills/README.md` and `src/c
 
 ## Scripts
 
-| Command                 | Purpose                                   |
-|-------------------------|-------------------------------------------|
-| `yarn start`            | Vite dev server (<http://localhost:4000>)   |
-| `yarn build`            | Production build to `dist/`               |
-| `yarn preview`          | Serves `dist/` at <http://localhost:4000>   |
-| `yarn lint`             | ESLint on `src/`                          |
-| `yarn tsc --noEmit`     | TypeScript type-check                     |
-| `yarn format`           | Prettier write                            |
-| `yarn format:check`     | Prettier check                            |
+| Command             | Purpose                                   |
+| ------------------- | ----------------------------------------- |
+| `yarn start`        | Vite dev server (<http://localhost:4000>) |
+| `yarn build`        | Production build to `dist/`               |
+| `yarn preview`      | Serves `dist/` at <http://localhost:4000> |
+| `yarn lint`         | ESLint on `src/`                          |
+| `yarn tsc --noEmit` | TypeScript type-check                     |
+| `yarn format`       | Prettier write                            |
+| `yarn format:check` | Prettier check                            |
 
 ## Formatting & Editor setup
 
