@@ -25,8 +25,6 @@
     }
   },
   "include": [
-    "src",
-    "playwright.config.ts",
-    "tests"
+    "src"
   ]
 }
