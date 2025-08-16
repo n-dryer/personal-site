@@ -32,7 +32,7 @@
 - Do not add heavy runtime deps without justification.
 
 # Tests
-- Keep the minimal css-variables test passing; do not add slow/e2e tests.
+- Keep the minimal CSS variables test passing; do not add slow/e2e tests.
 - If you add tests, keep them fast and deterministic.
 - Don’t change Jest env or expand CI unless explicitly requested.
 
