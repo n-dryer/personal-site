@@ -116,8 +116,6 @@ const TimelineComponent = ({ experienceData }: TimelineProps) => {
     }
   };
 
-  const isLeftSide = (index: number): boolean => index % 2 === 0;
-
   useEffect(() => {
     if (expandedId && timelineRefs.current[expandedId]) {
       const element = timelineRefs.current[expandedId];
@@ -160,7 +158,7 @@ const TimelineComponent = ({ experienceData }: TimelineProps) => {
         </h2>
         <motion.div
           ref={timelineContainerRef}
-          className="relative mx-auto grid w-full max-w-none grid-cols-1 gap-4 px-4 md:max-w-6xl md:grid-cols-[1fr_min-content_1fr] md:px-8"
+          className="relative mx-auto grid w-full max-w-none grid-cols-[auto_1fr] gap-x-4 gap-y-4 px-4 md:max-w-6xl md:grid-cols-[1fr_min-content_1fr] md:gap-x-8 md:gap-y-8 md:px-8"
           variants={shouldReduceMotion ? undefined : timelineContainerVariants}
           initial={shouldReduceMotion ? undefined : 'hidden'}
           animate={shouldReduceMotion ? undefined : isInView ? 'visible' : 'hidden'}
@@ -170,7 +168,6 @@ const TimelineComponent = ({ experienceData }: TimelineProps) => {
               key={item.id}
               item={item}
               isExpanded={expandedId === item.id}
-              isLeftSide={isLeftSide(index)}
               getYearRange={getYearRange}
               toggleExpand={toggleExpand}
               announceStateChange={announceStateChange}
