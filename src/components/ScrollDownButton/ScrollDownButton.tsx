@@ -134,7 +134,7 @@ const ScrollDownButtonComponent = (): React.ReactElement | null => {
           style={{
             width: 'clamp(1rem, 2.5vw, 1.5rem)',
             height: 'clamp(1rem, 2.5vw, 1.5rem)',
-            color: 'var(--color-on-accent)',
+            color: 'var(--on-accent)',
           }}
         />
       </motion.button>
