@@ -23,7 +23,7 @@ React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Yarn | Prettier
 
 1. `git clone https://github.com/n-dryer/personal-site.git`
 1. `cd personal-site && yarn install`
-1. `yarn start` (Vite dev server on `http://localhost:4000`)
+1. `yarn start` (Vite dev server at <http://localhost:4000>)
 
 **Quality gates (no heavy test suites):**
 
@@ -40,7 +40,7 @@ React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Yarn | Prettier
 
 ## Project Structure
 
-```
+```text
 public/                  # static assets and index.html
 src/
   components/            # UI components (Header, Timeline, Skills, etc.)
