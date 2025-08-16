@@ -30,47 +30,47 @@ const FooterComponent = ({ userData }: FooterProps): React.ReactElement => {
 
   // Prepare social links to include email explicitly if not in socialLinks array
   const displaySocialLinks: SocialLink[] = [
-    ...(userData.socialLinks.filter(link => iconMap[link.name])),
+    ...userData.socialLinks.filter((link) => iconMap[link.name]),
   ];
   const emailLink: SocialLink = { name: 'Email', url: `mailto:${userData.email}` };
 
   return (
     <footer
-      id='end'
-      className='bg-bg-surface py-8' // Changed to bg-surface for slight contrast
+      id="end"
+      className="bg-bg-surface py-8" // Changed to bg-surface for slight contrast
     >
-      <div className='container mx-auto w-full px-6'>
-        <div className='flex flex-col items-center'>
-          <div className='mb-6 flex items-center space-x-6'>
+      <div className="container mx-auto w-full px-6">
+        <div className="flex flex-col items-center">
+          <div className="mb-6 flex items-center space-x-6">
             {displaySocialLinks.map((link) => {
               const IconComponent = iconMap[link.name];
               return (
                 <motion.a
                   key={link.name}
                   href={link.url}
-                  target='_blank'
-                  rel='noopener noreferrer'
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={link.name}
-                  className='text-text-secondary transition-colors duration-300 hover:text-accent'
+                  className="text-text-secondary transition-colors duration-300 hover:text-accent"
                   whileHover={{ y: -2, scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <IconComponent className='h-6 w-6' />
+                  <IconComponent className="h-6 w-6" />
                 </motion.a>
               );
             })}
             <motion.a
               href={emailLink.url}
               aria-label={emailLink.name}
-              className='text-text-secondary transition-colors duration-300 hover:text-accent'
+              className="text-text-secondary transition-colors duration-300 hover:text-accent"
               whileHover={{ y: -2, scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Mail className='h-6 w-6' />
+              <Mail className="h-6 w-6" />
             </motion.a>
           </div>
-          <div className='border-text-primary/10 mt-4 w-full border-t pt-4'>
-            <p className='text-center text-sm text-text-secondary'>
+          <div className="border-text-primary/10 mt-4 w-full border-t pt-4">
+            <p className="text-center text-sm text-text-secondary">
               © {currentYear} {userData.fullName}. All rights reserved.
             </p>
           </div>
@@ -84,4 +84,4 @@ const FooterComponent = ({ userData }: FooterProps): React.ReactElement => {
  * Memoized Footer component.
  * @see FooterComponent
  */
-export const Footer = React.memo(FooterComponent); 
+export const Footer = React.memo(FooterComponent);

@@ -8,7 +8,7 @@ type LayoutProps = {
   children: React.ReactNode;
   /** Optional additional CSS class names to apply to the layout container. */
   className?: string;
-}
+};
 
 /**
  * Main layout component that wraps the entire application.

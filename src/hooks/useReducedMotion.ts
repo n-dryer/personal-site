@@ -17,9 +17,7 @@ export const useReducedMotion = (): boolean => {
     // Check if window.matchMedia is available (not available in Jest environment)
     if (typeof window !== 'undefined' && window.matchMedia) {
       try {
-        const mediaQuery = window.matchMedia(
-          '(prefers-reduced-motion: reduce)'
-        );
+        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
         if (mediaQuery && typeof mediaQuery.matches === 'boolean') {
           setShouldReduceMotion(mediaQuery.matches);
 

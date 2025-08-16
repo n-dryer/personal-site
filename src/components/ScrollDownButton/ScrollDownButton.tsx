@@ -36,14 +36,15 @@ const ScrollDownButtonComponent = (): React.ReactElement | null => {
 
   const handleScrollToTimeline = useCallback((): void => {
     handleHideAndRemoveListener(); // Hide button on click and remove listener
-    const timelineElement = document.getElementById('timeline') ||
+    const timelineElement =
+      document.getElementById('timeline') ||
       document.querySelector('[data-section="timeline"]') ||
       document.querySelector('main');
 
     if (timelineElement) {
       timelineElement.scrollIntoView({
         behavior: 'smooth',
-        block: 'start'
+        block: 'start',
       });
     }
   }, [handleHideAndRemoveListener]);
@@ -55,8 +56,8 @@ const ScrollDownButtonComponent = (): React.ReactElement | null => {
         duration: 2.0, // 2s bounce duration
         repeat: Infinity,
         repeatType: 'loop' as const,
-        ease: easeInOut
-      }
+        ease: easeInOut,
+      },
     },
     pulse: {
       scale: [1, 1.02, 1],
@@ -64,8 +65,8 @@ const ScrollDownButtonComponent = (): React.ReactElement | null => {
         duration: 3.0,
         repeat: Infinity,
         repeatType: 'loop' as const,
-        ease: easeInOut
-      }
+        ease: easeInOut,
+      },
     },
     hover: {
       scale: 1.05,
@@ -73,14 +74,14 @@ const ScrollDownButtonComponent = (): React.ReactElement | null => {
       transition: {
         type: 'spring',
         stiffness: 300,
-        damping: 20
-      }
+        damping: 20,
+      },
     },
     tap: {
       scale: 0.95,
       y: 0,
-      transition: { duration: 0.15 }
-    }
+      transition: { duration: 0.15 },
+    },
   };
 
   const prefersReducedMotion = useReducedMotion();
@@ -105,7 +106,7 @@ const ScrollDownButtonComponent = (): React.ReactElement | null => {
       transition={{
         opacity: { duration: 1.0, ease: easeOut },
         scale: { type: 'spring', stiffness: 300, damping: 20, duration: 0.5 },
-        y: { type: 'spring', stiffness: 300, damping: 20, duration: 1.0 }
+        y: { type: 'spring', stiffness: 300, damping: 20, duration: 1.0 },
       }}
     >
       <motion.button
@@ -133,7 +134,7 @@ const ScrollDownButtonComponent = (): React.ReactElement | null => {
           style={{
             width: 'clamp(1rem, 2.5vw, 1.5rem)',
             height: 'clamp(1rem, 2.5vw, 1.5rem)',
-            color: '#111111'  // Use consistent dark color for icon in both themes
+            color: 'var(--on-accent)',
           }}
         />
       </motion.button>
@@ -145,4 +146,4 @@ const ScrollDownButtonComponent = (): React.ReactElement | null => {
  * Memoized ScrollDownButton component.
  * @see ScrollDownButtonComponent
  */
-export const ScrollDownButton = React.memo(ScrollDownButtonComponent); 
+export const ScrollDownButton = React.memo(ScrollDownButtonComponent);

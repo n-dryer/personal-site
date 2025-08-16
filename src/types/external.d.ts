@@ -1,12 +1,3 @@
-declare module 'body-scroll-lock' {
-  export function disableBodyScroll(
-    targetElement: Element,
-    options?: { reserveScrollBarGap?: boolean }
-  ): void;
-  export function enableBodyScroll(targetElement: Element): void;
-  export function clearAllBodyScrollLocks(): void;
-}
-
 declare module 'focus-trap-react' {
   import * as React from 'react';
 
@@ -16,7 +7,8 @@ declare module 'focus-trap-react' {
     clickOutsideDeactivates?: boolean | ((e: MouseEvent) => boolean);
     onActivate?: () => void;
     onDeactivate?: () => void;
-    [key: string]: any;
+    // Allow unknown additional options without using `any` to satisfy strict typing
+    [key: string]: unknown;
   }
 
   export interface FocusTrapProps {

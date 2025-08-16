@@ -1,1 +1,1 @@
-export * from './ShipLog'; 
+export * from './ShipLog';

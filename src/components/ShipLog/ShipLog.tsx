@@ -9,7 +9,7 @@ import { UserData } from '../../types'; // Adjusted import path
 type ShipLogProps = {
   /** User data object. Currently unused but kept for future compatibility with a more detailed timeline. */
   userData: UserData;
-}
+};
 
 /**
  * ShipLogComponent is intended to display a professional journey or a log of significant events/projects.
@@ -56,35 +56,30 @@ const ShipLogComponent = ({ userData: _userData }: ShipLogProps): React.ReactEle
   return (
     <section
       ref={ref}
-      id='shiplog'
-      className='mt-20 bg-bg-primary py-16 text-text-primary md:mt-32'
+      id="shiplog"
+      className="mt-20 bg-bg-primary py-16 text-text-primary md:mt-32"
     >
-      <div className='container mx-auto px-4'>
-        <h2 className='mb-12 text-center text-3xl font-bold'>
-          Professional Journey
-        </h2>
+      <div className="container mx-auto px-4">
+        <h2 className="mb-12 text-center text-3xl font-bold">Professional Journey</h2>
 
         <motion.div
           ref={containerRef}
-          className='flex flex-col items-center justify-center py-16'
+          className="flex flex-col items-center justify-center py-16"
           variants={containerVariants}
-          initial='hidden'
+          initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
         >
           <motion.div
-            className='bg-surface max-w-md rounded-lg p-8 text-center shadow-sm'
+            className="bg-surface max-w-md rounded-lg p-8 text-center shadow-sm"
             variants={itemVariants}
           >
-            <h3 className='mb-4 text-xl font-bold text-accent'>
-              Coming Soon
-            </h3>
-            <p className='text-text-secondary'>
-              The professional journey timeline is currently being updated with
-              a new interactive format. Check back soon to explore my career
-              path in detail.
+            <h3 className="mb-4 text-xl font-bold text-accent">Coming Soon</h3>
+            <p className="text-text-secondary">
+              The professional journey timeline is currently being updated with a new interactive
+              format. Check back soon to explore my career path in detail.
             </p>
-            <div className='mt-6'>
-              <div className='inline-block h-1 w-10 rounded-full bg-accent'></div>
+            <div className="mt-6">
+              <div className="inline-block h-1 w-10 rounded-full bg-accent"></div>
             </div>
           </motion.div>
         </motion.div>
@@ -97,4 +92,4 @@ const ShipLogComponent = ({ userData: _userData }: ShipLogProps): React.ReactEle
  * Memoized ShipLog component.
  * @see ShipLogComponent
  */
-export const ShipLog = React.memo(ShipLogComponent); 
+export const ShipLog = React.memo(ShipLogComponent);

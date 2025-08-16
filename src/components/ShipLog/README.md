@@ -12,9 +12,9 @@ The `ShipLog` component is intended to display a professional journey or a log o
 import { ShipLog } from '@/components/ShipLog'; // Or the correct relative path
 import { userData } from '@/data.mock'; // Or your actual data source
 
-<ShipLog userData={userData} />
+<ShipLog userData={userData} />;
 ```
 
 ## Props
 
-- `userData`: `UserData` - An object containing user information. (Currently unused but kept for future compatibility). 
+- `userData`: `UserData` - An object containing user information. (Currently unused but kept for future compatibility).

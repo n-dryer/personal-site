@@ -9,5 +9,5 @@ createRoot(document.getElementById('root')!).render(
     <ParallaxProvider>
       <App />
     </ParallaxProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

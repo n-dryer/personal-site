@@ -1,1 +1,1 @@
-export * from './FloatingCommandButton'; 
+export * from './FloatingCommandButton';

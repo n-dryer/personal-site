@@ -70,7 +70,10 @@ export default [
       'react/react-in-jsx-scope': 'off', // Not needed in React 17+
       'react/prop-types': 'off',
       'react/display-name': 'off', // Allow anonymous components in tests
-      'react/no-unknown-property': ['error', { ignore: ['animate', 'transition', 'initial', 'layout'] }], // Framer Motion props
+      'react/no-unknown-property': [
+        'error',
+        { ignore: ['animate', 'transition', 'initial', 'layout'] },
+      ], // Framer Motion props
       'no-unused-vars': 'off', // Using TypeScript's version instead
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'error', // Enforce no-any as an error
@@ -80,31 +83,7 @@ export default [
     },
   },
 
-  // Test files specific configuration
-  {
-    files: ['**/__tests__/**/*.{js,jsx,ts,tsx}', '**/*.test.{js,jsx,ts,tsx}', '**/setupTests.ts'],
-    languageOptions: {
-      globals: {
-        ...globals.jest,
-        jest: 'readonly',
-        describe: 'readonly',
-        it: 'readonly',
-        test: 'readonly',
-        expect: 'readonly',
-        beforeEach: 'readonly',
-        afterEach: 'readonly',
-        beforeAll: 'readonly',
-        afterAll: 'readonly',
-      },
-    },
-    rules: {
-      // Relaxed TypeScript rules for tests
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-non-null-assertion': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
-      'no-undef': 'off', // Jest globals are defined
-    },
-  },
+  // (Removed test-specific configuration; no tests in this project)
 
   // Ignore patterns - removed TypeScript file ignores
   {
@@ -115,7 +94,6 @@ export default [
       'coverage/**',
       '**/*.min.js',
       'eslint.config.js',
-      'jest.config.js'
     ],
   },
 ];

@@ -26,7 +26,7 @@ export const useCommandMenu = (): UseCommandMenuReturn => {
   // Toggle function - Memoized to prevent infinite re-renders
   // PERFORMANCE FIX: Removed isOpen dependency that was causing infinite re-renders
   const toggle = useCallback((): void => {
-    setIsOpen(prev => !prev);
+    setIsOpen((prev) => !prev);
   }, []);
 
   // Keyboard shortcut for command menu (Cmd+K / Ctrl+K)

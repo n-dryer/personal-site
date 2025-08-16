@@ -78,4 +78,4 @@ const ThemeToggleComponent = ({ darkMode, toggleTheme }: ThemeToggleProps) => {
  * This component allows users to switch between light and dark themes.
  * @see ThemeToggleComponent
  */
-export const ThemeToggle = React.memo(ThemeToggleComponent); 
+export const ThemeToggle = React.memo(ThemeToggleComponent);

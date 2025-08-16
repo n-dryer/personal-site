@@ -13,13 +13,13 @@ import { ThemeToggle } from '@/components/ThemeToggle'; // Or the correct relati
 
 const MyComponent = () => {
   const [darkMode, setDarkMode] = React.useState(false);
-  const handleToggleTheme = () => setDarkMode(prev => !prev);
+  const handleToggleTheme = () => setDarkMode((prev) => !prev);
 
   return <ThemeToggle darkMode={darkMode} toggleTheme={handleToggleTheme} />;
-}
+};
 ```
 
 ## Props
 
 - `darkMode`: `boolean` - Indicates whether dark mode is currently active.
-- `toggleTheme`: `() => void` - A callback function that is executed when the button is clicked, responsible for changing the theme state. 
+- `toggleTheme`: `() => void` - A callback function that is executed when the button is clicked, responsible for changing the theme state.

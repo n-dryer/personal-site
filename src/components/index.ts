@@ -5,4 +5,4 @@ export * from './Header';
 export * from './CommandMenu';
 export * from './Skills';
 export * from './ThemeToggle';
-export * from './Timeline'; 
+export * from './Timeline';

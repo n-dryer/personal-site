@@ -6,7 +6,7 @@ import { useCallback } from 'react';
  * @property {() => void} [startViewTransition] - A function to start a view transition.
  */
 interface ViewTransition {
-    startViewTransition?: (callback: () => void) => void;
+  startViewTransition?: (callback: () => void) => void;
 }
 
 /**
@@ -30,22 +30,22 @@ interface ViewTransition {
  * };
  */
 export const useViewTransitions = (): {
-    withViewTransition: (callback: () => void) => void;
+  withViewTransition: (callback: () => void) => void;
 } => {
-    /**
-     * Wraps a callback with a view transition if supported.
-     *
-     * @param {() => void} callback - The function to execute, typically containing state updates.
-     */
-    const withViewTransition = useCallback((callback: () => void) => {
-        // Check if the View Transitions API is available on the document object
-        if ((document as ViewTransition).startViewTransition) {
-            (document as ViewTransition).startViewTransition!(callback);
-        } else {
-            // If not supported, execute the callback directly
-            callback();
-        }
-    }, []);
+  /**
+   * Wraps a callback with a view transition if supported.
+   *
+   * @param {() => void} callback - The function to execute, typically containing state updates.
+   */
+  const withViewTransition = useCallback((callback: () => void) => {
+    // Check if the View Transitions API is available on the document object
+    if ((document as ViewTransition).startViewTransition) {
+      (document as ViewTransition).startViewTransition!(callback);
+    } else {
+      // If not supported, execute the callback directly
+      callback();
+    }
+  }, []);
 
-    return { withViewTransition };
+  return { withViewTransition };
 };

@@ -42,7 +42,7 @@ export const useTheme = (): UseThemeReturn => {
    * Memoized for performance optimization to prevent unnecessary re-renders
    */
   const toggleTheme = useCallback((): void => {
-    setDarkMode(prevMode => !prevMode);
+    setDarkMode((prevMode) => !prevMode);
   }, []);
 
   // Apply theme changes to DOM and localStorage

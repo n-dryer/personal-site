@@ -12,11 +12,13 @@ The `FloatingCommandButton` component provides a fixed-position button, typicall
 import { FloatingCommandButton } from '@/components/FloatingCommandButton'; // Or the correct relative path
 
 const MyPage = () => {
-  const handleToggleMenu = () => { /* ... */ };
+  const handleToggleMenu = () => {
+    /* ... */
+  };
   return <FloatingCommandButton toggleCommandMenu={handleToggleMenu} />;
-}
+};
 ```
 
 ## Props
 
-- `toggleCommandMenu`: `() => void` - A callback function that is executed when the button is clicked, typically used to open or close a command menu. 
+- `toggleCommandMenu`: `() => void` - A callback function that is executed when the button is clicked, typically used to open or close a command menu.
