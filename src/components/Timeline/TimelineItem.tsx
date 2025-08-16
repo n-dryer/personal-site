@@ -9,7 +9,6 @@ import React from 'react';
 type TimelineItemProps = {
   item: Experience;
   isExpanded: boolean;
-  isLeftSide: boolean;
   getYearRange: (dateString: string) => string;
   toggleExpand: (id: string) => void;
   announceStateChange: (id: string, isExpanding: boolean) => void;
@@ -47,7 +46,6 @@ const timelineItemVariants = {
 const TimelineItemComponent = ({
   item,
   isExpanded,
-  isLeftSide,
   getYearRange,
   toggleExpand,
   announceStateChange,
@@ -61,51 +59,41 @@ const TimelineItemComponent = ({
 
   return (
     <React.Fragment>
-      {/* Mobile single-column connectors: left-anchored segment + dot per item */}
-      <div className="relative md:hidden" style={{ gridRow: itemIndex + 1 }}>
-        {/* Top segment (hidden for first item) */}
-        {itemIndex > 0 && (
-          <span
-            className="absolute left-4 top-0 h-[calc(50%-6px)] w-px bg-accent"
-            aria-hidden="true"
-          />
-        )}
-        {/* Bottom segment (hidden for last item) */}
-        {itemIndex < itemsCount - 1 && (
-          <span
-            className="absolute bottom-0 left-4 h-[calc(50%-6px)] w-px bg-accent"
-            aria-hidden="true"
-          />
-        )}
-        {/* Dot */}
-        <span
-          className="absolute left-4 top-1/2 h-3 w-3 -translate-y-1/2 rounded-full bg-accent shadow-md"
-          aria-hidden="true"
-        />
-      </div>
+      {/* Mobile/desktop connector line and dot */}
       <div
-        className={`${isLeftSide ? 'md:col-start-1' : 'md:col-start-3'}`}
-        style={{ gridRow: itemIndex + 1 }}
+        className="col-start-1 flex justify-center md:col-start-2"
+        style={{ gridRow: `${itemIndex * 2 + 1} / span 2` }}
+      >
+        <div className="relative h-full w-px bg-accent">
+          {/* Dot */}
+          <div
+            className={`absolute left-1/2 top-5 h-3 w-3 -translate-x-1/2 rounded-full bg-accent shadow-md`}
+          />
+        </div>
+      </div>
+
+      {/* Year */}
+      <div
+        className="col-start-1 self-center text-right text-sm font-semibold text-text-secondary md:col-start-1"
+        style={{ gridRow: itemIndex * 2 + 1 }}
+      >
+        {getYearRange(date)}
+      </div>
+
+      {/* Card */}
+      <div
+        className="col-start-2 md:col-start-3"
+        style={{ gridRow: `${itemIndex * 2 + 1} / span 2`, paddingBottom: 'var(--space-8)' }}
       >
         <motion.div
           ref={setTimelineRef(id)}
           className="timeline-grid-item"
-          style={{
-            marginBottom: isExpanded ? 'var(--space-5)' : 'var(--space-4)',
-          }}
           variants={shouldReduceMotion ? undefined : timelineItemVariants}
         >
           <motion.div
             layout="position"
             id={`timeline-content-${id}`}
-            className={`timeline-card-wrapper relative w-full md:w-auto ${
-              isExpanded
-                ? 'z-20 md:max-w-md lg:max-w-lg xl:max-w-xl'
-                : 'z-10 md:max-w-sm lg:max-w-md xl:max-w-lg'
-            }`}
-            style={{
-              marginTop: '0',
-            }}
+            className={`timeline-card-wrapper relative w-full`}
             initial={false}
             animate={{
               transition: shouldReduceMotion
@@ -119,14 +107,9 @@ const TimelineItemComponent = ({
                   },
             }}
           >
-            <div className="flex items-baseline gap-2">
-              <span className="inline-flex items-center whitespace-nowrap rounded-md bg-accent px-2 py-[var(--space-1)] text-xs font-semibold text-on-accent">
-                {getYearRange(date)}
-              </span>
-            </div>
             <motion.div
               layout="position"
-              className={`timeline-card-hover timeline-card-focus glass-surface relative text-left ${isExpanded ? 'p-[var(--space-5)]' : 'p-4'} cursor-pointer rounded-lg border border-white/10 shadow-sm ${shouldReduceMotion ? '' : 'transition-all duration-300'}`}
+              className={`timeline-card-hover timeline-card-focus glass-surface relative cursor-pointer rounded-lg border border-white/10 p-4 text-left shadow-sm ${shouldReduceMotion ? '' : 'transition-all duration-300'}`}
               data-view-transition-name={`timeline-card-${itemIndex + 1}`}
               style={
                 {
@@ -151,27 +134,25 @@ const TimelineItemComponent = ({
                 handleKeyDown(e, id);
               }}
             >
-              <motion.div layout="position">
+              <motion.div layout="position" className="space-y-2">
                 <h3
                   id={`timeline-title-${id}`}
-                  className={`${isExpanded ? 'mb-3 text-lg md:text-xl' : 'mb-2 text-base md:text-lg'} font-semibold leading-tight text-text-primary`}
+                  className={`text-base font-semibold leading-tight text-text-primary md:text-lg`}
                 >
                   {company}
                 </h3>
-                <p
-                  className={`${isExpanded ? 'mb-3 text-base md:text-lg' : 'mb-2 text-sm md:text-base'} font-medium leading-snug text-text-secondary`}
-                >
+                <p className={`text-sm font-medium leading-snug text-text-secondary md:text-base`}>
                   {title}
                 </p>
                 {isExpanded && (
-                  <p className="mb-4 text-sm font-normal text-text-secondary">{location}</p>
+                  <p className="text-sm font-normal text-text-secondary">{location}</p>
                 )}
               </motion.div>
               <AnimatePresence mode="wait">
                 {isExpanded && (
                   <motion.div
                     id={`timeline-expanded-${id}`}
-                    className="timeline-expanded-content"
+                    className="timeline-expanded-content pt-4"
                     data-view-transition-name={`expanded-content-${itemIndex + 1}`}
                     style={
                       {
@@ -210,12 +191,13 @@ const TimelineItemComponent = ({
                     }
                   >
                     <motion.div
+                      className="space-y-4"
                       initial={shouldReduceMotion ? undefined : { opacity: 0, y: 10 }}
                       animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
                       transition={shouldReduceMotion ? undefined : { delay: 0.05 }}
                     >
                       {technologies && (
-                        <div className="mb-4">
+                        <div>
                           <div className="flex flex-wrap justify-start gap-2">
                             {technologies.map((tech, techIdx) => (
                               <span
@@ -240,7 +222,7 @@ const TimelineItemComponent = ({
       {/* Desktop center column: per-item segmented connectors and dot */}
       <div
         style={{ gridColumn: 2, gridRow: itemIndex + 1 }}
-        className="relative hidden items-center justify-center md:flex"
+        className="relative flex items-center justify-center"
       >
         {/* Top segment (hidden for first item) */}
         {itemIndex > 0 && (

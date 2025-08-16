@@ -17,13 +17,13 @@ Agents must use idiomatic React + TypeScript patterns and respect the existing f
 
 ## Task & Code Execution Workflow
 
-1) Plan
+1. Plan
 
 - Generate a concise step-by-step plan before code changes.
 - If a non-trivial or risky refactor, propose first; wait for approval.
 - Reference the plan/task in PR descriptions.
 
-1) Branch & PR (Trunk-based)
+1. Branch & PR (Trunk-based)
 
 - Base off latest `main`.
 - Small, focused PRs only; conventional commits (feat, fix, chore, docs).
@@ -32,7 +32,7 @@ Agents must use idiomatic React + TypeScript patterns and respect the existing f
   - Non-UI/perf: `perf/<feature>` — current branch in use: `perf/optimizations`
 - Baseline snapshot/tag: `checkpoint/baseline-2025-08-15`
 
-1) Code Standards (order matters)
+1. Code Standards (order matters)
 
 - Format → Lint → Type-check → Build
 - Keep changes minimal and readable; match repo idioms (React function components, named exports, clear prop types).
