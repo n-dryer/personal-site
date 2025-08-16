@@ -1,0 +1,11 @@
+node_modules
+dist
+build
+out
+coverage
+.tmp
+.cache
+.env
+.env.*
+.vscode
+.DS_Store
