@@ -61,7 +61,7 @@ const TimelineItemComponent = ({
     <React.Fragment>
       {/* VERTICAL LINE / ICON - Renders the timeline's central vertical line and icon for each item. */}
       <div
-        className="col-start-1 row-start-1 flex items-center justify-center md:col-start-2"
+        className="col-start-1 flex items-center justify-center md:col-start-2"
         style={{ gridRow: `${itemIndex * 2 + 1} / span 2` }}
       >
         {/* Vertical line that connects timeline items, extending into the grid gap. */}
