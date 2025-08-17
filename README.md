@@ -12,7 +12,7 @@ React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Yarn | Prettier
 
 ## Main Features
 
-- Interactive Timeline: chronological overview of experience with roles and achievements
+- Interactive Timeline: desktop vertical tablist with detail panel and mobile single-column fallback
 - Skills Showcase: categorized skills with proficiency badges
 - Ship Log: recent updates and milestones
 - Command Menu: quick command palette (Cmd/Ctrl+K or floating button) for navigation and social links

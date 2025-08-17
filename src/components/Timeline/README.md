@@ -1,27 +1,31 @@
 # Timeline Component
 
-This directory contains the `Timeline` component, its tests, and related files.
+Displays professional experience in a master-detail timeline.
 
 ## Purpose
 
-Displays professional experiences with consistent layout, spacing, and accessibility. On small screens, items stack in a single column; on larger screens, they align in a two-column alternating layout with a center rail.
+- **Desktop (`lg` and up):** vertical ARIA tablist on the left and detail panel on the right.
+- **Mobile:** single column; tablist sits above the detail panel.
+- Supports deep-linking via `#exp={slug}`.
 
 ## Data Schema
 
-Uses `Experience` from `src/types`:
+Consumes `Experience` from `src/types`:
 
-- `title`, `company`, `location`, `date`, `achievements`, `technologies`.
+- `title`, `company`, `location`, `date`, `description`, `achievements`, `technologies`, `icon` (unused here).
 
 ## Usage
 
 ```tsx
-import { Timeline } from '@/components/Timeline';
-import { experienceData } from '@/__mocks__/data.mock';
+import { Timeline } from '@/components';
+import { experienceData } from '@/content/experience';
 
 <Timeline experienceData={experienceData} />;
 ```
 
 ## Accessibility
 
-- Expand/collapse buttons have `aria-expanded`, `aria-controls`, and descriptive labels.
-- Keyboard support: Enter/Space toggles; Escape collapses; Arrow keys move focus.
+- Implements WAI-ARIA vertical tabs (`role="tablist"`, `tab`, `tabpanel`).
+- Keyboard: Arrow Up/Down/Home/End move between tabs; Enter/Space activate.
+- Tab and Shift+Tab move focus in and out of the tablist.
+- Respects `prefers-reduced-motion` using Tailwind's `motion-reduce` utility.
