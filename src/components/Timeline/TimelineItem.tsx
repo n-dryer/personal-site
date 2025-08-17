@@ -70,7 +70,6 @@ const TimelineItemComponent = ({
           style={{
             left: '50%',
             transform: 'translateX(-50%)',
-            top: itemIndex === 0 ? '50%' : '-1rem', // gap-y-8 is 2rem, so we need to extend by half of that.
             top: itemIndex === 0 ? '50%' : 'calc(var(--timeline-gap-y, 2rem) / -2)', // Use custom property for grid gap.
             bottom: itemIndex === itemsCount - 1 ? '50%' : 'calc(var(--timeline-gap-y, 2rem) / -2)',
           }}
