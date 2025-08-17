@@ -43,6 +43,7 @@ Agents must use idiomatic React + TypeScript patterns and respect the existing f
 - `yarn build` — production build to `dist/`
 - `yarn preview` — serves `dist/` (<http://localhost:4000>)
 - `yarn lint` — ESLint on `src/`
+- `yarn test` — unit tests with Vitest
 - `yarn tsc --noEmit` — TypeScript type-check only
 - `yarn format` — Prettier write
 - `yarn format:check` — Prettier check
@@ -62,6 +63,7 @@ CI (GitHub Actions) runs on push/PR:
 - Vite production build
 - Minimal smoke test (curl) against a temporary preview server (validates key endpoints/meta)
 - Uploads `dist/` artifact for preview on every run
+- Unit tests run locally via `yarn test` (not in CI)
 
 Keep CI lightweight; no heavy/slow suites. Add only fast, deterministic checks.
 
@@ -120,6 +122,7 @@ src/
 
 - [ ] `yarn format:check` passes
 - [ ] `yarn lint` passes
+- [ ] `yarn test` passes
 - [ ] `yarn tsc --noEmit` passes
 - [ ] `yarn build` succeeds
 - [ ] Manual sanity check in `yarn preview` (UI changes only)

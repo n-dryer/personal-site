@@ -30,6 +30,7 @@ React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Yarn | Prettier
 - CI runs format check (Prettier), lint (ESLint), type-check (tsc), and build (Vite).
 - CI performs a minimal E2E smoke (curl-based) against a temporary `vite preview` server to validate key meta tags and endpoints.
 - CI uploads the built `dist/` as an artifact for safe preview without publishing.
+- Unit tests can be run locally with `yarn test` (Vitest + Testing Library).
 
 > Note: This project uses Yarn (v1). Please do not commit `package-lock.json`. Use `yarn` for all install and script commands.
 
@@ -99,6 +100,7 @@ Update guidelines are documented in `src/components/Skills/README.md` and `src/c
 | `yarn build`        | Production build to `dist/`               |
 | `yarn preview`      | Serves `dist/` at <http://localhost:4000> |
 | `yarn lint`         | ESLint on `src/`                          |
+| `yarn test`         | Run unit tests with Vitest                |
 | `yarn tsc --noEmit` | TypeScript type-check                     |
 | `yarn format`       | Prettier write                            |
 | `yarn format:check` | Prettier check                            |
