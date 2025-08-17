@@ -83,7 +83,15 @@ export default [
     },
   },
 
-  // (Removed test-specific configuration; no tests in this project)
+  // Test files
+  {
+    files: ['**/*.test.ts', '**/*.test.tsx'],
+    languageOptions: {
+      globals: {
+        ...globals.vitest,
+      },
+    },
+  },
 
   // Ignore patterns - removed TypeScript file ignores
   {
