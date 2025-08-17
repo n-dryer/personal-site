@@ -3,7 +3,7 @@ import { userData } from '@/__mocks__/data.mock';
 import { ShipLog } from './ShipLog';
 
 describe('ShipLog', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     vi.stubGlobal(
       'IntersectionObserver',
       class {
@@ -12,6 +12,10 @@ describe('ShipLog', () => {
         unobserve() {}
       },
     );
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
   it('renders placeholder message', () => {
     render(<ShipLog userData={userData} />);
