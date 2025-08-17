@@ -59,20 +59,44 @@ const TimelineItemComponent = ({
 
   return (
     <React.Fragment>
-      {/* Mobile/desktop connector line and dot */}
+      {/* VERTICAL LINE / ICON - Renders the timeline's central vertical line and icon for each item. */}
       <div
-        className="col-start-1 flex justify-center md:col-start-2"
+        className="col-start-1 row-start-1 flex items-center justify-center md:col-start-2"
         style={{ gridRow: `${itemIndex * 2 + 1} / span 2` }}
       >
-        <div className="relative h-full w-px bg-accent">
-          {/* Dot */}
-          <div
-            className={`absolute left-1/2 top-5 h-3 w-3 -translate-x-1/2 rounded-full bg-accent shadow-md`}
-          />
-        </div>
+        {/* Vertical line that connects timeline items, extending into the grid gap. */}
+        <div
+          className="absolute w-px bg-accent"
+          style={{
+            left: '50%',
+            transform: 'translateX(-50%)',
+            top: itemIndex === 0 ? '50%' : '-1rem', // gap-y-8 is 2rem, so we need to extend by half of that.
+            bottom: itemIndex === itemsCount - 1 ? '50%' : '-1rem',
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Icon button, centered over the line. */}
+        <button
+          className={`timeline-icon timeline-icon-focus absolute flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-accent text-on-accent shadow-lg`}
+          onClick={() => {
+            toggleExpand(id);
+            announceStateChange(id, !isExpanded);
+          }}
+          onKeyDown={(e) => handleKeyDown(e, id)}
+          type="button"
+          role="button"
+          aria-expanded={isExpanded}
+          aria-controls={`timeline-content-${id}`}
+          aria-labelledby={`timeline-title-${id}`}
+          aria-label={`${isExpanded ? 'Collapse' : 'Expand'} details for ${title} at ${company}`}
+          aria-describedby={`timeline-content-${id}`}
+        >
+          <IconComponent size={20} />
+        </button>
       </div>
 
-      {/* Year */}
+      {/* YEAR */}
       <div
         className="col-start-1 self-center text-right text-sm font-semibold text-text-secondary md:col-start-1"
         style={{ gridRow: itemIndex * 2 + 1 }}
@@ -80,7 +104,7 @@ const TimelineItemComponent = ({
         {getYearRange(date)}
       </div>
 
-      {/* Card */}
+      {/* CARD */}
       <div
         className="col-start-2 md:col-start-3"
         style={{ gridRow: `${itemIndex * 2 + 1} / span 2`, paddingBottom: 'var(--space-8)' }}
@@ -218,46 +242,6 @@ const TimelineItemComponent = ({
             </motion.div>
           </motion.div>
         </motion.div>
-      </div>
-      {/* Desktop center column: per-item segmented connectors and dot */}
-      <div
-        style={{ gridColumn: 2, gridRow: itemIndex + 1 }}
-        className="relative flex items-center justify-center"
-      >
-        {/* Top segment (hidden for first item) */}
-        {itemIndex > 0 && (
-          <span
-            className="absolute h-[calc(50%-24px)] w-px bg-accent"
-            style={{ top: 0 }}
-            aria-hidden="true"
-          />
-        )}
-        {/* Bottom segment (hidden for last item) */}
-        {itemIndex < itemsCount - 1 && (
-          <span
-            className="absolute h-[calc(50%-24px)] w-px bg-accent"
-            style={{ bottom: 0 }}
-            aria-hidden="true"
-          />
-        )}
-        {/* Dot + button */}
-        <button
-          className={`timeline-icon timeline-icon-focus flex h-12 min-h-[44px] w-12 min-w-[44px] cursor-pointer items-center justify-center rounded-full bg-accent text-on-accent shadow-lg`}
-          onClick={() => {
-            toggleExpand(id);
-            announceStateChange(id, !isExpanded);
-          }}
-          onKeyDown={(e) => handleKeyDown(e, id)}
-          type="button"
-          role="button"
-          aria-expanded={isExpanded}
-          aria-controls={`timeline-content-${id}`}
-          aria-labelledby={`timeline-title-${id}`}
-          aria-label={`${isExpanded ? 'Collapse' : 'Expand'} details for ${title} at ${company}`}
-          aria-describedby={`timeline-content-${id}`}
-        >
-          <IconComponent size={20} />
-        </button>
       </div>
     </React.Fragment>
   );
