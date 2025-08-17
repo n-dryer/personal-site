@@ -12,6 +12,8 @@ export type Project = {
 
 export type Experience = {
   id: string;
+  /** Optional slug for deep linking; generated from start year and company if absent */
+  slug?: string;
   title: string;
   company: string;
   location: string;

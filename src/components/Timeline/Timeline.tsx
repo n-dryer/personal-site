@@ -1,191 +1,181 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { motion, useInView, easeOut } from 'framer-motion';
-
+import React, { useEffect, useMemo, useRef, useState, KeyboardEvent } from 'react';
 import { Experience } from '../../types';
-import { TimelineItem } from './TimelineItem';
-import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 /**
  * Props for the Timeline component.
  */
 type TimelineProps = {
-  /** Array of experience data to display in the timeline. */
+  /** Array of experience data to display */
   experienceData: Experience[];
 };
 
-type TimelineRefs = {
-  [key: string]: HTMLDivElement | null;
+/** Create a slug from start year and company */
+const buildSlug = (exp: Experience): string => {
+  const yearMatch = exp.date.match(/\b(19|20)\d{2}\b/);
+  const year = yearMatch ? yearMatch[0] : '0000';
+  return `${year}-${exp.company}`.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 };
 
-// Animation variants for scroll-triggered timeline animations
-const timelineContainerVariants = {
-  hidden: {
-    opacity: 0,
-  },
-  visible: {
-    opacity: 1,
-    transition: {
-      duration: 0.6,
-      ease: easeOut,
-      staggerChildren: 0.15, // 150ms stagger between timeline items
-      delayChildren: 0.2, // 200ms delay before children start animating
-    },
-  },
+/** Group experiences by start year */
+const groupByYear = (items: (Experience & { slug: string; index: number })[]) => {
+  const groups: Record<string, (Experience & { slug: string; index: number })[]> = {};
+  items.forEach((item) => {
+    const yearMatch = item.date.match(/\b(19|20)\d{2}\b/);
+    const year = yearMatch ? yearMatch[0] : 'Unknown';
+    if (!groups[year]) groups[year] = [];
+    groups[year].push(item);
+  });
+  return Object.entries(groups).sort((a, b) => Number(b[0]) - Number(a[0]));
 };
 
 /**
- * TimelineComponent displays a chronological list of professional experiences.
- * It orchestrates TimelineItem components, manages overall layout, and scroll-triggered animations.
- * @param {TimelineProps} props - The properties passed to the component.
- * @returns {React.ReactElement} The rendered TimelineComponent.
+ * Desktop master-detail timeline with mobile fallback.
  */
-const TimelineComponent = ({ experienceData }: TimelineProps) => {
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-  const timelineRefs = useRef<TimelineRefs>({});
-  const shouldReduceMotion = useReducedMotion();
-
-  const timelineContainerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(timelineContainerRef, {
-    amount: 0.3,
-    once: true,
-    margin: '0px 0px -100px 0px',
-  });
-
-  const getYearRange = useCallback((dateString: string): string => {
-    if (dateString.toLowerCase().includes('present')) {
-      const startYearMatch = dateString.match(/\b(19|20)\d{2}\b/);
-      return startYearMatch ? `${startYearMatch[0]}-Present` : dateString;
-    }
-    const yearMatches = dateString.match(/\b(19|20)\d{2}\b/g);
-    if (yearMatches && yearMatches.length >= 2) {
-      return `${yearMatches[0]}-${yearMatches[yearMatches.length - 1]}`;
-    } else if (yearMatches && yearMatches.length === 1) {
-      return yearMatches[0];
-    }
-    return dateString.split(' ')[0];
-  }, []);
-
-  const toggleExpand = useCallback((id: string): void => {
-    setExpandedId((prev) => (prev === id ? null : id));
-  }, []);
-
-  const announceStateChange = useCallback(
-    (id: string, isExpanding: boolean): void => {
-      const item = experienceData.find((exp) => exp.id === id);
-      if (!item) return;
-      const message = isExpanding
-        ? `Expanded details for ${item.title} at ${item.company}`
-        : `Collapsed details for ${item.title} at ${item.company}`;
-      const announcement = document.createElement('div');
-      announcement.setAttribute('aria-live', 'polite');
-      announcement.setAttribute('aria-atomic', 'true');
-      announcement.className = 'sr-only';
-      announcement.textContent = message;
-      document.body.appendChild(announcement);
-      setTimeout(() => {
-        document.body.removeChild(announcement);
-      }, 1000);
-    },
+export const Timeline = ({ experienceData }: TimelineProps) => {
+  const items = useMemo(
+    () =>
+      experienceData.map((exp, index) => ({
+        ...exp,
+        slug: exp.slug ?? buildSlug(exp),
+        index,
+      })),
     [experienceData],
   );
 
-  const handleKeyDown = (e: React.KeyboardEvent, id: string): void => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggleExpand(id);
-      announceStateChange(id, expandedId !== id);
-    } else if (e.key === 'Escape') {
-      e.preventDefault();
-      if (expandedId) {
-        announceStateChange(expandedId, false);
-        setExpandedId(null);
+  const groups = useMemo(() => groupByYear(items), [items]);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const [activeSlug, setActiveSlug] = useState(items[0]?.slug);
+
+  // Select from hash on mount
+  useEffect(() => {
+    const hash = window.location.hash;
+    const match = hash.match(/exp=([^&]+)/);
+    if (match) {
+      const slug = decodeURIComponent(match[1]);
+      if (items.some((i) => i.slug === slug)) {
+        setActiveSlug(slug);
       }
-    } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    }
+  }, [items]);
+
+  const select = (slug: string, index: number) => {
+    setActiveSlug(slug);
+    history.replaceState(null, '', `#exp=${slug}`);
+    window.dispatchEvent(new CustomEvent('exp-change', { detail: slug }));
+    if (window.innerWidth < 1024) {
+      document.getElementById('timeline-panel')?.scrollIntoView({ behavior: 'smooth' });
+    }
+    tabRefs.current[index]?.focus();
+  };
+
+  const handleKey = (e: KeyboardEvent, index: number) => {
+    const max = items.length - 1;
+    if (e.key === 'ArrowDown') {
       e.preventDefault();
-      const currentIndex = experienceData.findIndex((item) => item.id === id);
-      const nextIndex =
-        e.key === 'ArrowDown'
-          ? Math.min(currentIndex + 1, experienceData.length - 1)
-          : Math.max(currentIndex - 1, 0);
-      const nextButton = document.querySelector(
-        `button[aria-describedby="timeline-content-${experienceData[nextIndex].id}"]`,
-      ) as HTMLButtonElement;
-      if (nextButton) {
-        nextButton.focus();
-      }
+      const next = index === max ? 0 : index + 1;
+      select(items[next].slug, next);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prev = index === 0 ? max : index - 1;
+      select(items[prev].slug, prev);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      select(items[0].slug, 0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      select(items[max].slug, max);
     }
   };
 
-  useEffect(() => {
-    if (expandedId && timelineRefs.current[expandedId]) {
-      const element = timelineRefs.current[expandedId];
-      if (!element) return;
-      const rect = element.getBoundingClientRect();
-      const isInView = rect.top >= 0 && rect.bottom <= window.innerHeight;
-      if (!isInView) {
-        element.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-        });
-      }
-    }
-  }, [expandedId]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Element;
-      if (!target.closest('.timeline-card') && !target.closest('.timeline-icon')) {
-        setExpandedId(null);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  const setTimelineRef =
-    (id: string) =>
-    (el: HTMLDivElement | null): void => {
-      timelineRefs.current[id] = el;
-    };
+  const active = items.find((i) => i.slug === activeSlug) ?? items[0];
 
   return (
-    <section id="timeline" className="bg-[var(--bg-surface-subtle)] px-4 py-[var(--space-section)]">
-      <div className="container mx-auto w-full">
-        <h2 className="mb-6 text-center font-display text-4xl font-semibold tracking-tight">
-          Professional Timeline
-        </h2>
-        <motion.div
-          ref={timelineContainerRef}
-          className="relative mx-auto grid w-full max-w-none grid-cols-[auto_1fr] gap-x-4 gap-y-4 px-4 md:max-w-6xl md:grid-cols-[1fr_min-content_1fr] md:gap-x-8 md:gap-y-8 md:px-8"
-          variants={shouldReduceMotion ? undefined : timelineContainerVariants}
-          initial={shouldReduceMotion ? undefined : 'hidden'}
-          animate={shouldReduceMotion ? undefined : isInView ? 'visible' : 'hidden'}
+    <section id="timeline" className="bg-bg-surface-subtle py-[var(--space-section)]">
+      <div className="container mx-auto w-full px-4 lg:grid lg:grid-cols-[320px_1fr] lg:gap-[var(--space-8)]">
+        <div
+          role="tablist"
+          aria-orientation="vertical"
+          className="mb-[var(--space-8)] flex flex-col lg:mb-0 lg:max-h-[calc(100vh-2*var(--space-section))] lg:overflow-y-auto"
         >
-          {experienceData.map((item, index) => (
-            <TimelineItem
-              key={item.id}
-              item={item}
-              isExpanded={expandedId === item.id}
-              getYearRange={getYearRange}
-              toggleExpand={toggleExpand}
-              announceStateChange={announceStateChange}
-              handleKeyDown={handleKeyDown}
-              setTimelineRef={setTimelineRef}
-              shouldReduceMotion={shouldReduceMotion}
-              itemIndex={index}
-              itemsCount={experienceData.length}
-            />
+          {groups.map(([year, exps]) => (
+            <div key={year} className="pb-[var(--space-4)]">
+              <div className="bg-bg-surface-subtle sticky top-0 z-10 py-[var(--space-1)] text-sm font-semibold text-text-secondary">
+                {year}
+              </div>
+              {exps.map((exp) => (
+                <button
+                  key={exp.slug}
+                  ref={(el) => {
+                    tabRefs.current[exp.index] = el;
+                  }}
+                  id={`tab-${exp.slug}`}
+                  role="tab"
+                  type="button"
+                  aria-selected={active.slug === exp.slug}
+                  aria-controls="timeline-panel"
+                  tabIndex={active.slug === exp.slug ? 0 : -1}
+                  onClick={() => select(exp.slug, exp.index)}
+                  onKeyDown={(e) => handleKey(e, exp.index)}
+                  className={`w-full rounded-md px-[var(--space-4)] py-[var(--space-2)] text-left transition-colors motion-reduce:transition-none ${
+                    active.slug === exp.slug
+                      ? 'bg-accent text-on-accent'
+                      : 'hover:bg-text-secondary/10'
+                  }`}
+                  style={{ minHeight: 44 }}
+                >
+                  <span className="block text-sm font-medium leading-snug">{exp.title}</span>
+                  <span className="block text-xs text-text-secondary">{exp.company}</span>
+                </button>
+              ))}
+            </div>
           ))}
-        </motion.div>
+        </div>
+        <div
+          id="timeline-panel"
+          role="tabpanel"
+          tabIndex={0}
+          aria-labelledby={`tab-${active.slug}`}
+          className="rounded-lg bg-bg-surface p-[var(--space-6)] shadow-md"
+        >
+          <h3 className="font-display text-2xl font-semibold tracking-tight">{active.title}</h3>
+          <p className="text-text-secondary">
+            {active.company} • {active.location}
+          </p>
+          <p className="mt-[var(--space-4)]">{active.description}</p>
+          {active.achievements && active.achievements.length > 0 && (
+            <ul className="mt-[var(--space-4)] list-disc space-y-2 pl-[var(--space-5)]">
+              {active.achievements.map((ach, i) => (
+                <li key={i} className="text-sm">
+                  {ach}
+                </li>
+              ))}
+            </ul>
+          )}
+          {active.technologies && active.technologies.length > 0 && (
+            <div className="mt-[var(--space-4)] flex flex-wrap gap-2">
+              {active.technologies.map((tech, i) => (
+                <span
+                  key={i}
+                  className="bg-text-secondary/10 rounded-full px-3 py-[var(--space-1)] text-sm"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
 };
 
-/**
- * Memoized Timeline component.
- * @see TimelineComponent
- */
-export const Timeline = React.memo(TimelineComponent);
+/* Manual QA checklist
+- Arrow Up/Down, Home/End move focus and selection within the tablist
+- Tab/Shift+Tab move focus out of the tablist and panel
+- Hash deep-link #exp={slug} selects matching item on load
+- Selecting a tab updates hash and dispatches exp-change event
+- Prefers-reduced-motion respected via motion-reduce utilities
+- Buttons maintain ≥44px hit area
+- Year headers remain sticky while scrolling
+- Mobile: tablist stacks above panel and selection scrolls panel into view
+*/
