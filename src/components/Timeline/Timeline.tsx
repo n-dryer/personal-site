@@ -60,7 +60,9 @@ export const Timeline = ({ experienceData }: TimelineProps) => {
 
   const select = (slug: string, index: number) => {
     setActiveSlug(slug);
-    history.replaceState(null, '', `#exp=${slug}`);
+    if (typeof window !== 'undefined' && window.history && typeof window.history.replaceState === 'function') {
+      window.history.replaceState(null, '', `#exp=${slug}`);
+    }
     window.dispatchEvent(new CustomEvent('exp-change', { detail: slug }));
     if (window.innerWidth < 1024) {
       document.getElementById('timeline-panel')?.scrollIntoView({ behavior: 'smooth' });
