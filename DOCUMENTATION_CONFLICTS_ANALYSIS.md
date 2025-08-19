@@ -10,12 +10,14 @@ This analysis identifies **17 distinct conflicts** across 5 documentation files 
 ## Critical Conflicts (Immediate Action Required)
 
 ### 1. **AGENTS.md vs GEMINI.md Complete Duplication**
+
 - **Issue:** AGENTS.md and GEMINI.md contain identical content, both showing "# AGENTS.md" header
 - **Impact:** High - Confusing for developers, unclear which file to follow
 - **Recommendation:** **Update GEMINI.md** to have distinct content focused on Gemini-specific instructions
 - **Reasoning:** AGENTS.md appears to be the primary/original file with more comprehensive content
 
 ### 2. **Missing Scripts in Documentation**
+
 - **Issue:** Package.json contains scripts not documented anywhere
   - `lint:fix` (eslint src --fix) - Missing from all docs
   - `ci:guard:lockfile` - Missing from all docs
@@ -24,6 +26,7 @@ This analysis identifies **17 distinct conflicts** across 5 documentation files 
 - **Reasoning:** These are functional scripts that developers should know about
 
 ### 3. **Inaccurate Project Structure**
+
 - **Issue:** All documentation missing key directories/files:
   - `src/App.tsx` (main app component)
   - `src/__mocks__/` (test mocks)
@@ -37,22 +40,22 @@ This analysis identifies **17 distinct conflicts** across 5 documentation files 
 
 ### Scripts Section Conflicts
 
-| Issue | Documentation Says | Actual Code | Recommendation |
-|-------|-------------------|-------------|----------------|
-| Missing `lint:fix` | Not mentioned | `eslint src --fix` | **Update docs** - Add to all script tables |
-| Missing `ci:guard:lockfile` | Not mentioned | Yarn lockfile protection | **Update docs** - Add to script tables |
-| `tsc` command format | `yarn tsc --noEmit` | `tsc -p tsconfig.json` | **Keep docs as-is** - `--noEmit` flag works |
+| Issue                       | Documentation Says  | Actual Code              | Recommendation                              |
+| --------------------------- | ------------------- | ------------------------ | ------------------------------------------- |
+| Missing `lint:fix`          | Not mentioned       | `eslint src --fix`       | **Update docs** - Add to all script tables  |
+| Missing `ci:guard:lockfile` | Not mentioned       | Yarn lockfile protection | **Update docs** - Add to script tables      |
+| `tsc` command format        | `yarn tsc --noEmit` | `tsc -p tsconfig.json`   | **Keep docs as-is** - `--noEmit` flag works |
 
 **Validation:** All documented scripts work correctly. Missing scripts provide valuable functionality.
 
 ### Project Structure Conflicts
 
-| Missing from Docs | Actual File/Dir | Purpose | Recommendation |
-|------------------|-----------------|---------|----------------|
-| `App.tsx` | ✅ Exists | Main app component | **Add to docs** |
-| `__mocks__/` | ✅ Exists | Test mock data | **Add to docs** |
-| `setupTests.ts` | ✅ Exists | Test environment setup | **Add to docs** |
-| `types/` | ✅ Exists | TypeScript definitions | **Add to docs** |
+| Missing from Docs | Actual File/Dir | Purpose                | Recommendation  |
+| ----------------- | --------------- | ---------------------- | --------------- |
+| `App.tsx`         | ✅ Exists       | Main app component     | **Add to docs** |
+| `__mocks__/`      | ✅ Exists       | Test mock data         | **Add to docs** |
+| `setupTests.ts`   | ✅ Exists       | Test environment setup | **Add to docs** |
+| `types/`          | ✅ Exists       | TypeScript definitions | **Add to docs** |
 
 **Validation:** These are core parts of the application architecture and should be documented.
 
@@ -67,11 +70,11 @@ This analysis identifies **17 distinct conflicts** across 5 documentation files 
 
 ### Content Consistency Issues
 
-| Issue | Files Affected | Conflict | Recommendation |
-|-------|----------------|----------|----------------|
-| File duplication | AGENTS.md vs GEMINI.md | Identical content | **Differentiate GEMINI.md** |
-| Content description | AGENTS/GEMINI vs README | "data files" vs "content data" | **Standardize on "content data"** |
-| Layout description | AGENTS/GEMINI vs README | "shared layout wrapper(s)" vs "application layout components" | **Use README version** |
+| Issue               | Files Affected          | Conflict                                                      | Recommendation                    |
+| ------------------- | ----------------------- | ------------------------------------------------------------- | --------------------------------- |
+| File duplication    | AGENTS.md vs GEMINI.md  | Identical content                                             | **Differentiate GEMINI.md**       |
+| Content description | AGENTS/GEMINI vs README | "data files" vs "content data"                                | **Standardize on "content data"** |
+| Layout description  | AGENTS/GEMINI vs README | "shared layout wrapper(s)" vs "application layout components" | **Use README version**            |
 
 **Validation:** Minor wording differences but consistency improves clarity.
 
@@ -79,12 +82,12 @@ This analysis identifies **17 distinct conflicts** across 5 documentation files 
 
 ### Files Mentioned But Missing
 
-| Referenced In | File Mentioned | Exists? | Recommendation |
-|--------------|----------------|---------|----------------|
-| `src/styles/README.md` | `css-variables.test.ts` | ❌ No | **Remove reference** or **Create file** |
-| `src/styles/README.md` | `timeline.css` | ❌ No | **Remove reference** - Not needed |
-| Multiple docs | `src/components/Skills/README.md` | ✅ Exists | **No action** |
-| Multiple docs | `src/components/Timeline/README.md` | ✅ Exists | **No action** |
+| Referenced In          | File Mentioned                      | Exists?   | Recommendation                          |
+| ---------------------- | ----------------------------------- | --------- | --------------------------------------- |
+| `src/styles/README.md` | `css-variables.test.ts`             | ❌ No     | **Remove reference** or **Create file** |
+| `src/styles/README.md` | `timeline.css`                      | ❌ No     | **Remove reference** - Not needed       |
+| Multiple docs          | `src/components/Skills/README.md`   | ✅ Exists | **No action**                           |
+| Multiple docs          | `src/components/Timeline/README.md` | ✅ Exists | **No action**                           |
 
 **Validation:** Referenced files should either exist or be removed from documentation.
 
@@ -99,7 +102,7 @@ This analysis identifies **17 distinct conflicts** across 5 documentation files 
 ### CI/Testing Configuration
 
 - **Issue:** Documentation conflicts about test execution
-  - AGENTS/GEMINI: "Unit tests run locally via `yarn test` (not in CI)"  
+  - AGENTS/GEMINI: "Unit tests run locally via `yarn test` (not in CI)"
   - CI workflow: Does NOT run tests
   - README: Suggests tests run in CI
 - **Impact:** Medium - Unclear when tests actually run
@@ -121,7 +124,7 @@ This analysis identifies **17 distinct conflicts** across 5 documentation files 
 
 - **Status:** ✅ **Mostly aligned** with other documentation
 - **Unique value:** Provides detailed coding patterns and examples
-- **Minor conflicts:** 
+- **Minor conflicts:**
   - More detailed than other docs (good)
   - References design tokens not detailed elsewhere (should be added to main docs)
 
@@ -137,10 +140,12 @@ This analysis identifies **17 distinct conflicts** across 5 documentation files 
 ## Detailed Recommendations by File
 
 ### AGENTS.md
+
 - ✅ **Keep as-is** - Appears to be the primary comprehensive guide
 - **Action:** Ensure it remains the source of truth
 
-### GEMINI.md  
+### GEMINI.md
+
 - 🔄 **Major update needed**
 - **Actions:**
   1. Change header to "# GEMINI.md"
@@ -149,6 +154,7 @@ This analysis identifies **17 distinct conflicts** across 5 documentation files 
   4. Add Gemini-specific coding patterns or preferences
 
 ### README.md
+
 - 🔄 **Minor updates needed**
 - **Actions:**
   1. Add missing scripts to table
@@ -157,14 +163,17 @@ This analysis identifies **17 distinct conflicts** across 5 documentation files 
   4. Standardize wording with other docs
 
 ### .cursorrules
+
 - ✅ **Keep as-is** - Provides good editor-specific guidance
 - **Action:** Ensure consistency with other docs
 
 ### .github/copilot-instructions.md
+
 - ✅ **Keep as-is** - Provides valuable detailed patterns
 - **Action:** Consider extracting some general patterns to main docs
 
 ### src/styles/README.md
+
 - 🔄 **Minor update needed**
 - **Actions:**
   1. Remove reference to non-existent `css-variables.test.ts`
@@ -174,16 +183,19 @@ This analysis identifies **17 distinct conflicts** across 5 documentation files 
 ## Implementation Priority
 
 ### High Priority (Do First)
+
 1. Fix AGENTS.md vs GEMINI.md duplication
 2. Update project structure in all docs
 3. Add missing scripts to documentation
 
-### Medium Priority 
+### Medium Priority
+
 1. Clarify CI/test execution documentation
 2. Fix missing file references in styles README
 3. Standardize content descriptions across docs
 
 ### Low Priority
+
 1. Improve main.tsx description clarity
 2. Consider TypeScript version update
 3. Review baseline tag references

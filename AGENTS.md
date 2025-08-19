@@ -43,10 +43,12 @@ Agents must use idiomatic React + TypeScript patterns and respect the existing f
 - `yarn build` — production build to `dist/`
 - `yarn preview` — serves `dist/` (<http://localhost:4000>)
 - `yarn lint` — ESLint on `src/`
+- `yarn lint:fix` — ESLint on `src/` with auto-fix
 - `yarn test` — unit tests with Vitest
 - `yarn tsc --noEmit` — TypeScript type-check only
 - `yarn format` — Prettier write
 - `yarn format:check` — Prettier check
+- `yarn ci:guard:lockfile` — Prevent package-lock.json creation
 
 Notes:
 
@@ -91,11 +93,15 @@ Keep CI lightweight; no heavy/slow suites. Add only fast, deterministic checks.
 ```text
 public/                  # static assets and index.html
 src/
+  App.tsx                # main application component
+  __mocks__/             # test mock data
   components/            # UI components (Header, Timeline, Skills, etc.)
-  content/               # data files (experience.ts, skills.ts, user.ts)
+  content/               # content data (experience.ts, skills.ts, user.ts)
   hooks/                 # custom React hooks
   layouts/               # shared layout wrapper(s)
+  setupTests.ts          # test environment setup
   styles/                # global styles & design tokens (tokens.css, global.css)
+  types/                 # TypeScript type definitions
   main.tsx               # app bootstrap
 ```
 

@@ -30,7 +30,7 @@ React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Yarn | Prettier
 - CI runs format check (Prettier), lint (ESLint), type-check (tsc), and build (Vite).
 - CI performs a minimal E2E smoke (curl-based) against a temporary `vite preview` server to validate key meta tags and endpoints.
 - CI uploads the built `dist/` as an artifact for safe preview without publishing.
-- Unit tests can be run locally with `yarn test` (Vitest + Testing Library).
+- Unit tests run locally only with `yarn test` (Vitest + Testing Library) - not included in CI for performance.
 
 > Note: This project uses Yarn (v1). Please do not commit `package-lock.json`. Use `yarn` for all install and script commands.
 
@@ -44,11 +44,15 @@ React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Yarn | Prettier
 ```text
 public/                  # static assets and index.html
 src/
+  App.tsx                # main application component
+  __mocks__/             # test mock data
   components/            # UI components (Header, Timeline, Skills, etc.)
   content/               # content data (experience.ts, skills.ts, user.ts)
   hooks/                 # custom React hooks
   layouts/               # application layout components
+  setupTests.ts          # test environment setup
   styles/                # global styles & design tokens (tokens.css, global.css)
+  types/                 # TypeScript type definitions
   main.tsx               # app bootstrap
 ```
 
@@ -94,16 +98,18 @@ Update guidelines are documented in `src/components/Skills/README.md` and `src/c
 
 ## Scripts
 
-| Command             | Purpose                                   |
-| ------------------- | ----------------------------------------- |
-| `yarn start`        | Vite dev server (<http://localhost:4000>) |
-| `yarn build`        | Production build to `dist/`               |
-| `yarn preview`      | Serves `dist/` at <http://localhost:4000> |
-| `yarn lint`         | ESLint on `src/`                          |
-| `yarn test`         | Run unit tests with Vitest                |
-| `yarn tsc --noEmit` | TypeScript type-check                     |
-| `yarn format`       | Prettier write                            |
-| `yarn format:check` | Prettier check                            |
+| Command                  | Purpose                                   |
+| ------------------------ | ----------------------------------------- |
+| `yarn start`             | Vite dev server (<http://localhost:4000>) |
+| `yarn build`             | Production build to `dist/`               |
+| `yarn preview`           | Serves `dist/` at <http://localhost:4000> |
+| `yarn lint`              | ESLint on `src/`                          |
+| `yarn lint:fix`          | ESLint on `src/` with auto-fix            |
+| `yarn test`              | Run unit tests with Vitest                |
+| `yarn tsc --noEmit`      | TypeScript type-check                     |
+| `yarn format`            | Prettier write                            |
+| `yarn format:check`      | Prettier check                            |
+| `yarn ci:guard:lockfile` | Prevent package-lock.json creation        |
 
 ## Formatting & Editor setup
 
