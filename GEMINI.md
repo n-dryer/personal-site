@@ -1,126 +1,127 @@
-# AGENTS.md
+# GEMINI.md
 
 ## Overview
 
-Automated code agents (e.g., Jules, Copilot) assist routine development tasks. This guide defines how agents should plan, code, validate, and contribute so efforts align with this repo’s standards and workflow.
+This guide provides specific instructions for Google Gemini when working on the personal-site repository. For comprehensive agent guidelines, workflows, and project structure, refer to `AGENTS.md`. This document focuses on Gemini-specific patterns, preferences, and optimizations.
 
-## Main Features & UI (preserve these)
+## Gemini-Specific Preferences
 
-- Interactive Timeline: chronological work history and achievements
-- Skills Showcase: categorized with proficiency badges
-- Ship Log: placeholder component (planned feed for recent updates)
-- Command Menu: Cmd/Ctrl+K palette for navigation/social
-- Theme Toggle: light/dark modes (contrast tokens)
-- Responsive Design: mobile-friendly, accessible, performant
+### Code Generation Style
 
-Agents must use idiomatic React + TypeScript patterns and respect the existing folder structure.
+- **Verbose explanations**: Provide detailed JSDoc comments for complex functions
+- **Step-by-step reasoning**: Break down complex changes into clear, logical steps
+- **Context awareness**: Reference existing patterns when suggesting similar implementations
+- **Safety-first**: Prefer explicit type checking over implicit assumptions
 
-## Task & Code Execution Workflow
+### React Component Patterns
 
-1. Plan
+```typescript
+// ✅ Gemini preferred: Explicit prop destructuring with defaults
+type ComponentProps = {
+  data: DataType[];
+  onAction?: () => void;
+  className?: string;
+};
 
-- Generate a concise step-by-step plan before code changes.
-- If a non-trivial or risky refactor, propose first; wait for approval.
-- Reference the plan/task in PR descriptions.
+const ComponentName = ({
+  data,
+  onAction,
+  className = ''
+}: ComponentProps) => {
+  // Explicit early return for empty data
+  if (!data.length) {
+    return <div className="text-gray-500">No data available</div>;
+  }
 
-1. Branch & PR (Trunk-based)
+  // Clear separation of concerns
+  const handleAction = useCallback(() => {
+    onAction?.();
+  }, [onAction]);
 
-- Base off latest `main`.
-- Small, focused PRs only; conventional commits (feat, fix, chore, docs).
-- Branch naming:
-  - UI improvements: `ui/<feature>` (e.g., `ui/skills`, `ui/command-menu`, `ui/vertical-timeline`)
-  - Non-UI/perf: `perf/<feature>` — current branch in use: `perf/optimizations`
-- Baseline snapshot/tag: `checkpoint/baseline-2025-08-15`
-
-1. Code Standards (order matters)
-
-- Format → Lint → Type-check → Build
-- Keep changes minimal and readable; match repo idioms (React function components, named exports, clear prop types).
-
-## Scripts (Yarn v1 only)
-
-- `yarn start` — dev server (<http://localhost:4000>)
-- `yarn build` — production build to `dist/`
-- `yarn preview` — serves `dist/` (<http://localhost:4000>)
-- `yarn lint` — ESLint on `src/`
-- `yarn tsc --noEmit` — TypeScript type-check only
-- `yarn format` — Prettier write
-- `yarn format:check` — Prettier check
-
-Notes:
-
-- Yarn v1 project; do not commit `package-lock.json`.
-- Node v20 is required/preferred (`.nvmrc`, engines in package.json).
-
-## Quality Gates & CI
-
-CI (GitHub Actions) runs on push/PR:
-
-- Prettier check
-- ESLint
-- TypeScript type-check (`yarn tsc --noEmit`)
-- Vite production build
-- Minimal smoke test (curl) against a temporary preview server (validates key endpoints/meta)
-- Uploads `dist/` artifact for preview on every run
-
-Keep CI lightweight; no heavy/slow suites. Add only fast, deterministic checks.
-
-## Build, Preview & Artifact
-
-- Local build: `yarn build` (outputs to `dist/`)
-- Local preview (artifact or local build):
-
-  ```bash
-  npx serve -s dist -l 4000
-  # open http://localhost:4000
-  ```
-
-- CI artifact preview: download and serve `dist/` as above.
-
-## Deploy
-
-- Not auto-deploying yet; prefer GitHub Pages via `.github/workflows/deploy-pages.yml` when enabled.
-- Vite base must match hosting:
-  - Custom domain/user site: `base: '/'`
-  - Project pages (`https://<user>.github.io/<repo>/`): `base: '/<repo>/'` (trailing slash)
-
-## Project Structure
-
-```text
-public/                  # static assets and index.html
-src/
-  components/            # UI components (Header, Timeline, Skills, etc.)
-  content/               # data files (experience.ts, skills.ts, user.ts)
-  hooks/                 # custom React hooks
-  layouts/               # shared layout wrapper(s)
-  styles/                # global styles & design tokens (tokens.css, global.css)
-  main.tsx               # app bootstrap
+  return (
+    <div className={`base-styles ${className}`}>
+      {data.map((item, index) => (
+      {data.map((item) => (
+        <div key={item.id}>
+          {/* Component content */}
+        </div>
+      ))}
+    </div>
+  );
+};
 ```
 
-## Content Schema (for agents updating content)
+### Error Handling Preferences
 
-- **Skills**: grouped into Languages & Runtimes, Frameworks & Libraries, AI/ML & Tooling, Infra & DevOps, Design & UX. Depth: Expert, Proficient, Familiar (legacy: Advanced→Proficient, Intermediate→Familiar). Source: `src/content/skills.ts`
-- **Timeline**: entries include `title`, `company`, `date`, succinct achievements, and technologies. Source: `src/content/experience.ts`
-- **User**: personal details and social links. Source: `src/content/user.ts`
-- See: `src/components/Skills/README.md`, `src/components/Timeline/README.md` for UI notes.
+- **Graceful degradation**: Always provide fallback UI states
+- **Explicit error boundaries**: Wrap components that might fail
+- **User-friendly messages**: Avoid technical error details in UI
 
-## Editor & Agent Rules
+### Performance Optimizations
 
-- See `.cursorrules` for editor/agent expectations (formatting, CI, file handling).
-- Respect `.editorconfig` and Prettier.
-- Use Yarn-only workflows (guard exists to prevent `package-lock.json`).
+- **React.memo usage**: Apply to components with stable props
+- **Callback memoization**: Use useCallback for event handlers passed to children
+- **Computation memoization**: Use useMemo for expensive calculations
+- **Bundle optimization**: Import only what's needed from libraries
 
-## Security & Privacy
+## Referencing AGENTS.md
 
-- Never commit secrets or credentials.
-- Minimize dependencies; justify new ones.
-- Keep code and content safe for public distribution.
+For the following topics, refer to the main `AGENTS.md` documentation:
 
-## Checklist (before opening a PR)
+- **Project structure and organization**
+- **Git workflow and branching strategy**
+- **CI/CD pipeline and quality gates**
+- **Content schema and data management**
+- **Security and privacy guidelines**
+- **General coding standards and conventions**
 
-- [ ] `yarn format:check` passes
-- [ ] `yarn lint` passes
-- [ ] `yarn tsc --noEmit` passes
-- [ ] `yarn build` succeeds
-- [ ] Manual sanity check in `yarn preview` (UI changes only)
-- [ ] PR includes plan summary and impact/risk notes
+## Gemini-Specific Workflow
+
+### Planning Phase
+
+1. **Analyze existing patterns** in the codebase before suggesting new approaches
+2. **Identify reusable components** that can be enhanced rather than replaced
+3. **Consider accessibility impact** of all UI changes
+4. **Validate against design system** (tokens.css) before implementing custom styles
+
+### Implementation Phase
+
+1. **Start with TypeScript types** - define interfaces before implementation
+2. **Build incrementally** - create basic structure, then add features
+3. **Test early and often** - verify each step works before proceeding
+4. **Document as you go** - add JSDoc comments during development
+
+### Validation Phase
+
+1. **Cross-browser testing considerations** - note potential compatibility issues
+2. **Performance impact assessment** - identify any bundle size or runtime concerns
+3. **Accessibility verification** - ensure keyboard navigation and screen reader support
+4. **Mobile responsiveness check** - verify behavior across viewport sizes
+
+## Gemini Advantage Areas
+
+### Complex Refactoring
+
+- Breaking down large components into smaller, focused pieces
+- Identifying and extracting reusable logic into custom hooks
+- Modernizing older React patterns to current best practices
+
+### Type Safety Improvements
+
+- Converting any types to proper TypeScript interfaces
+- Adding missing error handling and null checks
+- Implementing discriminated unions for complex state management
+
+### Performance Analysis
+
+- Identifying unnecessary re-renders and optimization opportunities
+- Suggesting code splitting strategies for large components
+- Recommending when to use React.lazy vs eager loading
+
+### Documentation Enhancement
+
+- Creating comprehensive JSDoc comments with examples
+- Writing clear README files for complex components
+- Explaining the reasoning behind architectural decisions
+
+Remember: When in doubt, refer to `AGENTS.md` for the authoritative guidance on project standards and workflows.
