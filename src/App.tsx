@@ -7,8 +7,8 @@ import {
   Footer,
   ScrollDownButton,
   FloatingCommandButton,
-  Timeline,
-  Skills,
+  TimelineMetro,
+  SkillsMatrix,
   CommandMenu,
 } from './components';
 
@@ -48,16 +48,14 @@ const App = () => {
         <ErrorBoundary
           fallback={<div className="text-red-500">Something went wrong with the Timeline.</div>}
         >
-          <Timeline experienceData={experienceData} />
+          <TimelineMetro experienceData={experienceData} />
         </ErrorBoundary>
         <ErrorBoundary
           fallback={
             <div className="text-red-500">Something went wrong with the Skills section.</div>
           }
         >
-          <div className="container mx-auto px-4">
-            <Skills skillsData={skillsData} />
-          </div>
+          <SkillsMatrix skillsData={skillsData} />
         </ErrorBoundary>
       </main>
       <Footer userData={userData} />
