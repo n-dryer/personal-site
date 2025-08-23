@@ -46,7 +46,7 @@ export const YearAccordionTimeline: React.FC = () => {
           </button>
           {openYear === year && (
             <ul className="space-y-2 px-4 py-2">
-              {grouped[year]
+              {[...grouped[year]]
                 .sort((a, b) => (a.date > b.date ? -1 : 1))
                 .map((ev) => (
                   <li key={ev.date}>
