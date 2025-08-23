@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Experience } from '../../types';
+import { BranchingTimeline } from './BranchingTimeline';
 
 /**
  * Props for the Timeline component.
@@ -30,6 +31,7 @@ const toSlug = (exp: Experience): { slug: string; year: string } => {
  * Mobile: stacked list with detail panel below.
  */
 export const Timeline = ({ experienceData }: TimelineProps) => {
+  const [showBranchingTimeline, setShowBranchingTimeline] = useState(false);
   const items: TimelineItem[] = useMemo(
     () => experienceData.map((exp) => ({ ...exp, ...toSlug(exp) })),
     [experienceData],
@@ -86,12 +88,24 @@ export const Timeline = ({ experienceData }: TimelineProps) => {
     }
   };
 
+  if (showBranchingTimeline) {
+    return <BranchingTimeline />;
+  }
+
   return (
     <section id="timeline" className="bg-bg-surface-subtle px-4 py-[var(--space-section)]">
       <div className="container mx-auto w-full">
-        <h2 className="mb-6 text-center font-display text-4xl font-semibold tracking-tight">
-          Professional Timeline
-        </h2>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-center font-display text-4xl font-semibold tracking-tight">
+            Professional Timeline
+          </h2>
+          <button
+            onClick={() => setShowBranchingTimeline(true)}
+            className="px-4 py-2 rounded-md bg-blue-500 text-white"
+          >
+            Show Branching Timeline
+          </button>
+        </div>
         <div className="lg:grid lg:grid-cols-[360px_1fr] lg:gap-x-[var(--space-8)]">
           <div className="lg:sticky lg:top-[var(--space-8)]">
             <div
