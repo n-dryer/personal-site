@@ -67,7 +67,9 @@ const App = () => {
               <button
                 type="button"
                 className={`px-3 py-2 text-sm ${
-                  timelineView === 'tabs' ? 'bg-accent text-on-accent' : 'bg-bg-surface text-text-primary'
+                  timelineView === 'tabs'
+                    ? 'bg-accent text-on-accent'
+                    : 'bg-bg-surface text-text-primary'
                 }`}
                 onClick={() => setTimelineView('tabs')}
                 aria-pressed={timelineView === 'tabs'}

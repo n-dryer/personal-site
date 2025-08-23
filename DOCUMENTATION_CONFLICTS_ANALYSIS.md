@@ -8,6 +8,7 @@
 This analysis identifies **17 distinct conflicts** across 5 documentation files (AGENTS.md, GEMINI.md, README.md, .cursorrules, .github/copilot-instructions.md) and the actual codebase. The conflicts range from complete file duplication to missing scripts and inaccurate project structure descriptions.
 
 **For each conflict below, recommendations are provided as:**
+
 - **A) Update the documentation** - Modify docs to match codebase reality
 - **B) Change the codebase** - Modify code to match documentation expectations
 
@@ -46,20 +47,20 @@ This analysis identifies **17 distinct conflicts** across 5 documentation files 
 
 | Issue                       | Documentation Says  | Actual Code              | Recommendation                                        |
 | --------------------------- | ------------------- | ------------------------ | ----------------------------------------------------- |
-| Missing `lint:fix`          | Not mentioned       | `eslint src --fix`       | **A) Update docs** - Add to all script tables        |
-| Missing `ci:guard:lockfile` | Not mentioned       | Yarn lockfile protection | **A) Update docs** - Add to script tables            |
+| Missing `lint:fix`          | Not mentioned       | `eslint src --fix`       | **A) Update docs** - Add to all script tables         |
+| Missing `ci:guard:lockfile` | Not mentioned       | Yarn lockfile protection | **A) Update docs** - Add to script tables             |
 | `tsc` command format        | `yarn tsc --noEmit` | `tsc -p tsconfig.json`   | **Keep docs as-is** - `--noEmit` flag works correctly |
 
 **Validation:** All documented scripts work correctly. Missing scripts provide valuable functionality.
 
 ### Project Structure Conflicts
 
-| Missing from Docs | Actual File/Dir | Purpose                | Recommendation              |
-| ----------------- | --------------- | ---------------------- | --------------------------- |
-| `App.tsx`         | ✅ Exists       | Main app component     | **A) Add to docs**          |
-| `__mocks__/`      | ✅ Exists       | Test mock data         | **A) Add to docs**          |
-| `setupTests.ts`   | ✅ Exists       | Test environment setup | **A) Add to docs**          |
-| `types/`          | ✅ Exists       | TypeScript definitions | **A) Add to docs**          |
+| Missing from Docs | Actual File/Dir | Purpose                | Recommendation     |
+| ----------------- | --------------- | ---------------------- | ------------------ |
+| `App.tsx`         | ✅ Exists       | Main app component     | **A) Add to docs** |
+| `__mocks__/`      | ✅ Exists       | Test mock data         | **A) Add to docs** |
+| `setupTests.ts`   | ✅ Exists       | Test environment setup | **A) Add to docs** |
+| `types/`          | ✅ Exists       | TypeScript definitions | **A) Add to docs** |
 
 **Validation:** These are core parts of the application architecture and should be documented.
 
@@ -74,11 +75,11 @@ This analysis identifies **17 distinct conflicts** across 5 documentation files 
 
 ### Content Consistency Issues
 
-| Issue               | Files Affected          | Conflict                                                      | Recommendation                            |
-| ------------------- | ----------------------- | ------------------------------------------------------------- | ----------------------------------------- |
-| File duplication    | AGENTS.md vs GEMINI.md  | Identical content                                             | **A) Differentiate GEMINI.md**           |
-| Content description | AGENTS/GEMINI vs README | "data files" vs "content data"                               | **A) Standardize on "content data"**     |
-| Layout description  | AGENTS/GEMINI vs README | "shared layout wrapper(s)" vs "application layout components" | **A) Use README version consistently**   |
+| Issue               | Files Affected          | Conflict                                                      | Recommendation                         |
+| ------------------- | ----------------------- | ------------------------------------------------------------- | -------------------------------------- |
+| File duplication    | AGENTS.md vs GEMINI.md  | Identical content                                             | **A) Differentiate GEMINI.md**         |
+| Content description | AGENTS/GEMINI vs README | "data files" vs "content data"                                | **A) Standardize on "content data"**   |
+| Layout description  | AGENTS/GEMINI vs README | "shared layout wrapper(s)" vs "application layout components" | **A) Use README version consistently** |
 
 **Validation:** Minor wording differences but consistency improves clarity.
 
@@ -89,7 +90,7 @@ This analysis identifies **17 distinct conflicts** across 5 documentation files 
 | Referenced In          | File Mentioned                      | Exists?   | Recommendation                                     |
 | ---------------------- | ----------------------------------- | --------- | -------------------------------------------------- |
 | `src/styles/README.md` | `css-variables.test.ts`             | ❌ No     | **A) Remove reference** or **B) Create test file** |
-| `src/styles/README.md` | `timeline.css`                      | ❌ No     | **A) Remove reference** - File not needed         |
+| `src/styles/README.md` | `timeline.css`                      | ❌ No     | **A) Remove reference** - File not needed          |
 | Multiple docs          | `src/components/Skills/README.md`   | ✅ Exists | **No action required**                             |
 | Multiple docs          | `src/components/Timeline/README.md` | ✅ Exists | **No action required**                             |
 
@@ -146,7 +147,7 @@ This analysis identifies **17 distinct conflicts** across 5 documentation files 
 ### A) Update Documentation (13 items)
 
 1. **GEMINI.md** - Rewrite with Gemini-specific content instead of duplicating AGENTS.md
-2. **All docs** - Add missing `lint:fix` script to documentation 
+2. **All docs** - Add missing `lint:fix` script to documentation
 3. **All docs** - Add missing `ci:guard:lockfile` script to documentation
 4. **All docs** - Add `src/App.tsx` to project structure sections
 5. **All docs** - Add `src/__mocks__/` directory to project structure sections
@@ -236,7 +237,7 @@ This analysis identifies **17 distinct conflicts** across 5 documentation files 
 
 - **Total conflicts identified:** 17
 - **A) Documentation should be updated:** 13 items (high priority)
-- **B) Code could be updated:** 2 items (optional/low priority) 
+- **B) Code could be updated:** 2 items (optional/low priority)
 - **No action required:** 2 items
 
 **Recommendation Priority:** Focus on documentation updates (A) as they address the core issue of keeping documentation accurate and helpful. Codebase changes (B) are optional optimizations.

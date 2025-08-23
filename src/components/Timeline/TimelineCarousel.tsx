@@ -23,9 +23,7 @@ const getImageForExperience = (exp: Experience): string => {
   return '/profile.jpg';
 };
 
-export const TimelineCarousel: React.FC<TimelineCarouselProps> = ({
-  experienceData,
-}) => {
+export const TimelineCarousel: React.FC<TimelineCarouselProps> = ({ experienceData }) => {
   const items = useMemo(() => experienceData ?? defaultExperienceData, [experienceData]);
 
   return (
@@ -67,7 +65,9 @@ export const TimelineCarousel: React.FC<TimelineCarouselProps> = ({
                     <h3 className="text-lg font-semibold tracking-tight text-text-primary">
                       {exp.title}
                     </h3>
-                    <p className="text-sm text-text-secondary">{exp.company} • {exp.location}</p>
+                    <p className="text-sm text-text-secondary">
+                      {exp.company} • {exp.location}
+                    </p>
                     <p className="text-xs text-text-secondary">{exp.date}</p>
                   </header>
                   <p className="text-sm text-text-secondary">{exp.description}</p>
