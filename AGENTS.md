@@ -50,6 +50,14 @@ Agents must use idiomatic React + TypeScript patterns and respect the existing f
 - `yarn format:check` — Prettier check
 - `yarn ci:guard:lockfile` — Prevent package-lock.json creation
 
+### Timeline Carousel Prototype (Swiper)
+
+- Install dependency: `yarn add swiper`
+- Component: `src/components/Timeline/TimelineCarousel.tsx`
+- Toggle: use the switch in `App.tsx` or append `?timeline=carousel` to the URL
+- Keyboard: Left/Right arrows, PageUp/PageDown, Home/End via Swiper Keyboard module
+- Touch: swipe on mobile; desktop has arrow buttons
+
 Notes:
 
 - Yarn v1 project; do not commit `package-lock.json`.

@@ -10,6 +10,7 @@ import {
   Timeline,
   Skills,
   CommandMenu,
+  TimelineCarousel,
 } from './components';
 
 // Import the useTheme hook
@@ -36,6 +37,19 @@ const App = () => {
     toggle: toggleCommandMenuFromHook,
   } = useCommandMenu();
 
+  // Simple demo toggle between tabbed Timeline and Carousel version
+  const [timelineView, setTimelineView] = React.useState<'tabs' | 'carousel'>(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('timeline') === 'carousel' ? 'carousel' : 'tabs';
+  });
+
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    params.set('timeline', timelineView);
+    const newUrl = `${window.location.pathname}?${params.toString()}${window.location.hash}`;
+    window.history.replaceState(null, '', newUrl);
+  }, [timelineView]);
+
   return (
     <Layout>
       <Header
@@ -48,7 +62,37 @@ const App = () => {
         <ErrorBoundary
           fallback={<div className="text-red-500">Something went wrong with the Timeline.</div>}
         >
-          <Timeline experienceData={experienceData} />
+          <div className="container mx-auto mb-4 flex items-center justify-center gap-2 px-4">
+            <div className="inline-flex overflow-hidden rounded-lg border border-white/10">
+              <button
+                type="button"
+                className={`px-3 py-2 text-sm ${
+                  timelineView === 'tabs' ? 'bg-accent text-on-accent' : 'bg-bg-surface text-text-primary'
+                }`}
+                onClick={() => setTimelineView('tabs')}
+                aria-pressed={timelineView === 'tabs'}
+              >
+                Tabs
+              </button>
+              <button
+                type="button"
+                className={`px-3 py-2 text-sm ${
+                  timelineView === 'carousel'
+                    ? 'bg-accent text-on-accent'
+                    : 'bg-bg-surface text-text-primary'
+                }`}
+                onClick={() => setTimelineView('carousel')}
+                aria-pressed={timelineView === 'carousel'}
+              >
+                Carousel
+              </button>
+            </div>
+          </div>
+          {timelineView === 'carousel' ? (
+            <TimelineCarousel experienceData={experienceData} />
+          ) : (
+            <Timeline experienceData={experienceData} />
+          )}
         </ErrorBoundary>
         <ErrorBoundary
           fallback={
