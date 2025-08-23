@@ -8,6 +8,7 @@ import {
   ScrollDownButton,
   FloatingCommandButton,
   Timeline,
+  TimelineConceptSwitcher,
   Skills,
   CommandMenu,
 } from './components';
@@ -49,6 +50,15 @@ const App = () => {
           fallback={<div className="text-red-500">Something went wrong with the Timeline.</div>}
         >
           <Timeline experienceData={experienceData} />
+        </ErrorBoundary>
+        <ErrorBoundary
+          fallback={
+            <div className="text-red-500">Something went wrong with the timeline concepts.</div>
+          }
+        >
+          <div className="container mx-auto px-4">
+            <TimelineConceptSwitcher />
+          </div>
         </ErrorBoundary>
         <ErrorBoundary
           fallback={
