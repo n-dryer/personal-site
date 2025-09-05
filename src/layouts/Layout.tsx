@@ -1,4 +1,5 @@
 import React from 'react';
+import { FluidBackground } from '../components';
 
 /**
  * Props for the Layout component.
@@ -23,9 +24,10 @@ type LayoutProps = {
 const LayoutComponent = ({ children, className = '' }: LayoutProps): React.ReactElement => {
   return (
     <div
-      className={`min-h-screen bg-bg-primary text-text-primary transition-colors duration-300 ${className}`}
+      className={`relative min-h-screen text-text-primary transition-colors duration-300 ${className}`}
     >
-      {children}
+      <FluidBackground />
+      <div className="relative z-10">{children}</div>
     </div>
   );
 };

@@ -71,7 +71,7 @@ const HeaderComponent = ({
 
   return (
     <header
-      className="relative flex min-h-screen items-center justify-center bg-bg-primary pb-20 pt-[var(--space-section)] text-text-primary md:pb-32"
+      className="relative flex min-h-screen items-center justify-center pb-20 pt-[var(--space-section)] text-text-primary md:pb-32"
       id="top"
     >
       {/* Theme Toggle - Positioned in top-right corner */}
@@ -94,7 +94,7 @@ const HeaderComponent = ({
             transition={{ duration: 0.7, delay: 0.2 }}
           >
             <motion.h1
-              className="mb-2 font-display text-[clamp(1.75rem,9vw,5rem)] font-bold tracking-tight text-text-primary"
+              className="mb-2 font-display text-[clamp(2.75rem,9vw,5rem)] font-extrabold tracking-tight text-text-primary"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
@@ -107,7 +107,7 @@ const HeaderComponent = ({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <p className="text-[clamp(1rem,2.2vw,2rem)] font-medium text-text-secondary md:whitespace-nowrap md:text-[clamp(1.25rem,2.6vw,2.25rem)]">
+              <p className="text-[clamp(1rem,2.2vw,2rem)] font-medium text-accent md:whitespace-nowrap md:text-[clamp(1.25rem,2.6vw,2.25rem)]">
                 {userData.bioLine}
               </p>
             </motion.div>
@@ -123,7 +123,7 @@ const HeaderComponent = ({
               transition={{ duration: 0.6, delay: 0.5 }}
             >
               <motion.div
-                className="flex cursor-pointer items-center rounded-full bg-accent px-4 py-3 text-on-accent shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-opacity-75"
+                className="flex cursor-pointer items-center rounded-full bg-accent px-4 py-3 text-on-accent shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-2 focus-visible:ring-opacity-75"
                 onClick={toggleCommandMenu}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98, y: 0 }}
@@ -149,7 +149,7 @@ const HeaderComponent = ({
                     </motion.span>
                   </AnimatePresence>
                 </div>
-                <span className="bg-surface/20 hidden items-center justify-center rounded px-2 py-1 text-xs md:flex">
+                <span className="hidden items-center justify-center rounded bg-black/20 px-2 py-1 text-xs md:flex">
                   {`Search (${isMac ? '⌘K' : 'Ctrl+K'})`}
                 </span>
               </motion.div>

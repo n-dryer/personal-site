@@ -33,7 +33,7 @@ export type Skill = {
    * Depth indicator of competence. Prefer 'Expert' | 'Proficient' | 'Familiar'.
    * Backward-compat: 'Advanced' maps to 'Proficient', 'Intermediate' maps to 'Familiar'.
    */
-  tier?: 'Expert' | 'Proficient' | 'Familiar' | 'Advanced' | 'Intermediate';
+  tier?: 'Expert' | 'Proficient' | 'Familiar';
   /** Short evidence phrase (<= 10 words) */
   evidence?: string;
   /** Legacy grouping; retained for backward compatibility */
@@ -69,35 +69,4 @@ export type UserData = {
 export type ThemeContextType = {
   darkMode: boolean;
   toggleTheme: () => void;
-};
-
-/**
- * Component prop interfaces
- */
-export type HeaderProps = {
-  userData: UserData;
-  toggleTheme: () => void;
-  darkMode: boolean;
-  toggleCommandMenu: () => void;
-};
-
-export type TimelineProps = {
-  experienceData: Experience[];
-};
-
-export type SkillsProps = {
-  skillsData: Skill[];
-};
-
-export type FooterProps = {
-  userData: UserData;
-};
-
-export type FloatingActionButtonProps = {
-  toggleCommandMenu: () => void;
-};
-
-export type CommandMenuProps = {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
 };

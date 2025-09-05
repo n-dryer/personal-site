@@ -8,9 +8,15 @@ interface UseInViewOptions extends IntersectionObserverInit {
   once?: boolean;
 }
 
-export const useInView = <T extends HTMLElement = HTMLElement>(
-  options: UseInViewOptions = {}
-) => {
+/**
+ * Custom hook for observing when an element enters the viewport.
+ * It uses the Intersection Observer API to efficiently detect visibility.
+ *
+ * @param {UseInViewOptions} options - Configuration options for the Intersection Observer.
+ * @returns {{ ref: React.RefObject<T>, inView: boolean }} An object containing a ref to attach to the element and a boolean indicating if it's in view.
+ * @template T - The type of the HTML element to be observed.
+ */
+export const useInView = <T extends HTMLElement = HTMLElement>(options: UseInViewOptions = {}) => {
   const { threshold = 0.2, rootMargin = '-15% 0% -25% 0%', once = true } = options;
   const [inView, setInView] = useState(false);
   const ref = useRef<T | null>(null);
@@ -32,7 +38,7 @@ export const useInView = <T extends HTMLElement = HTMLElement>(
           }
         }
       },
-      { threshold, rootMargin }
+      { threshold, rootMargin },
     );
 
     observer.observe(element);

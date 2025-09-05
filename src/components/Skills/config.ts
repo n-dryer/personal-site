@@ -22,13 +22,3 @@ export const CATEGORY_FILTERS: Array<{ id: 'all' | CategoryKey; label: string }>
   { id: 'infra_devops', label: 'Infra & DevOps' },
   { id: 'design_ux', label: 'Design & UX' },
 ];
-
-export const mapLegacyTierToDepth = (
-  tier: 'Expert' | 'Proficient' | 'Familiar' | 'Advanced' | 'Intermediate' | undefined,
-): (typeof TIER_ORDER)[number] => {
-  if (tier === 'Expert') return 'Expert';
-  if (tier === 'Advanced') return 'Proficient';
-  if (tier === 'Intermediate') return 'Familiar';
-  if (tier === 'Proficient' || tier === 'Familiar') return tier;
-  return 'Familiar';
-};

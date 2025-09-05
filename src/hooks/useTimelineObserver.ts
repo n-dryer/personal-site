@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export interface UseTimelineObserverOptions {
-  /** Root margin for intersection observer (default: "-20% 0px -60% 0px") */
+  /** Root margin for intersection observer (default: "-40% 0px -40% 0px") */
   rootMargin?: string;
-  /** Threshold for intersection observer (default: 0.3) */
+  /** Threshold for intersection observer (default: 0.5) */
   threshold?: number;
   /** Whether to enable intersection observing (default: true) */
   enabled?: boolean;
@@ -16,71 +16,82 @@ export interface UseTimelineObserverReturn {
   registerCard: (id: string, element: HTMLElement | null) => void;
   /** Function to manually set active ID (for programmatic control) */
   setActiveId: (id: string | null) => void;
-  /** Map of all registered elements */
-  elementsMap: Map<string, HTMLElement>;
 }
 
 /**
- * Hook for managing timeline card intersection observation
- * Tracks which timeline card is currently in the viewport
+ * Custom hook for managing the active state of timeline cards based on viewport visibility.
+ * It uses an Intersection Observer to track which timeline card is most prominently in view
+ * and provides functionality to register cards for observation and manually set the active card.
+ *
+ * @param {UseTimelineObserverOptions} options - Configuration options for the Intersection Observer.
+ * @returns {UseTimelineObserverReturn} An object containing the active card ID and functions to manage observation.
  */
 export const useTimelineObserver = (
-  options: UseTimelineObserverOptions = {}
+  options: UseTimelineObserverOptions = {},
 ): UseTimelineObserverReturn => {
-  const {
-    rootMargin = '-20% 0px -60% 0px',
-    threshold = 0.3,
-    enabled = true,
-  } = options;
+  const { rootMargin = '-40% 0px -40% 0px', threshold = 0.5, enabled = true } = options;
 
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const [activeId, _setActiveId] = useState<string | null>(null);
   const elementsMap = useRef<Map<string, HTMLElement>>(new Map());
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const interactionTimer = useRef<number | null>(null);
+  const isUserInteracting = useRef(false);
+
+  const setActiveId = useCallback((id: string | null) => {
+    _setActiveId(id);
+    isUserInteracting.current = true;
+    if (interactionTimer.current) {
+      window.clearTimeout(interactionTimer.current);
+    }
+    interactionTimer.current = window.setTimeout(() => {
+      isUserInteracting.current = false;
+    }, 1000);
+  }, []);
 
   /**
    * Register a timeline card element for observation
    */
-  const registerCard = useCallback((id: string, element: HTMLElement | null) => {
-    const currentMap = elementsMap.current;
-    
-    // Remove previous element if it exists
-    const previousElement = currentMap.get(id);
-    if (previousElement && observerRef.current) {
-      observerRef.current.unobserve(previousElement);
-    }
+  const registerCard = useCallback(
+    (id: string, element: HTMLElement | null) => {
+      const currentMap = elementsMap.current;
+      const observer = observerRef.current;
 
-    if (element) {
-      // Add new element
-      currentMap.set(id, element);
-      if (observerRef.current && enabled) {
-        observerRef.current.observe(element);
+      // Unobserve previous element if it exists
+      const previousElement = currentMap.get(id);
+      if (previousElement && observer) {
+        observer.unobserve(previousElement);
       }
-    } else {
-      // Remove element
-      currentMap.delete(id);
-    }
-  }, [enabled]);
+
+      if (element) {
+        // Observe new element
+        currentMap.set(id, element);
+        if (observer && enabled) {
+          observer.observe(element);
+        }
+      } else {
+        // Remove element from map
+        currentMap.delete(id);
+      }
+    },
+    [enabled],
+  );
 
   /**
    * Handle intersection observer entries
    */
   const handleIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
-    // Find the most visible entry
-    let mostVisibleEntry: IntersectionObserverEntry | null = null;
-    let maxRatio = 0;
+    if (isUserInteracting.current) return;
 
-    entries.forEach((entry) => {
-      if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
-        mostVisibleEntry = entry;
-        maxRatio = entry.intersectionRatio;
-      }
-    });
+    const intersectingEntries = entries.filter((entry) => entry.isIntersecting);
 
-    if (mostVisibleEntry) {
+    if (intersectingEntries.length > 0) {
+      // Sort by intersection ratio to find the most visible element
+      intersectingEntries.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+      const mostVisibleEntry = intersectingEntries[0];
+
       // Extract ID from element (assuming format: timeline-card-{id})
-      const elementId = mostVisibleEntry.target.id;
-      const cardId = elementId.replace('timeline-card-', '');
-      setActiveId(cardId);
+      const cardId = (mostVisibleEntry.target as HTMLElement).id.replace('timeline-card-', '');
+      _setActiveId(cardId);
     }
   }, []);
 
@@ -112,31 +123,15 @@ export const useTimelineObserver = (
     return () => {
       observer.disconnect();
       observerRef.current = null;
-    };
-  }, [enabled, rootMargin, threshold, handleIntersection]);
-
-  /**
-   * Handle window resize (recalculate intersections)
-   */
-  useEffect(() => {
-    const handleResize = () => {
-      if (observerRef.current) {
-        // Force recalculation by disconnecting and reconnecting
-        observerRef.current.disconnect();
-        elementsMap.current.forEach((element) => {
-          observerRef.current?.observe(element);
-        });
+      if (interactionTimer.current) {
+        window.clearTimeout(interactionTimer.current);
       }
     };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [enabled, rootMargin, threshold, handleIntersection]);
 
   return {
     activeId,
     registerCard,
     setActiveId,
-    elementsMap: elementsMap.current,
   };
 };

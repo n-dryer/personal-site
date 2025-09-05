@@ -6,11 +6,12 @@ Automated code agents (e.g., Jules, Copilot) assist routine development tasks. T
 
 ## Main Features & UI (preserve these)
 
+- Fluid Background: static gradient with grain texture
 - Interactive Timeline: chronological work history and achievements
 - Skills Showcase: categorized with proficiency badges
-- Ship Log: placeholder component (planned feed for recent updates)
 - Command Menu: Cmd/Ctrl+K palette for navigation/social
 - Theme Toggle: light/dark modes (contrast tokens)
+- Glass Components: semi-transparent overlays with backdrop blur
 - Responsive Design: mobile-friendly, accessible, performant
 
 Agents must use idiomatic React + TypeScript patterns and respect the existing folder structure.

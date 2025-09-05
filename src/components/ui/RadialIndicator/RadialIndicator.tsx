@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { useReducedMotion } from '../../../hooks/useReducedMotion';
 
 export type IndicatorVariant = 'expert' | 'proficient' | 'familiar' | 'custom';
 
@@ -45,7 +45,7 @@ export const RadialIndicator = React.memo<RadialIndicatorProps>(
     label,
     size = 64,
     animate = true,
-    className = ''
+    className = '',
   }) => {
     const [hasAnimated, setHasAnimated] = useState(false);
     const shouldReduceMotion = useReducedMotion();
@@ -73,9 +73,9 @@ export const RadialIndicator = React.memo<RadialIndicatorProps>(
     } as React.CSSProperties;
 
     // Browser fallback for unsupported conic-gradient
-    const supportsConicGradient = 
-      typeof CSS !== 'undefined' && 
-      CSS.supports && 
+    const supportsConicGradient =
+      typeof CSS !== 'undefined' &&
+      CSS.supports &&
       CSS.supports('background', 'conic-gradient(red, blue)');
 
     if (!supportsConicGradient) {
@@ -137,10 +137,7 @@ export const RadialIndicator = React.memo<RadialIndicatorProps>(
         <span className="relative z-10 text-xs font-bold text-text-primary">
           {variant !== 'custom' ? variant.charAt(0).toUpperCase() : `${value}`}
         </span>
-        <span 
-          id={`indicator-desc-${label.replace(/\s+/g, '-').toLowerCase()}`} 
-          className="sr-only"
-        >
+        <span id={`indicator-desc-${label.replace(/\s+/g, '-').toLowerCase()}`} className="sr-only">
           Progress indicator showing {percentage.toFixed(0)}% completion
         </span>
       </div>

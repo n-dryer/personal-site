@@ -17,12 +17,7 @@ type ErrorFallbackProps = {
  * Used by Error Boundaries to provide graceful degradation.
  */
 export const ErrorFallback = React.memo<ErrorFallbackProps>(
-  ({ 
-    message = 'Something went wrong', 
-    onRetry, 
-    componentName = 'section',
-    className = ''
-  }) => {
+  ({ message = 'Something went wrong', onRetry, componentName = 'section', className = '' }) => {
     const handleRetry = () => {
       if (onRetry) {
         onRetry();
@@ -35,19 +30,17 @@ export const ErrorFallback = React.memo<ErrorFallbackProps>(
       <div className={`py-12 text-center ${className}`}>
         <div className="mx-auto flex max-w-md flex-col items-center space-y-4">
           <AlertTriangle className="h-12 w-12 text-red-500" aria-hidden="true" />
-          
+
           <div className="space-y-2">
             <h3 className="text-lg font-semibold text-text-primary">
               {componentName} temporarily unavailable
             </h3>
-            <p className="text-sm text-text-secondary">
-              {message}
-            </p>
+            <p className="text-sm text-text-secondary">{message}</p>
           </div>
 
           <button
             onClick={handleRetry}
-            className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 font-medium text-on-accent transition-colors hover:bg-accent/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            className="hover:bg-accent/90 inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 font-medium text-on-accent transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             style={{ minHeight: '44px' }}
             aria-label={`Retry loading ${componentName}`}
           >

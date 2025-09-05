@@ -3,6 +3,7 @@ import { CATEGORY_FILTERS, CategoryKey, TIER_ORDER } from './config';
 import React, { useCallback, useMemo, useState } from 'react';
 import { Skill } from '../../types';
 import { useViewTransitions } from '../../hooks/useViewTransitions';
+import { Card } from '../ui';
 
 type SkillsMatrixProps = {
   /** Array of skill data to display */
@@ -122,13 +123,17 @@ export const SkillsMatrix = React.memo<SkillsMatrixProps>(({ skillsData }) => {
     };
 
     filteredByTier.forEach((s) => {
-      categories[s.category].push(s);
+      if (s.category) {
+        categories[s.category].push(s);
+      }
     });
 
     // Sort each category by tier then name
     (Object.keys(categories) as CategoryKey[]).forEach((cat) => {
       categories[cat] = categories[cat].slice().sort((a, b) => {
-        const tierDiff = TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier);
+        const aTier = a.tier || 'Familiar';
+        const bTier = b.tier || 'Familiar';
+        const tierDiff = TIER_ORDER.indexOf(aTier) - TIER_ORDER.indexOf(bTier);
         if (tierDiff !== 0) return tierDiff;
         return a.name.localeCompare(b.name);
       });
@@ -138,7 +143,7 @@ export const SkillsMatrix = React.memo<SkillsMatrixProps>(({ skillsData }) => {
   }, [filteredByTier]);
 
   return (
-    <section id="skills" className="bg-bg-surface-subtle py-[var(--space-section)]">
+    <section id="skills" className="py-[var(--space-section)]">
       <div className="container mx-auto w-full px-4">
         <h2 className="mb-6 text-center font-display text-4xl font-semibold tracking-tight">
           Skills Matrix
@@ -155,10 +160,8 @@ export const SkillsMatrix = React.memo<SkillsMatrixProps>(({ skillsData }) => {
               <motion.button
                 key={filter.id}
                 onClick={() => toggleGroup(filter.id as GroupKey)}
-                className={`rounded-full px-[var(--space-5)] py-[var(--space-2)] text-sm font-medium transition-all md:text-base ${
-                  isActive
-                    ? 'bg-accent text-on-accent'
-                    : 'bg-surface hover:bg-text-secondary/10 text-text-primary shadow-hairline'
+                className={`bg-surface/80 hover:bg-surface/90 rounded-full border border-white/10 px-[var(--space-5)] py-[var(--space-2)] text-sm font-medium text-text-primary ring-1 ring-white/5 backdrop-blur-xl transition-all md:text-base ${
+                  isActive ? 'bg-accent text-on-accent shadow-lg' : ''
                 }`}
                 whileHover={{ y: -2 }}
                 whileTap={{ y: 0 }}
@@ -220,7 +223,7 @@ export const SkillsMatrix = React.memo<SkillsMatrixProps>(({ skillsData }) => {
           ] as CategoryKey[]
         ).every((cat) => (byCategory[cat] || []).length === 0) && (
           <motion.div
-            className="bg-surface rounded-lg py-10 text-center shadow-inner"
+            className="bg-surface/80 rounded-lg border border-white/10 py-10 text-center shadow-inner ring-1 ring-white/5 backdrop-blur-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2 }}
@@ -250,32 +253,32 @@ const SkillMatrixCard = React.memo<{ skill: EnhancedSkill; index: number }>(({ s
         },
       }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className="card-flat group px-3 py-2"
-      role="article"
-      aria-labelledby={`skill-title-${skill.id}`}
-      tabIndex={0}
-      onKeyDown={(e) => {
-        // Keyboard navigation for proof links
-        if (e.key === 'Enter' && skill.proofLinks.length === 1) {
-          e.preventDefault();
-          window.open(skill.proofLinks[0].url, '_blank', 'noopener,noreferrer');
-        }
-      }}
+      className="h-full"
     >
-      <div className="flex items-center justify-between">
-        <h4
-          id={`skill-title-${skill.id}`}
-          className="text-lg font-semibold text-text-primary"
-        >
-          {skill.name}
-        </h4>
-        <div className="text-right">
-          <div className="font-mono text-sm text-text-primary">
-            {tier === 'Expert' ? '92%' : tier === 'Proficient' ? '78%' : '55%'}
+      <Card
+        className="group flex h-full flex-col p-4"
+        hover={true}
+        onClick={
+          skill.proofLinks.length === 1
+            ? () => window.open(skill.proofLinks[0].url, '_blank', 'noopener,noreferrer')
+            : undefined
+        }
+        role="article"
+        aria-labelledby={`skill-title-${skill.id}`}
+        tabIndex={0}
+      >
+        <div className="flex items-center justify-between">
+          <h4 id={`skill-title-${skill.id}`} className="text-lg font-semibold text-text-primary">
+            {skill.name}
+          </h4>
+          <div className="text-right">
+            <div className="font-mono text-sm text-text-primary">
+              {tier === 'Expert' ? '92%' : tier === 'Proficient' ? '78%' : '55%'}
+            </div>
+            <div className="text-xs text-text-secondary">{tier}</div>
           </div>
-          <div className="text-xs text-text-secondary">{tier}</div>
         </div>
-      </div>
+      </Card>
     </motion.div>
   );
 });

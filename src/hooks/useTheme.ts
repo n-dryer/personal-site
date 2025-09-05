@@ -49,7 +49,7 @@ export const useTheme = (): UseThemeReturn => {
   useEffect(() => {
     const htmlElement = document.documentElement;
 
-    const newDatasetTheme = darkMode ? 'graphite-dark' : 'graphite-light';
+    const newDatasetTheme = darkMode ? 'aurora-dark' : 'aurora-light';
     // Avoid redundant writes to minimize reflow; add a short-lived class for scoped transitions
     if (htmlElement.dataset.theme !== newDatasetTheme) {
       htmlElement.classList.add('theme-changing');

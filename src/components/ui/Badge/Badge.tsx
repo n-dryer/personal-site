@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type BadgeVariant = 'expert' | 'proficient' | 'familiar' | 'tech' | 'default';
+export type BadgeVariant = 'expert' | 'proficient' | 'familiar' | 'tech' | 'default' | 'kpi';
 export type BadgeSize = 'sm' | 'md' | 'lg';
 
 type BadgeProps = {
@@ -18,6 +18,7 @@ const VARIANT_STYLES: Record<BadgeVariant, string> = {
   familiar: 'bg-text-secondary/20 text-text-secondary border-text-secondary/30',
   tech: 'bg-text-secondary/10 text-text-secondary border-text-secondary/20',
   default: 'bg-surface text-text-primary border-text-primary/10',
+  kpi: 'bg-accent-2/10 text-accent-2 border-accent-2/20',
 };
 
 const SIZE_STYLES: Record<BadgeSize, string> = {

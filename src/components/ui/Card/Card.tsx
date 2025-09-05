@@ -14,25 +14,19 @@ type CardProps = {
   style?: React.CSSProperties;
 };
 
-const baseClasses = 'relative bg-bg-surface rounded-lg shadow-sm ring-1 ring-inset ring-white/10';
-const hoverClasses = 'transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:ring-accent';
-const clickableClasses = 'cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2';
+const baseClasses =
+  'relative bg-surface/80 backdrop-blur-xl rounded-lg shadow-lg border border-white/10 ring-1 ring-white/5';
+const hoverClasses =
+  'transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-accent/50';
+const clickableClasses =
+  'cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary';
 
 /**
  * Card component providing consistent card styling across the application.
  * Used by Skills Matrix, Timeline, ShipLog, and other card-based layouts.
  */
 export const Card = React.memo<CardProps>(
-  ({
-    children,
-    className = '',
-    hover = true,
-    onClick,
-    role,
-    tabIndex,
-    style,
-    ...props
-  }) => {
+  ({ children, className = '', hover = true, onClick, role, tabIndex, style, ...props }) => {
     const isClickable = Boolean(onClick);
 
     const classes = [
@@ -40,7 +34,9 @@ export const Card = React.memo<CardProps>(
       hover ? hoverClasses : '',
       isClickable ? clickableClasses : '',
       className,
-    ].filter(Boolean).join(' ');
+    ]
+      .filter(Boolean)
+      .join(' ');
 
     const cardProps = {
       className: classes,
@@ -73,10 +69,7 @@ export const Card = React.memo<CardProps>(
     }
 
     return (
-      <motion.div
-        {...cardProps}
-        whileHover={hover ? { y: -2 } : undefined}
-      >
+      <motion.div {...cardProps} whileHover={hover ? { y: -2 } : undefined}>
         {children}
       </motion.div>
     );

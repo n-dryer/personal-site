@@ -28,18 +28,7 @@
     <link rel="manifest" href="/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap"
-      rel="preload"
-      as="style"
-      onload="this.rel='stylesheet'"
-    />
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
+    <link rel="stylesheet" href="https://use.typekit.net/Mona-Sans.css" />
     <title>Nathan Dryer | Portfolio</title>
     <script>
       (function () {
@@ -48,7 +37,7 @@
           var theme = localStorage.getItem('theme');
           var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
           var isDark = theme === 'dark' || (!theme && prefersDark);
-          d.dataset.theme = isDark ? 'graphite-dark' : 'graphite-light';
+          d.dataset.theme = isDark ? 'aurora-dark' : 'aurora-light';
           d.classList[isDark ? 'add' : 'remove']('dark');
           d.style.colorScheme = isDark ? 'dark' : 'light';
         } catch (e) {
@@ -57,7 +46,18 @@
       })();
     </script>
   </head>
+
   <body>
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position: absolute">
+      <filter id="noiseFilter">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.85"
+          numOctaves="6"
+          stitchTiles="stitch"
+        />
+      </filter>
+    </svg>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

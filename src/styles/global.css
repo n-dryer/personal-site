@@ -7,15 +7,7 @@
 
 /* 2. CUSTOM COMPONENT LAYERS */
 @layer components {
-  .glass-surface {
-    background-color: rgb(from var(--bg-surface) r g b / 0.7);
-    border: 1px solid rgb(from var(--text-primary) r g b / 0.1);
-    backdrop-filter: blur(8px);
-  }
-
-  .dark .glass-surface {
-    background-color: rgb(from var(--bg-surface) r g b / 0.5);
-  }
+  /* No custom component layers needed for now */
 }
 
 /* 3. GLOBAL STYLES */
@@ -23,6 +15,8 @@ body {
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--ff-body);
+  position: relative;
+  isolation: isolate;
 }
 
 html {
@@ -84,18 +78,6 @@ body.modal-open {
   overflow: hidden;
 }
 
-.skill-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: var(--space-5);
-  background-color: var(--bg-surface);
-  border-radius: var(--r-lg);
-  box-shadow: var(--e-md);
-  border: 1px solid color-mix(in srgb, var(--text-primary) 5%, transparent);
-  transition: all var(--motion-duration) var(--motion-easing);
-}
-
 .skill-icon {
   display: flex;
   align-items: center;
@@ -127,110 +109,130 @@ body.modal-open {
   line-height: 1.4;
 }
 
-/* 5. TIMELINE METRO STYLES */
-.timeline-metro {
-  position: relative;
-  min-height: 400px;
+/* 5. ORGANIC TIMELINE STYLES */
+.timeline-organic {
+  --timeline-line-width: 2px;
+  --timeline-node-size: 20px;
 }
 
-.timeline-thread {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: var(--accent);
-  transform: translateX(-50%);
-  z-index: 1;
+/* Enhanced organic flow animations */
+@keyframes neural-pulse {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1) rotate(0deg);
+  }
+
+  25% {
+    opacity: 0.6;
+    transform: scale(1.1) rotate(90deg);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.2) rotate(180deg);
+  }
+
+  75% {
+    opacity: 0.4;
+    transform: scale(1.1) rotate(270deg);
+  }
 }
 
+@keyframes synaptic-signal {
+  0% {
+    opacity: 0;
+    transform: translateX(0) scale(0.5);
+  }
+
+  10% {
+    opacity: 1;
+    transform: translateX(20%) scale(1);
+  }
+
+  90% {
+    opacity: 1;
+    transform: translateX(80%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(100%) scale(0.5);
+  }
+}
+
+@keyframes neural-connection {
+  0%,
+  100% {
+    opacity: 0.3;
+    filter: blur(0.5px);
+  }
+
+  50% {
+    opacity: 0.7;
+    filter: blur(0px);
+  }
+}
+
+/* Smooth organic transitions */
+.timeline-organic * {
+  will-change: transform, opacity;
+}
+
+/* Clean timeline card styling */
 .timeline-card {
   position: relative;
-  transition: all 0.3s ease;
-}
-
-.timeline-card--left {
-  text-align: right;
-}
-
-.timeline-card--right {
-  text-align: left;
+  z-index: 10;
+  transform-origin: center;
 }
 
 .timeline-card--active {
-  transform: scale(1.02);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  z-index: 20;
 }
 
-.timeline-card--in-view {
-  opacity: 1;
-  transform: translateY(0);
+/* Mobile organic flow improvements */
+@media (max-width: 767px) {
+  .timeline-organic {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .timeline-card {
+    max-width: calc(100vw - 5rem);
+  }
 }
 
-.timeline-card--hidden {
-  opacity: 0.7;
-  transform: translateY(10px);
+/* Enhanced responsive breakpoints for organic timeline */
+@media (min-width: 768px) {
+  .timeline-organic {
+    --timeline-line-width: 3px;
+    --timeline-node-size: 24px;
+  }
+
+  .timeline-card {
+    max-width: 28rem;
+  }
 }
 
-.timeline-card__connector {
-  position: absolute;
-  top: 24px;
-  width: 32px;
-  height: 1px;
-  background: var(--accent);
-  opacity: 0.3;
+@media (min-width: 1024px) {
+  .timeline-organic {
+    --timeline-line-width: 4px;
+    --timeline-node-size: 28px;
+  }
+
+  .timeline-card {
+    max-width: 32rem;
+  }
 }
 
-.timeline-card--left .timeline-card__connector {
-  right: -32px;
-}
+@media (min-width: 1280px) {
+  .timeline-organic {
+    max-width: 5xl;
+  }
 
-.timeline-card--right .timeline-card__connector {
-  left: -32px;
-}
-
-.timeline-card__dot {
-  position: absolute;
-  top: 24px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  border: 2px solid var(--bg-surface);
-  z-index: 2;
-}
-
-.timeline-card--left .timeline-card__dot {
-  right: -6px;
-}
-
-.timeline-card--right .timeline-card__dot {
-  left: -6px;
-}
-
-.timeline-years {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  transform: translateX(-50%);
-  pointer-events: none;
-  z-index: 3;
-}
-
-.timeline-year {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  background: var(--bg-surface);
-  padding: 4px 12px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  border-radius: 9999px;
-  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
-  white-space: nowrap;
+  .timeline-card {
+    max-width: 36rem;
+  }
 }
 
 /* 6. SKILLS MATRIX STYLES */
@@ -254,7 +256,7 @@ body.modal-open {
 .skill-matrix-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--e-lg);
-  border-color: color-mix(in srgb, var(--accent) 20%, transparent);
+  border-color: color-mix(in srgb, var(--accent-2) 20%, transparent);
 }
 
 .skill-matrix-card__header {
@@ -296,16 +298,16 @@ body.modal-open {
   gap: var(--space-1);
   padding: var(--space-1) var(--space-2);
   font-size: 0.75rem;
-  color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 10%, transparent);
-  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--accent-2) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-3) 20%, transparent);
   border-radius: var(--r-sm);
   text-decoration: none;
   transition: all var(--motion-duration) var(--motion-easing);
 }
 
 .proof-link:hover {
-  background: color-mix(in srgb, var(--accent) 20%, transparent);
+  background: color-mix(in srgb, var(--accent-4) 20%, transparent);
   transform: translateY(-1px);
 }
 
@@ -327,7 +329,7 @@ body.modal-open {
   transition: all 0.3s ease;
 }
 
-.radial-indicator[data-animate="true"] {
+.radial-indicator[data-animate='true'] {
   animation: radial-fill 1s ease-out forwards;
 }
 
@@ -335,6 +337,7 @@ body.modal-open {
   from {
     background: conic-gradient(from 0deg, var(--indicator-color) 0%, var(--bg-surface-alt) 0%);
   }
+
   to {
     background: var(--indicator-fill);
   }
@@ -349,8 +352,13 @@ body.modal-open {
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* 8. RESPONSIVE ADJUSTMENTS */
@@ -359,37 +367,37 @@ body.modal-open {
     left: 24px;
     transform: none;
   }
-  
+
   .timeline-card-wrapper {
     padding-left: 48px !important;
     padding-right: 0 !important;
   }
-  
+
   .timeline-card--left,
   .timeline-card--right {
     text-align: left;
   }
-  
+
   .timeline-card__connector {
     left: -32px !important;
     right: auto !important;
   }
-  
+
   .timeline-card__dot {
     left: -6px !important;
     right: auto !important;
   }
-  
+
   .timeline-years {
     left: 24px;
     transform: none;
   }
-  
+
   .timeline-year {
     left: 24px;
     transform: translateY(-50%);
   }
-  
+
   .skills-matrix-grid {
     grid-template-columns: 1fr;
   }
@@ -407,8 +415,7 @@ body.modal-open {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-surface);
-  border-radius: 4px;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -417,7 +424,7 @@ body.modal-open {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: color-mix(in srgb, var(--accent) 80%, var(--on-accent));
+  background: color-mix(in srgb, var(--accent) 80%, black);
 }
 
 /* 10. RESPONSIVE & MOTION PREFERENCES */
@@ -457,10 +464,6 @@ body.modal-open {
     padding-right: 1rem;
   }
 
-  .skill-card {
-    padding: var(--space-4);
-  }
-
   .skill-icon {
     width: 40px;
     height: 40px;
@@ -470,3 +473,5 @@ body.modal-open {
     font-size: 0.875rem;
   }
 }
+
+/* 12. GRADIENT & GRAIN BACKGROUNDS */

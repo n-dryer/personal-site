@@ -306,7 +306,7 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
             >
               <motion.div
                 ref={containerRef}
-                className="border-text-secondary/10 bg-surface/50 dark:bg-surface/40 glass-surface relative h-full w-full overflow-y-auto border-t shadow-lg md:h-auto md:max-h-[80vh] md:max-w-lg md:rounded-lg md:border lg:max-w-xl xl:max-w-2xl"
+                className="bg-surface/80 relative h-full w-full overflow-y-auto border-t border-white/10 shadow-lg ring-1 ring-white/5 backdrop-blur-xl md:h-auto md:max-h-[80vh] md:max-w-lg md:rounded-lg md:border lg:max-w-xl xl:max-w-2xl"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"

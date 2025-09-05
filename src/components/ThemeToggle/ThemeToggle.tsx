@@ -30,45 +30,47 @@ const ThemeToggleComponent = ({ darkMode, toggleTheme }: ThemeToggleProps) => {
   };
 
   const iconVariants = {
-    initial: { opacity: 0, rotate: -90, scale: 0 },
+    initial: { opacity: 1, rotate: -90, scale: 0.5 },
     animate: { opacity: 1, rotate: 0, scale: 1 },
-    exit: { opacity: 0, rotate: 90, scale: 0 },
+    exit: { opacity: 1, rotate: 90, scale: 0.5 },
   };
 
   return (
     <button
-      className="bg-surface/10 hover:bg-surface/20 relative flex h-14 w-14 items-center justify-center rounded-full transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-opacity-75"
+      className="bg-surface/80 hover:bg-surface/90 relative flex h-14 w-14 items-center justify-center rounded-full border border-white/10 text-text-secondary ring-1 ring-white/5 backdrop-blur-xl transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-opacity-75"
       onClick={handleClick}
       type="button"
       aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
     >
-      <AnimatePresence initial={false} mode="wait">
-        {darkMode ? (
-          <motion.div
-            key="moon"
-            variants={shouldReduceMotion ? undefined : iconVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.25, ease: easeInOut }}
-            style={{ viewTransitionName: 'theme-icon-moon' }}
-          >
-            <Moon className="h-8 w-8" />
-          </motion.div>
-        ) : (
-          <motion.div
-            key="sun"
-            variants={shouldReduceMotion ? undefined : iconVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.25, ease: easeInOut }}
-            style={{ viewTransitionName: 'theme-icon-sun' }}
-          >
-            <Sun className="h-8 w-8" />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div className="relative">
+        <AnimatePresence initial={false} mode="wait">
+          {darkMode ? (
+            <motion.div
+              key="moon"
+              variants={shouldReduceMotion ? undefined : iconVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={{ duration: 0.25, ease: easeInOut }}
+              style={{ viewTransitionName: 'theme-icon-moon' }}
+            >
+              <Moon className="h-8 w-8 text-accent" />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="sun"
+              variants={shouldReduceMotion ? undefined : iconVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={{ duration: 0.25, ease: easeInOut }}
+              style={{ viewTransitionName: 'theme-icon-sun' }}
+            >
+              <Sun className="h-8 w-8 text-accent" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </button>
   );
 };
