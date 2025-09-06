@@ -4,8 +4,8 @@ This file provides project-specific guidance for GitHub Copilot to generate code
 
 ## Project Overview
 
-**Tech Stack:** React 19 + TypeScript + Vite + Tailwind CSS + Framer Motion
-**Package Manager:** Yarn v1 only (never use npm or pnpm)
+**Tech Stack:** React 19 + TypeScript 5.8+ + Vite 5 + Tailwind CSS + Framer Motion + Vitest
+**Package Manager:** Yarn v1 only (never use npm or pnpm)  
 **Node Version:** 20+ (see .nvmrc)
 **Architecture:** Component-based SPA with content-driven data
 
@@ -23,6 +23,7 @@ This file provides project-specific guidance for GitHub Copilot to generate code
 - **ESM only**: Use ES modules, avoid CommonJS `require()`
 - **TypeScript strict mode**: No `any` types, prefer `unknown` for unknown data
 - **Vite for bundling**: Use Vite-specific features and conventions
+- **React 19**: Use modern patterns with createRoot, StrictMode, and concurrent features
 
 ## Code Patterns & Conventions
 
@@ -43,6 +44,43 @@ const ComponentName = ({ data, onAction }: ComponentProps) => {
 
 // ✅ Export with React.memo for performance when appropriate
 export const Component = React.memo(ComponentName);
+
+// ✅ Use barrel exports from components/index.ts
+export * from './ComponentName';
+```
+
+### Application Architecture
+
+- **Main App component**: `src/App.tsx` orchestrates layout and global state
+- **Entry point**: `src/main.tsx` with React 19 + StrictMode + ParallaxProvider
+- **Error boundaries**: Wrap major sections for graceful error handling
+- **Global providers**: ParallaxProvider wraps entire app for scroll effects
+
+```typescript
+// ✅ App structure pattern
+const App = () => {
+  const { darkMode, toggleTheme } = useTheme();
+  const { isOpen, setIsOpen, toggle } = useCommandMenu();
+
+  return (
+    <div className="relative min-h-screen">
+      <FluidBackground />
+      <Layout>
+        <Header {...props} />
+        <main>
+          <ErrorBoundary fallback={<div>Timeline error</div>}>
+            <TimelineMetro experienceData={experienceData} />
+          </ErrorBoundary>
+          <ErrorBoundary fallback={<div>Skills error</div>}>
+            <SkillsMatrix skillsData={skillsData} />
+          </ErrorBoundary>
+        </main>
+        <Footer {...props} />
+        <CommandMenu {...props} />
+      </Layout>
+    </div>
+  );
+};
 ```
 
 ### TypeScript Patterns
@@ -66,34 +104,39 @@ const Component = (props: any) => { ... }
 ### Import/Export Patterns
 
 ```typescript
-// ✅ Path aliases (configured in tsconfig.json)
+// ✅ Path aliases (configured in tsconfig.json via vite-tsconfig-paths)
 import { Component } from '@/components';
 import { useTheme } from '@/hooks';
-import { userData } from '@/content/user';
+import { userData } from 'content/user';
 
 // ✅ Named exports (not default exports)
 export const MyComponent = () => { ... };
 
 // ✅ Barrel exports in index.ts files
-export { Component } from './Component';
-export { AnotherComponent } from './AnotherComponent';
+export * from './Component';
+export * from './AnotherComponent';
 ```
 
 ### Directory Structure
 
 ```
 src/
-  components/          # Reusable UI components
-    ComponentName/     # Component directory
-      index.ts         # Barrel export
+  App.tsx             # Main application component
+  main.tsx            # Application entry point (Vite)
+  setupTests.ts       # Test environment setup
+  __mocks__/          # Test mock data and utilities
+  components/         # Reusable UI components
+    ComponentName/    # Component directory
+      index.ts        # Barrel export
       ComponentName.tsx
-      ComponentName.test.tsx
-      README.md        # Component documentation
-  content/            # Static data (skills.ts, experience.ts, user.ts)
-  hooks/              # Custom React hooks
-  layouts/            # Layout components
-  styles/             # Global styles and design tokens
-  types/              # TypeScript type definitions
+      ComponentName.test.tsx (optional)
+      README.md       # Component documentation
+  content/           # Static data (skills.ts, experience.ts, user.ts)
+  hooks/             # Custom React hooks
+  layouts/           # Layout components
+  styles/            # Global styles and design tokens
+  types/             # TypeScript type definitions
+  utils/             # Utility functions
 ```
 
 ## Styling Guidelines
@@ -111,13 +154,33 @@ src/
 
 // ✅ Good: Responsive and dark mode
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 dark:bg-surface-dark">
+
+// ✅ FluidBackground: Global dynamic background component
+<div className="relative min-h-screen">
+  <FluidBackground />  {/* Always behind content with z-index: -10 */}
+  <Layout>
+    {/* Content with z-index: 10+ */}
+  </Layout>
+</div>
 ```
 
 ### CSS Custom Properties
 
 - **Use design tokens**: Reference variables from `src/styles/tokens.css`
 - **Spacing**: `var(--space-{size})` for consistent spacing
-- **Colors**: Use semantic color tokens (e.g., `text-primary`, `surface`, `accent`)
+- **Colors**: Use semantic color tokens (e.g., `--text-primary`, `--bg-surface`, `--accent`)
+- **Theme system**: "Cosmic Comet" design inspired by Perplexity's gradients
+
+```css
+/* ✅ Current theme tokens (Cosmic Comet) */
+:root {
+  --accent: hsl(252, 85%, 58%);           /* Comet Purple */
+  --accent-electric: hsl(217, 91%, 60%);  /* Electric Blue */
+  --bg-primary: hsl(0, 0%, 98%);          /* Almost white */
+  --text-primary: hsl(0, 0%, 5%);         /* Near black */
+  --ff-display: 'Mona Sans', 'Inter', sans-serif;
+}
+```
 
 ## Animation & Interactions
 
@@ -151,18 +214,19 @@ const Component = () => {
 
 ### Minimal Testing Approach
 
-- **Unit tests**: Only for critical business logic
-- **Component tests**: Focus on behavior, not implementation details
-- **Fast execution**: Keep tests under 2 seconds total runtime
-- **Vitest**: Use Vitest for test runner, jsdom for DOM environment
+- **Current Status**: Project has Vitest configured but no test files currently exist
+- **Component tests**: Add only when testing critical business logic or complex interactions
+- **Focus on behavior**: Test component behavior, not implementation details  
+- **Fast execution**: Keep tests under 2 seconds total runtime when added
+- **Vitest + jsdom**: Use Vitest for test runner, jsdom for DOM environment
 
 ```typescript
-// ✅ Good: Behavior-focused test
+// ✅ Good: Behavior-focused test (when tests are added)
 import { render, screen } from '@testing-library/react';
-import { Skills } from './Skills';
+import { SkillsMatrix } from './SkillsMatrix';
 
 test('renders skills with filtering', () => {
-  render(<Skills skillsData={mockSkills} />);
+  render(<SkillsMatrix skillsData={mockSkills} />);
   expect(screen.getByText('Languages & Runtimes')).toBeInTheDocument();
 });
 ```
@@ -235,15 +299,16 @@ export const skills: Skill[] = [
 ### Scripts (use yarn only)
 
 ```bash
-yarn start          # Development server
-yarn build          # Production build
-yarn preview        # Preview production build
-yarn lint           # ESLint check
-yarn lint:fix       # ESLint auto-fix
-yarn format         # Prettier formatting
-yarn format:check   # Check formatting
-yarn test           # Run tests
-yarn tsc --noEmit   # TypeScript check
+yarn start              # Development server (port 4000)
+yarn build              # Production build
+yarn preview            # Preview production build (port 4000) 
+yarn lint               # ESLint check
+yarn lint:fix           # ESLint auto-fix
+yarn format             # Prettier formatting
+yarn format:check       # Check formatting
+yarn test               # Run tests (Vitest)
+yarn tsc                # TypeScript check
+yarn ci:guard:lockfile  # Prevent package-lock.json creation
 ```
 
 ### Quality Gates
