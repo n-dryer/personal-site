@@ -10,6 +10,8 @@ import { useReducedMotion } from '../../hooks/useReducedMotion';
 type FloatingCommandButtonProps = {
   /** Function to toggle the visibility of the command menu. */
   toggleCommandMenu: () => void;
+  /** Whether the command menu is currently open. */
+  isCommandMenuOpen: boolean;
 };
 
 // Available commands for preview animation
@@ -35,6 +37,7 @@ const availableCommands = [
  */
 const FloatingCommandButtonComponent = ({
   toggleCommandMenu,
+  isCommandMenuOpen,
 }: FloatingCommandButtonProps): React.ReactElement | null => {
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [isMac, setIsMac] = useState<boolean>(false);
@@ -169,6 +172,27 @@ const FloatingCommandButtonComponent = ({
     },
   };
 
+  const iconVariants: Variants = {
+    open: {
+      rotate: 90,
+      scale: 1.1,
+      transition: {
+        type: 'spring',
+        stiffness: 400,
+        damping: 30,
+      },
+    },
+    closed: {
+      rotate: 0,
+      scale: 1,
+      transition: {
+        type: 'spring',
+        stiffness: 400,
+        damping: 30,
+      },
+    },
+  };
+
   return (
     <AnimatePresence>
       {isVisible && (
@@ -188,7 +212,7 @@ const FloatingCommandButtonComponent = ({
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 10 }}
                 transition={{ duration: 0.2 }}
-                className="bg-surface absolute bottom-full right-0 mb-4 whitespace-nowrap rounded-lg px-4 py-2 text-sm text-text-primary shadow-lg"
+                className="bg-surface/80 absolute bottom-full right-0 mb-4 whitespace-nowrap rounded-lg border border-white/10 px-4 py-2 text-sm text-text-primary shadow-lg ring-1 ring-white/5 backdrop-blur-xl"
               >
                 <div className="flex items-center gap-2">
                   <div
@@ -268,13 +292,19 @@ const FloatingCommandButtonComponent = ({
               }
             }}
           >
-            <Command
-              style={{
-                width: 'clamp(1rem, 2.5vw, 1.5rem)',
-                height: 'clamp(1rem, 2.5vw, 1.5rem)',
-                color: 'currentColor',
-              }}
-            />
+            <motion.div
+              variants={iconVariants}
+              animate={isCommandMenuOpen ? 'open' : 'closed'}
+              style={{ display: 'flex' }} // Ensure the div doesn't collapse
+            >
+              <Command
+                style={{
+                  width: 'clamp(1rem, 2.5vw, 1.5rem)',
+                  height: 'clamp(1rem, 2.5vw, 1.5rem)',
+                  color: 'currentColor',
+                }}
+              />
+            </motion.div>
           </motion.button>
         </motion.div>
       )}

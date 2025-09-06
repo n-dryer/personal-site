@@ -25,7 +25,18 @@ const iconMap: { [key: string]: React.ElementType } = {
  * @param {UserData} props.userData - The user data to display in the footer.
  * @returns {React.ReactElement} The rendered footer element.
  */
-const FooterComponent = ({ userData }: FooterProps): React.ReactElement => {
+const defaultUserData: UserData = {
+  fullName: 'User',
+  bioLine: '',
+  photoUrl: '',
+  email: 'user@example.com',
+  phone: '',
+  location: '',
+  socialLinks: [],
+  resumeUrl: '',
+};
+
+const FooterComponent = ({ userData = defaultUserData }: FooterProps): React.ReactElement => {
   const currentYear = new Date().getFullYear();
 
   // Prepare social links to include email explicitly if not in socialLinks array
@@ -37,7 +48,7 @@ const FooterComponent = ({ userData }: FooterProps): React.ReactElement => {
   return (
     <footer
       id="end"
-      className="bg-bg-surface py-8" // Changed to bg-surface for slight contrast
+      className="bg-transparent py-8 text-text-secondary" // Make footer transparent
     >
       <div className="container mx-auto w-full px-6">
         <div className="flex flex-col items-center">
@@ -69,7 +80,7 @@ const FooterComponent = ({ userData }: FooterProps): React.ReactElement => {
               <Mail className="h-6 w-6" />
             </motion.a>
           </div>
-          <div className="border-text-primary/10 mt-4 w-full border-t pt-4">
+          <div className="mt-4 w-full border-t border-white/10 pt-4">
             <p className="text-center text-sm text-text-secondary">
               © {currentYear} {userData.fullName}. All rights reserved.
             </p>

@@ -8,9 +8,9 @@ Centralizing type definitions helps maintain consistency, improves code readabil
 
 ## Contents
 
-- **`portfolio.ts`**: Defines the core data structures and types specific to the portfolio's content, such as `Experience`, `Skill`, `UserData`, `Project`, and various component prop types.
-- **`react-scroll-parallax.d.ts`**: Contains TypeScript definitions for the `react-scroll-parallax` library, ensuring type safety when using this external module.
+- **`external.d.ts`**: Contains ambient declarations for modules that do not have their own TypeScript types.
 - **`index.ts`**: Serves as a barrel file, re-exporting all types from this directory for easy importing into other parts of the application.
+- **`react-scroll-parallax.d.ts`**: Contains TypeScript definitions for the `react-scroll-parallax` library, ensuring type safety when using this external module.
 
 ## Usage
 

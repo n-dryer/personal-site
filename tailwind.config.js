@@ -1,10 +1,9 @@
 /** @type {import('tailwindcss').Config} */
-/** @type {import('tailwindcss').Config} */
 // ESM-compatible export for Vite environment
 
 export default {
   content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
-  darkMode: ['class', '[data-theme="graphite-dark"]'],
+  darkMode: ['class', '[data-theme="aurora-dark"]'],
   theme: {
     extend: {
       fontFamily: {
@@ -28,6 +27,7 @@ export default {
         'bg-primary': 'var(--bg-primary)',
         'bg-surface': 'var(--bg-surface)',
         accent: 'var(--accent)',
+        'accent-2': 'var(--accent-2)',
         'on-accent': 'var(--on-accent)',
         'text-primary': 'var(--text-primary)',
         'text-secondary': 'var(--text-secondary)',
@@ -53,5 +53,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/container-queries')],
 };

@@ -1,96 +1,121 @@
-/* 1 · FONT FAMILIES & CORE PRIMITIVES */
+/*
+  Design Tokens: "Cosmic Comet"
+  Inspired by Perplexity's comet gradients - deep purples, electric blues,
+  and cosmic flowing effects with comet trail aesthetics.
+*/
+
+:root,
+[data-theme='aurora-light'] {
+  /* Typography */
+  --ff-display: 'Mona Sans', 'Inter', sans-serif;
+  --ff-body: 'Mona Sans', 'Inter', sans-serif;
+  --tracking-tight: -0.025em;
+  --fw-bold: 700;
+  --fw-medium: 500;
+  --fw-normal: 400;
+
+  /* Light Mode Palette - Cosmic Comet */
+  --bg-primary: hsl(0, 0%, 98%);
+  /* Almost white */
+  --bg-surface: hsl(0, 0%, 100%);
+  /* Pure white for surfaces */
+  --text-primary: hsl(0, 0%, 5%);
+  /* Near black for high contrast */
+  --text-secondary: hsl(0, 0%, 35%);
+  /* Grey for secondary text */
+  --accent: hsl(252, 85%, 58%);
+  /* Comet Purple - Perplexity-inspired */
+  --accent-2: hsl(262, 83%, 65%);
+  /* Lighter comet purple */
+  --accent-electric: hsl(217, 91%, 60%);
+  /* Electric Blue comet trail */
+  --accent-cosmic: hsl(280, 67%, 60%);
+  /* Cosmic violet accent */
+  --on-accent: hsl(0, 0%, 100%);
+  /* White text on accent */
+
+  /* Cosmic Comet gradient - Perplexity-inspired */
+  --bg-primary-gradient: radial-gradient(ellipse 120% 80% at 10% 20%,
+      hsla(252, 85%, 58%, 0.06) 0%,
+      hsla(217, 91%, 60%, 0.04) 20%,
+      hsla(280, 67%, 60%, 0.03) 40%,
+      hsla(262, 83%, 65%, 0.02) 60%,
+      transparent 100%),
+    radial-gradient(ellipse 100% 60% at 90% 80%,
+      hsla(217, 91%, 60%, 0.08) 0%,
+      hsla(252, 85%, 58%, 0.04) 30%,
+      hsla(280, 67%, 60%, 0.02) 60%,
+      transparent 100%),
+    linear-gradient(145deg,
+      hsla(252, 85%, 58%, 0.03) 0%,
+      hsla(217, 91%, 60%, 0.02) 25%,
+      hsla(280, 67%, 60%, 0.01) 50%,
+      transparent 75%);
+  --bg-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+[data-theme='aurora-dark'] {
+  /* Dark Mode Palette - Cosmic Comet */
+  --bg-primary: hsl(252, 15%, 8%);
+  /* Deep cosmic purple-black */
+  --bg-surface: hsl(252, 15%, 12%);
+  /* Slightly lighter cosmic surface */
+  --text-primary: hsl(0, 0%, 95%);
+  /* Off-white for text */
+  --text-secondary: hsl(0, 0%, 60%);
+  /* Lighter grey for secondary */
+  --accent: hsl(252, 85%, 65%);
+  /* Brighter Comet Purple for dark mode */
+  --accent-2: hsl(262, 83%, 70%);
+  --accent-electric: hsl(217, 91%, 65%);
+  /* Electric Blue comet trail */
+  --accent-cosmic: hsl(280, 67%, 65%);
+  /* Cosmic violet accent */
+  --on-accent: hsl(0, 0%, 100%);
+  /* White text on accent */
+
+  /* Cosmic Comet dark gradient - Perplexity-inspired */
+  --bg-primary-gradient: radial-gradient(ellipse 140% 90% at 15% 25%,
+      hsla(252, 85%, 65%, 0.08) 0%,
+      hsla(217, 91%, 65%, 0.06) 15%,
+      hsla(280, 67%, 65%, 0.04) 35%,
+      hsla(262, 83%, 70%, 0.03) 55%,
+      transparent 100%),
+    radial-gradient(ellipse 110% 70% at 85% 75%,
+      hsla(217, 91%, 65%, 0.10) 0%,
+      hsla(252, 85%, 65%, 0.05) 25%,
+      hsla(280, 67%, 65%, 0.03) 50%,
+      transparent 100%),
+    linear-gradient(150deg,
+      hsla(252, 85%, 65%, 0.04) 0%,
+      hsla(217, 91%, 65%, 0.03) 20%,
+      hsla(280, 67%, 65%, 0.02) 40%,
+      hsla(252, 15%, 8%, 0) 70%);
+  --bg-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Foundational design tokens */
 :root {
-  /* Font Families (to be loaded via <link> in <head>) */
-  --ff-display: "Space Grotesk", system-ui, sans-serif;
-  --ff-body: "Inter", system-ui, sans-serif;
-
-  /* Typographic Scale */
-  --tracking-tight: -0.015em;
-
-  /* Radii */
-  --r-sm: 0.375rem;
-  /* 6px */
-  --r-md: 0.5rem;
-  /* 8px */
-  --r-lg: 1rem;
-  /* 16px */
-
-  /* Elevation */
-  --e-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-  --e-md: 0 4px 8px rgba(0, 0, 0, 0.08);
-  --e-lg: 0 12px 24px rgba(0, 0, 0, 0.12);
-
-  /* Spacing Scale (4px/8px baseline) */
   --space-1: 0.25rem;
-  /* 4px */
   --space-2: 0.5rem;
-  /* 8px */
   --space-3: 0.75rem;
-  /* 12px */
   --space-4: 1rem;
-  /* 16px */
-  --space-5: 1.5rem;
-  /* 24px */
-  --space-6: 2rem;
-  /* 32px */
-  --space-8: 3rem;
-  /* 48px */
-  --space-12: 4rem;
-  /* 64px */
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
   --space-24: 6rem;
-  /* 96px */
+  --space-component: var(--space-6);
+  --space-section: var(--space-12);
 
-  /* Responsive Spacing (merged from global.css) */
-  --space-component: clamp(1rem, 3vw, 1.5rem);
-  /* 16px to 24px */
-  --space-section: clamp(2.5rem, 6vw, 4rem);
-  /* 40px to 64px */
+  --r-sm: 0.25rem;
+  --r-md: 0.5rem;
+  --r-lg: 0.75rem;
 
-  /* Motion */
+  --e-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --e-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --e-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
   --motion-duration: 200ms;
   --motion-easing: cubic-bezier(0.4, 0, 0.2, 1);
-  /* Icon */
-  --icon-color: currentColor;
-}
-
-/* 2 · THEME TOKENS (GRAPHITE & GOLD) */
-/* Light Mode */
-:root,
-:root[data-theme='graphite-light'] {
-  --bg-primary: #F5F5F7;
-  --bg-surface: #F0F0F2;
-  --bg-surface-alt: #EAEAEB;
-  --bg-surface-subtle: #F3F3F5;
-  --accent: #F1B33E;
-  --on-accent: #111111;
-  --text-primary: #1C1C1C;
-  --text-secondary: #5F5F5F;
-  --timeline-line: var(--accent);
-  color-scheme: light;
-}
-
-/* Dark Mode */
-:root[data-theme='graphite-dark'] {
-  --bg-primary: #1C1C1C;
-  --bg-surface: #181818;
-  --bg-surface-alt: #222222;
-  --bg-surface-subtle: #222222;
-  --accent: #FACA63;
-  --on-accent: #181818;
-  --text-primary: #E0E0E0;
-  --text-secondary: #9D9D9D;
-  --timeline-line: var(--accent);
-  color-scheme: dark;
-}
-
-/* 3 · GLOBAL ELEMENT DEFAULTS */
-body {
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--ff-body);
-  font-size: 16px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  transition: background-color var(--motion-duration) var(--motion-easing), color var(--motion-duration) var(--motion-easing);
 }

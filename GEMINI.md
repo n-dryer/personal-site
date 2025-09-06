@@ -40,7 +40,6 @@ const ComponentName = ({
 
   return (
     <div className={`base-styles ${className}`}>
-      {data.map((item, index) => (
       {data.map((item) => (
         <div key={item.id}>
           {/* Component content */}

@@ -9,8 +9,10 @@ Custom hooks allow for the extraction and reuse of component logic. They help ke
 ## Available Hooks
 
 - `useCommandMenu.ts`: Manages the state and keyboard shortcuts for the command menu.
+- `useIntersectionObserver.ts`: A generic hook for observing element visibility changes.
 - `useReducedMotion.ts`: Detects the user's preference for reduced motion to disable or adjust animations accordingly.
 - `useTheme.ts`: Manages the application's theme (light/dark mode), including persistence to localStorage and system preference detection.
+- `useTimelineObserver.ts`: Specifically manages the active state of timeline cards based on their visibility.
 - `useViewTransitions.ts`: Provides a wrapper for the View Transitions API with a graceful fallback for unsupported browsers, enabling smooth UI state changes.
 
 ## Usage

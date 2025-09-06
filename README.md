@@ -14,7 +14,6 @@ React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Yarn | Prettier
 
 - Interactive Timeline: desktop vertical tablist with detail panel and mobile single-column fallback
 - Skills Showcase: categorized skills with proficiency badges
-- Ship Log: recent updates and milestones
 - Command Menu: quick command palette (Cmd/Ctrl+K or floating button) for navigation and social links
 - Theme Toggle: light/dark mode with token-driven contrast
 - Responsive Design: mobile-first, accessible, performant
