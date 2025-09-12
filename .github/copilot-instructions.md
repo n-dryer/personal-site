@@ -1,325 +1,237 @@
-# GitHub Copilot Custom Instructions
+# Personal Site - GitHub Copilot Coding Agent Instructions
 
-This file provides project-specific guidance for GitHub Copilot to generate code that follows the established patterns, conventions, and constraints of the personal-site repository.
+**ALWAYS follow these instructions first and fallback to additional search and context gathering only if the information here is incomplete or found to be in error.**
 
-## Project Overview
+Personal portfolio site built with React 19 + TypeScript + Vite + Tailwind CSS + Framer Motion. Interactive timeline, skills showcase, command menu (Cmd/Ctrl+K), theme toggle, and glass morphism design.
 
-**Tech Stack:** React 19 + TypeScript + Vite + Tailwind CSS + Framer Motion
-**Package Manager:** Yarn v1 only (never use npm or pnpm)
-**Node Version:** 20+ (see .nvmrc)
-**Architecture:** Component-based SPA with content-driven data
+## Working Effectively
 
-## Core Constraints
+### Bootstrap and Setup
 
-### Package Management
+Run these commands in exact order to set up the repository:
 
-- **Always use Yarn v1**: `yarn add`, `yarn install`, `yarn remove`
-- **Never create package-lock.json**: Only yarn.lock is permitted
-- **Guard against npm**: Project has guards to prevent package-lock.json creation
+```bash
+# Verify Node version (must be v20+)
+node --version  # Should show v20.x.x
 
-### Development Environment
+# Install dependencies (takes ~30 seconds)
+yarn install --frozen-lockfile
 
-- **Node 20+**: Required for all development (see package.json engines)
-- **ESM only**: Use ES modules, avoid CommonJS `require()`
-- **TypeScript strict mode**: No `any` types, prefer `unknown` for unknown data
-- **Vite for bundling**: Use Vite-specific features and conventions
-
-## Code Patterns & Conventions
-
-### React Components
-
-```typescript
-// ✅ Preferred: Named function component with TypeScript
-type ComponentProps = {
-  /** JSDoc for props */
-  data: DataType[];
-  onAction?: () => void;
-};
-
-const ComponentName = ({ data, onAction }: ComponentProps) => {
-  // Component logic
-  return <div>Content</div>;
-};
-
-// ✅ Export with React.memo for performance when appropriate
-export const Component = React.memo(ComponentName);
+# Verify installation worked
+yarn --version  # Should show 1.22.22
 ```
 
-### TypeScript Patterns
+**CRITICAL**: Always use `yarn` commands - NEVER use `npm`. Project has guards against package-lock.json creation.
 
-- **Strict typing**: Define explicit types, avoid `any`
-- **Props interfaces**: Use type aliases for component props
-- **Import types**: Use `import type` for type-only imports
-- **Null safety**: Handle undefined/null cases explicitly
+### Build and Quality Gates
 
-```typescript
-// ✅ Good
-type UserProps = {
-  userData: UserData;
-  onSelect?: (id: string) => void;
-};
+Run the complete quality pipeline before making changes:
 
-// ❌ Avoid
-const Component = (props: any) => { ... }
+```bash
+# Format code (takes ~2 seconds)
+yarn format
+
+# Check formatting (takes ~2 seconds)
+yarn format:check
+
+# Lint code (takes ~4 seconds)
+yarn lint
+
+# Type check (takes ~3 seconds)
+yarn tsc --noEmit
+
+# Production build (takes ~4 seconds)
+yarn build
+
+# Test command (takes ~1 second, but currently no tests exist)
+yarn test  # NOTE: Will exit with code 1 - no test files exist in src/
 ```
 
-### Import/Export Patterns
+All commands are fast (under 5 seconds). No extended timeouts needed.
 
-```typescript
-// ✅ Path aliases (configured in tsconfig.json)
-import { Component } from '@/components';
-import { useTheme } from '@/hooks';
-import { userData } from '@/content/user';
+### Run Development Environment
 
-// ✅ Named exports (not default exports)
-export const MyComponent = () => { ... };
+```bash
+# Start development server
+yarn start
+# Opens http://localhost:4000 automatically
 
-// ✅ Barrel exports in index.ts files
-export { Component } from './Component';
-export { AnotherComponent } from './AnotherComponent';
+# In separate terminal, preview production build
+yarn build && yarn preview
+# Serves dist/ at http://localhost:4000
 ```
 
-### Directory Structure
+## Manual Validation
+
+Always manually validate changes by running through these scenarios:
+
+### Core Application Testing
+
+After making changes, start the preview server and test:
+
+```bash
+yarn build && yarn preview
+```
+
+1. **Home Page Load**: Visit http://localhost:4000
+   - Page loads with interactive timeline
+   - Skills matrix renders with categories
+   - Theme toggle works (light/dark mode)
+   - Fluid background with grain texture visible
+
+2. **Interactive Features**:
+   - Press `Cmd/Ctrl+K` to open command menu
+   - Test timeline scrolling and card highlighting
+   - Click skills categories to filter
+   - Test mobile responsiveness (timeline switches to single column)
+
+3. **Key Endpoints**:
+   ```bash
+   curl -sSf http://localhost:4000 >/dev/null  # Root responds
+   curl -sSf http://localhost:4000/robots.txt  # SEO files
+   curl -sSf http://localhost:4000/sitemap.xml
+   curl -sSf http://localhost:4000/manifest.json
+   ```
+
+### Content and Meta Validation
+
+Check these essential meta tags exist:
+
+```bash
+curl -s http://localhost:4000 | grep 'Nathan Dryer'
+curl -s http://localhost:4000 | grep 'theme-color'
+curl -s http://localhost:4000 | grep 'og:image'
+```
+
+## CI Pipeline
+
+CI runs the same quality gates on every push/PR:
+
+- Prettier format check
+- ESLint linting
+- TypeScript type checking (`yarn tsc --noEmit`)
+- Vite production build
+- E2E smoke tests (curl-based endpoint validation)
+- Uploads `dist/` artifact for preview
+
+**Always run the complete pipeline locally before committing**:
+
+```bash
+yarn format:check && yarn lint && yarn tsc --noEmit && yarn build
+```
+
+## Key Repository Locations
+
+### Primary Development Areas
 
 ```
 src/
-  components/          # Reusable UI components
-    ComponentName/     # Component directory
-      index.ts         # Barrel export
-      ComponentName.tsx
-      ComponentName.test.tsx
-      README.md        # Component documentation
-  content/            # Static data (skills.ts, experience.ts, user.ts)
-  hooks/              # Custom React hooks
-  layouts/            # Layout components
-  styles/             # Global styles and design tokens
-  types/              # TypeScript type definitions
+├── components/           # React UI components
+│   ├── Timeline/        # Interactive metro-style timeline
+│   ├── Skills/          # Skills matrix with filtering
+│   ├── CommandMenu/     # Cmd/Ctrl+K command palette
+│   ├── Header/          # Navigation and theme toggle
+│   └── ui/              # Reusable UI components
+├── content/             # Static data files
+│   ├── experience.ts    # Timeline/work history data
+│   ├── skills.ts        # Skills and proficiency data
+│   └── user.ts          # Personal info and social links
+├── hooks/               # Custom React hooks
+├── styles/              # Global CSS and design tokens
+│   ├── tokens.css       # CSS custom properties
+│   └── global.css       # Global styles
+└── types/               # TypeScript type definitions
 ```
 
-## Styling Guidelines
+### Configuration Files
 
-### Tailwind CSS
-
-- **Utility-first**: Use Tailwind classes, avoid custom CSS unless necessary
-- **Design tokens**: Use CSS custom properties from `src/styles/tokens.css`
-- **Responsive design**: Mobile-first approach with responsive modifiers
-- **Dark mode**: Support via `dark:` classes and design tokens
-
-```typescript
-// ✅ Good: Utility classes with design tokens
-<div className="bg-surface text-text-primary rounded-lg p-[var(--space-4)]">
-
-// ✅ Good: Responsive and dark mode
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 dark:bg-surface-dark">
+```
+.nvmrc                   # Node v20 requirement
+package.json            # Yarn v1, scripts, dependencies
+tsconfig.json           # TypeScript config with path aliases
+vite.config.ts          # Vite bundler configuration
+tailwind.config.js      # Tailwind CSS configuration
+eslint.config.js        # ESLint rules and plugins
+.prettierrc             # Code formatting rules
 ```
 
-### CSS Custom Properties
+### Important Documentation
 
-- **Use design tokens**: Reference variables from `src/styles/tokens.css`
-- **Spacing**: `var(--space-{size})` for consistent spacing
-- **Colors**: Use semantic color tokens (e.g., `text-primary`, `surface`, `accent`)
+- `README.md` - Project overview and basic setup
+- `AGENTS.md` - Detailed agent workflow and conventions
+- `src/components/Timeline/README.md` - Timeline component docs
+- `src/components/Skills/README.md` - Skills component docs
 
-## Animation & Interactions
+## Technology Stack Details
 
-### Framer Motion
+**Frontend**: React 19 with TypeScript in strict mode
+**Bundling**: Vite with SWC for fast builds  
+**Styling**: Tailwind CSS with custom design tokens
+**Animations**: Framer Motion with reduced motion support
+**Testing**: Vitest + Testing Library (minimal test approach)
+**Linting**: ESLint with React, TypeScript, a11y, Tailwind rules
+**Formatting**: Prettier with consistent code style
 
-- **Preference**: Use Framer Motion for animations over CSS transitions
-- **Performance**: Use `layout` animations for smooth transitions
-- **Accessibility**: Respect `prefers-reduced-motion` via `useReducedMotion` hook
+## Common Development Tasks
 
-```typescript
-// ✅ Good: Framer Motion with accessibility
-import { motion } from 'framer-motion';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
+### Adding New Components
 
-const Component = () => {
-  const shouldReduceMotion = useReducedMotion();
+1. Create component directory: `src/components/ComponentName/`
+2. Add main file: `ComponentName.tsx`
+3. Add barrel export: `index.ts`
+4. Add documentation: `README.md`
+5. Update `src/components/index.ts` with export
 
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: shouldReduceMotion ? 0 : 0.3 }}
-    >
-      Content
-    </motion.div>
-  );
-};
-```
+### Updating Content
 
-## Testing Strategy
+- **Skills**: Edit `src/content/skills.ts` with new skills/categories
+- **Experience**: Edit `src/content/experience.ts` with work history
+- **Personal Info**: Edit `src/content/user.ts` with contact details
 
-### Minimal Testing Approach
+### Code Quality Checklist
 
-- **Unit tests**: Only for critical business logic
-- **Component tests**: Focus on behavior, not implementation details
-- **Fast execution**: Keep tests under 2 seconds total runtime
-- **Vitest**: Use Vitest for test runner, jsdom for DOM environment
+Always run before committing changes:
 
-```typescript
-// ✅ Good: Behavior-focused test
-import { render, screen } from '@testing-library/react';
-import { Skills } from './Skills';
+- [ ] `yarn format:check` passes
+- [ ] `yarn lint` passes
+- [ ] `yarn tsc --noEmit` passes
+- [ ] `yarn build` succeeds
+- [ ] Manual testing in `yarn preview`
+- [ ] Interactive features still work (timeline, command menu, skills)
 
-test('renders skills with filtering', () => {
-  render(<Skills skillsData={mockSkills} />);
-  expect(screen.getByText('Languages & Runtimes')).toBeInTheDocument();
-});
-```
+## Validation Timing
 
-## Performance Guidelines
+- **Initial setup**: ~30 seconds (yarn install)
+- **Quality gates**: ~10 seconds total (format + lint + typecheck + build)
+- **Development server**: Instant startup at localhost:4000
+- **Preview build**: ~4 seconds to build + serve
 
-### React Optimization
+## Troubleshooting
 
-- **React.memo**: Use for components that receive stable props
-- **useCallback**: Memoize event handlers passed to child components
-- **useMemo**: Memoize expensive computations
-- **Lazy loading**: Use React.lazy for code splitting when appropriate
+### Common Issues
 
-### Bundle Optimization
+- **Build fails**: Check TypeScript errors with `yarn tsc --noEmit`
+- **Linting errors**: Run `yarn lint:fix` for auto-fixes
+- **Format issues**: Run `yarn format` to fix formatting
+- **Missing dependencies**: Run `yarn install --frozen-lockfile`
+- **Wrong Node version**: Check `.nvmrc` and use Node v20+
 
-- **Tree shaking**: Import only what you need from libraries
-- **Code splitting**: Split routes and heavy components
-- **Asset optimization**: Optimize images and use appropriate formats
-
-## Accessibility Standards
-
-### ARIA & Semantics
-
-- **Semantic HTML**: Use proper HTML elements (nav, main, section, article)
-- **ARIA labels**: Provide descriptive labels for interactive elements
-- **Focus management**: Ensure keyboard navigation works correctly
-- **Screen readers**: Test with screen reader announcements
-
-```typescript
-// ✅ Good: Accessible component
-<button
-  onClick={handleClick}
-  aria-label={`Toggle ${category} filter`}
-  aria-pressed={isActive}
-  className="focus-visible:outline focus-visible:outline-2"
->
-  {category}
-</button>
-```
-
-## Content Management
-
-### Data Structure
-
-- **Type safety**: All content data is strongly typed
-- **Static imports**: Content loaded as ES modules, not JSON
-- **Validation**: TypeScript ensures content matches expected schema
-
-```typescript
-// ✅ Content files follow strict typing
-export const skills: Skill[] = [
-  {
-    id: 'react',
-    name: 'React',
-    tier: 'Expert',
-    category: 'frameworks_libraries',
-    evidence: 'Led 5+ production apps',
-  },
-];
-```
-
-### Content Schema
-
-- **Skills**: Categorized with proficiency levels (Expert/Proficient/Familiar)
-- **Experience**: Timeline entries with achievements and technologies
-- **User data**: Personal info and social links
-
-## Development Workflow
-
-### Scripts (use yarn only)
+### Emergency Reset
 
 ```bash
-yarn start          # Development server
-yarn build          # Production build
-yarn preview        # Preview production build
-yarn lint           # ESLint check
-yarn lint:fix       # ESLint auto-fix
-yarn format         # Prettier formatting
-yarn format:check   # Check formatting
-yarn test           # Run tests
-yarn tsc --noEmit   # TypeScript check
+rm -rf node_modules yarn.lock
+yarn install --frozen-lockfile
+yarn build
 ```
 
-### Quality Gates
+### Preview CI Artifacts
 
-1. **Format**: Prettier (2 spaces, single quotes, trailing commas)
-2. **Lint**: ESLint with React, TypeScript, Tailwind, a11y rules
-3. **Type check**: TypeScript strict mode
-4. **Build**: Vite production build must succeed
-5. **Tests**: All tests must pass (kept minimal and fast)
+Download `dist/` artifact from GitHub Actions runs:
 
-## Git & Branching
+```bash
+# After downloading and extracting dist/ locally:
+npx serve -s dist -l 4000
+# Open http://localhost:4000
+```
 
-### Branch Naming
-
-- UI features: `ui/feature-name` (e.g., `ui/skills`, `ui/timeline`)
-- Performance: `perf/optimization-name`
-- Bug fixes: `fix/issue-description`
-- Documentation: `docs/update-description`
-
-### Commit Messages
-
-- **Conventional commits**: `feat:`, `fix:`, `chore:`, `docs:`
-- **Scope**: Include component/area when relevant
-- **Description**: Clear, concise description of change
-
-## Error Handling
-
-### React Error Boundaries
-
-- **Use react-error-boundary**: Wrap components that might throw
-- **Graceful degradation**: Provide fallback UI for errors
-- **User feedback**: Show meaningful error messages
-
-### TypeScript Error Prevention
-
-- **Strict null checks**: Handle undefined/null explicitly
-- **Type guards**: Use type predicates for runtime safety
-- **Exhaustive checking**: Use discriminated unions with never type
-
-## Browser Support
-
-### Modern Browsers
-
-- **ES2020+**: Use modern JavaScript features
-- **CSS Grid & Flexbox**: Modern layout methods
-- **CSS Custom Properties**: For theming and design tokens
-- **Intersection Observer**: For scroll-based animations
-
-### Progressive Enhancement
-
-- **Core functionality**: Works without JavaScript
-- **Enhanced experience**: Animations and interactions with JS
-- **Responsive design**: Mobile-first, accessible on all devices
-
-## Security Considerations
-
-### Content Security
-
-- **No secrets in code**: All environment variables properly handled
-- **Static site**: No server-side vulnerabilities
-- **Dependency scanning**: Regular updates and security audits
-
-### User Privacy
-
-- **No tracking**: Minimal external dependencies
-- **Local storage**: Only for theme preferences
-- **Performance**: Optimized loading and rendering
-
----
-
-When generating code, prioritize:
-
-1. **Type safety** over convenience
-2. **Accessibility** over visual appeal
-3. **Performance** over feature richness
-4. **Maintainability** over cleverness
-5. **Consistency** with existing patterns
-
-Always check existing components for patterns before creating new approaches.
+Always reference this file first for build, test, and validation procedures before searching or running other commands.
