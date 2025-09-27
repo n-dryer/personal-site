@@ -125,8 +125,8 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
   const handleDownloadResume = useCallback((): void => {
     try {
       const link = document.createElement('a');
-      link.href = '/nathan_dryer_resume.pdf'; // Corrected path
-      link.download = 'nathan_dryer_resume.pdf'; // Corrected filename
+      link.href = '/company_overview.pdf'; // Corrected path
+      link.download = 'company_overview.pdf'; // Corrected filename
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
