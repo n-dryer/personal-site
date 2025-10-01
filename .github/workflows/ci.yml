@@ -53,13 +53,13 @@ jobs:
           # Head tags
           curl -s http://localhost:4000 | grep -q 'name="theme-color" media="(prefers-color-scheme: light)" content="#F5F5F7"'
           curl -s http://localhost:4000 | grep -q 'name="theme-color" media="(prefers-color-scheme: dark)" content="#1C1C1C"'
-          curl -s http://localhost:4000 | grep -q 'rel="canonical" href="https://nathandryer.com/"'
-          curl -s http://localhost:4000 | grep -q 'property="og:site_name" content="Nathan Dryer"'
-          curl -s http://localhost:4000 | grep -q 'property="og:image" content="https://nathandryer.com/og-card.jpg"'
-          curl -s http://localhost:4000 | grep -q 'name="twitter:image" content="https://nathandryer.com/og-card.jpg"'
+          curl -s http://localhost:4000 | grep -q 'rel="canonical" href="https://blanche-enterprise-trial.com/"'
+          curl -s http://localhost:4000 | grep -q 'property="og:site_name" content="Blanche Enterprise Trial"'
+          curl -s http://localhost:4000 | grep -q 'property="og:image" content="https://blanche-enterprise-trial.com/og-card.jpg"'
+          curl -s http://localhost:4000 | grep -q 'name="twitter:image" content="https://blanche-enterprise-trial.com/og-card.jpg"'
           # Aux endpoints
-          curl -sSf http://localhost:4000/robots.txt | grep -q 'Sitemap: https://nathandryer.com/sitemap.xml'
-          curl -sSf http://localhost:4000/sitemap.xml | grep -q '<loc>https://nathandryer.com/</loc>'
+          curl -sSf http://localhost:4000/robots.txt | grep -q 'Sitemap: https://blanche-enterprise-trial.com/sitemap.xml'
+          curl -sSf http://localhost:4000/sitemap.xml | grep -q '<loc>https://blanche-enterprise-trial.com/</loc>'
           curl -sSf http://localhost:4000/manifest.json >/dev/null
           # Stop preview
           pkill -f "vite preview" || true
