@@ -1,5 +1,4 @@
 import React from 'react';
-import { useReducedMotion } from '../../hooks/useReducedMotion';
 import './FluidBackground.css';
 
 /**
@@ -9,17 +8,13 @@ import './FluidBackground.css';
  * It provides a fallback for users with reduced motion preferences.
  */
 const FluidBackgroundComponent: React.FC = () => {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <div className="fluid-background" aria-hidden="true">
-      <div className="fluid-base-layer" style={{ background: 'var(--bg-primary-gradient)' }} />
       <div
-        className="fluid-grain-layer"
+        className="fluid-base-layer"
         style={{
-          backgroundImage: 'var(--bg-grain)',
-          opacity: shouldReduceMotion ? 0.08 : 0.18,
-          mixBlendMode: 'overlay',
+          background:
+            'radial-gradient(ellipse at top left, hsl(210, 100%, 45%) 0%, transparent 50%), radial-gradient(ellipse at top right, hsl(200, 100%, 50%) 0%, transparent 50%), radial-gradient(ellipse at bottom, hsl(220, 90%, 35%) 0%, transparent 50%), hsl(220, 20%, 8%)',
         }}
       />
     </div>
