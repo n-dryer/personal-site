@@ -1,136 +1,138 @@
-# AGENTS.md
+## Getting Started
 
-## Overview
+### Prerequisites
 
-Automated code agents (e.g., Jules, Copilot) assist routine development tasks. This guide defines how agents should plan, code, validate, and contribute so efforts align with this repo’s standards and workflow.
+-   Node.js (version >= 20)
+-   Yarn (preferred package manager for this project)
+-   npm (Node Package Manager, often used for global packages or as an alternative)
 
-## Main Features & UI (preserve these)
+### Installation
 
-- Fluid Background: static gradient with grain texture
-- Interactive Timeline: chronological work history and achievements
-- Skills Showcase: categorized with proficiency badges
-- Command Menu: Cmd/Ctrl+K palette for navigation/social
-- Theme Toggle: light/dark modes (contrast tokens)
-- Glass Components: semi-transparent overlays with backdrop blur
-- Responsive Design: mobile-friendly, accessible, performant
+1.  Install dependencies:
+    ```bash
+    yarn install
+    ```
 
-Agents must use idiomatic React + TypeScript patterns and respect the existing folder structure.
+### Development
 
-## Task & Code Execution Workflow
+To run the development server:
 
-1. Plan
-
-- Generate a concise step-by-step plan before code changes.
-- If a non-trivial or risky refactor, propose first; wait for approval.
-- Reference the plan/task in PR descriptions.
-
-1. Branch & PR (Trunk-based)
-
-- Base off latest `main`.
-- Small, focused PRs only; conventional commits (feat, fix, chore, docs).
-- Branch naming:
-  - UI improvements: `ui/<feature>` (e.g., `ui/skills`, `ui/command-menu`, `ui/vertical-timeline`)
-  - Non-UI/perf: `perf/<feature>` — current branch in use: `perf/optimizations`
-- Baseline snapshot/tag: `checkpoint/baseline-2025-08-15`
-
-1. Code Standards (order matters)
-
-- Format → Lint → Type-check → Build
-- Keep changes minimal and readable; match repo idioms (React function components, named exports, clear prop types).
-
-## Scripts (Yarn v1 only)
-
-- `yarn start` — dev server (<http://localhost:4000>)
-- `yarn build` — production build to `dist/`
-- `yarn preview` — serves `dist/` (<http://localhost:4000>)
-- `yarn lint` — ESLint on `src/`
-- `yarn lint:fix` — ESLint on `src/` with auto-fix
-- `yarn test` — unit tests with Vitest
-- `yarn tsc --noEmit` — TypeScript type-check only
-- `yarn format` — Prettier write
-- `yarn format:check` — Prettier check
-- `yarn ci:guard:lockfile` — Prevent package-lock.json creation
-
-Notes:
-
-- Yarn v1 project; do not commit `package-lock.json`.
-- Node v20 is required/preferred (`.nvmrc`, engines in package.json).
-
-## Quality Gates & CI
-
-CI (GitHub Actions) runs on push/PR:
-
-- Prettier check
-- ESLint
-- TypeScript type-check (`yarn tsc --noEmit`)
-- Vite production build
-- Minimal smoke test (curl) against a temporary preview server (validates key endpoints/meta)
-- Uploads `dist/` artifact for preview on every run
-- Unit tests run locally via `yarn test` (not in CI)
-
-Keep CI lightweight; no heavy/slow suites. Add only fast, deterministic checks.
-
-## Build, Preview & Artifact
-
-- Local build: `yarn build` (outputs to `dist/`)
-- Local preview (artifact or local build):
-
-  ```bash
-  npx serve -s dist -l 4000
-  # open http://localhost:4000
-  ```
-
-- CI artifact preview: download and serve `dist/` as above.
-
-## Deploy
-
-- Not auto-deploying yet; prefer GitHub Pages via `.github/workflows/deploy-pages.yml` when enabled.
-- Vite base must match hosting:
-  - Custom domain/user site: `base: '/'`
-  - Project pages (`https://<user>.github.io/<repo>/`): `base: '/<repo>/'` (trailing slash)
-
-## Project Structure
-
-```text
-public/                  # static assets and index.html
-src/
-  App.tsx                # main application component
-  __mocks__/             # test mock data
-  components/            # UI components (Header, Timeline, Skills, etc.)
-  content/               # content data (experience.ts, skills.ts, user.ts)
-  hooks/                 # custom React hooks
-  layouts/               # shared layout wrapper(s)
-  setupTests.ts          # test environment setup
-  styles/                # global styles & design tokens (tokens.css, global.css)
-  types/                 # TypeScript type definitions
-  main.tsx               # app bootstrap
+```bash
+yarn start
 ```
 
-## Content Schema (for agents updating content)
+This will start the Vite development server and open the application at `http://localhost:4000`.
 
-- **Skills**: grouped into Languages & Runtimes, Frameworks & Libraries, AI/ML & Tooling, Infra & DevOps, Design & UX. Depth: Expert, Proficient, Familiar (legacy: Advanced→Proficient, Intermediate→Familiar). Source: `src/content/skills.ts`
-- **Timeline**: entries include `title`, `company`, `date`, succinct achievements, and technologies. Source: `src/content/experience.ts`
-- **User**: personal details and social links. Source: `src/content/user.ts`
-- See: `src/components/Skills/README.md`, `src/components/Timeline/README.md` for UI notes.
+**Note:** All commands in this `AGENTS.md` are assumed to be run from the project root directory unless otherwise specified.
 
-## Editor & Agent Rules
+## Building the Project
 
-- See `.cursorrules` for editor/agent expectations (formatting, CI, file handling).
-- Respect `.editorconfig` and Prettier.
-- Use Yarn-only workflows (guard exists to prevent `package-lock.json`).
+To create a production build:
 
-## Security & Privacy
+```bash
+yarn build
+```
 
-- Never commit secrets or credentials.
-- Minimize dependencies; justify new ones.
-- Keep code and content safe for public distribution.
+The build artifacts will be located in the `dist/` directory.
 
-## Checklist (before opening a PR)
+## Testing
 
-- [ ] `yarn format:check` passes
-- [ ] `yarn lint` passes
-- [ ] `yarn test` passes
-- [ ] `yarn tsc --noEmit` passes
-- [ ] `yarn build` succeeds
-- [ ] Manual sanity check in `yarn preview` (UI changes only)
-- [ ] PR includes plan summary and impact/risk notes
+To run the test suite:
+
+```bash
+yarn test
+```
+
+This will execute the tests using Vitest.
+
+## Gemini-Specific Guidelines
+
+This section provides specific instructions for me, Gemini, to ensure my contributions align with the project's standards.
+
+### Code Generation Style
+
+-   **Verbose Explanations**: Provide detailed JSDoc comments for complex functions.
+-   **Step-by-Step Reasoning**: Break down complex changes into clear, logical steps.
+-   **Context Awareness**: Reference existing patterns when suggesting similar implementations.
+-   **Safety-First**: Prefer explicit type checking over implicit assumptions.
+
+### React Component Patterns
+
+-   **Explicit Prop Destructuring**: Use explicit prop destructuring with default values.
+-   **Early Returns**: Use early returns for empty data or other edge cases.
+-   **Separation of Concerns**: Keep logic, markup, and styles clearly separated.
+
+### Error Handling
+
+-   **Graceful Degradation**: Always provide fallback UI states.
+-   **Explicit Error Boundaries**: Wrap components that might fail in an ErrorBoundary.
+-   **User-Friendly Messages**: Avoid technical error details in the UI.
+
+### Performance Optimizations
+
+-   **Memoization**: Use `React.memo`, `useCallback`, and `useMemo` where appropriate to prevent unnecessary re-renders.
+-   **Bundle Optimization**: Import only what's needed from libraries.
+
+### Workflow
+
+1.  **Analyze**: Analyze existing patterns in the codebase before suggesting new approaches.
+2.  **Plan**: Create a clear plan for any changes.
+3.  **Implement**: Build incrementally, starting with TypeScript types.
+4.  **Test**: Verify each step works before proceeding.
+5.  **Document**: Add JSDoc comments during development.
+6.  **Validate**: Check for cross-browser compatibility, performance impact, accessibility, and mobile responsiveness.
+
+## Chrome DevTools MCP
+
+The `chrome-devtools-mcp` tool allows me to control a Chrome browser instance for debugging and testing.
+
+### Starting the Server
+
+To start the MCP server, run the following command:
+
+```bash
+npx chrome-devtools-mcp@latest
+```
+
+To use a specific Chrome channel, use the `--channel` flag:
+
+```bash
+# Use Chrome Beta
+npx chrome-devtools-mcp@latest --channel beta
+
+# Use Chrome Canary
+npx chrome-devtools-mcp@latest --channel canary
+```
+
+The server runs in the foreground by default. To run it in the background, append `&` to the command.
+
+### Usage
+
+The MCP server is a server that I, the AI agent, connect to as a client. My environment needs to be configured with an MCP client to send commands to the server. Without a client, I cannot directly control the browser.
+
+## Deployment
+
+The website is automatically deployed to GitHub Pages whenever changes are pushed to the `main` branch. The deployment workflow is defined in `.github/workflows/deploy-pages.yml`.
+
+## Local Development Environment Information
+
+This section provides information about the user's local development environment.
+
+-   **Operating System**: macOS (darwin)
+-   **Shell**: zsh
+-   **macOS Package Manager**: Homebrew (`brew` installed at `/opt/homebrew/bin/brew`)
+-   **Node.js Version Manager**: `nvm`
+-   **Project-Specific Package Manager**: `yarn`
+-   **Python**: `python3` installed at `/opt/homebrew/bin/python3`
+-   **Python Package Manager**: `pip3` installed at `/opt/homebrew/bin/pip3`
+-   **Code Editor (IDE)**: Visual Studio Code Insiders, Cursor
+
+### Shell Profile (`.zshrc`)
+
+Your shell profile (`.zshrc`) is crucial for setting up your development environment. It is likely configured to:
+
+-   Initialize `nvm` for Node.js version management, ensuring the correct Node.js version is used for projects.
+-   Set up aliases or functions for frequently used commands, streamlining your workflow.
+-   Configure your shell prompt and other environment variables essential for various tools.
+
+If specific details from your `.zshrc` (e.g., custom aliases, environment variables, or tool-specific configurations) are relevant for agent tasks, please provide them.

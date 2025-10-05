@@ -36,3 +36,30 @@
   background-repeat: repeat;
   z-index: 2;
 }
+
+/* Animated gradient background using design tokens */
+@keyframes gradientAnimation {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Animate the base gradient layer; colors provided by --bg-primary-gradient */
+.fluid-base-layer {
+  /* Increase background size so position changes are visible */
+  background-size: 200% 200%;
+  /* Smooth, subtle motion similar to Next.js fallback */
+  animation: gradientAnimation 15s ease infinite;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .fluid-base-layer {
+    animation: none;
+  }
+}

@@ -26,19 +26,12 @@ export type Experience = {
 export type Skill = {
   id: string;
   name: string;
-  /** Numeric level retained for backward compatibility (no longer rendered) */
-  level?: number;
   icon?: string;
-  /**
-   * Depth indicator of competence. Prefer 'Expert' | 'Proficient' | 'Familiar'.
-   * Backward-compat: 'Advanced' maps to 'Proficient', 'Intermediate' maps to 'Familiar'.
-   */
+  /** Depth indicator of competence */
   tier?: 'Expert' | 'Proficient' | 'Familiar';
   /** Short evidence phrase (<= 10 words) */
   evidence?: string;
-  /** Legacy grouping; retained for backward compatibility */
-  group?: 'technical' | 'leadership';
-  /** New category grouping used by the Skills component */
+  /** Category grouping used by the Skills component */
   category?:
     | 'languages_runtimes'
     | 'frameworks_libraries'

@@ -8,6 +8,7 @@ This file provides project-specific guidance for GitHub Copilot to generate code
 **Package Manager:** Yarn v1 only (never use npm or pnpm)
 **Node Version:** 20+ (see .nvmrc)
 **Architecture:** Component-based SPA with content-driven data
+**Key Libraries:** cmdk (command menu), react-error-boundary, lucide-react (icons), react-intersection-observer
 
 ## Core Constraints
 
