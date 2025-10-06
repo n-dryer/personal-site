@@ -2,9 +2,9 @@ export const TIER_ORDER = ['Expert', 'Proficient', 'Familiar'] as const;
 
 export const TIER_META: Record<(typeof TIER_ORDER)[number], { color: string; ariaLabel: string }> =
   {
-    Expert: { color: 'var(--accent)', ariaLabel: 'Expert level' },
-    Proficient: { color: 'var(--text-primary)', ariaLabel: 'Proficient level' },
-    Familiar: { color: 'var(--text-secondary)', ariaLabel: 'Familiar level' },
+    Expert: { color: 'var(--resume-accent)', ariaLabel: 'Expert level' },
+    Proficient: { color: 'var(--resume-text-primary)', ariaLabel: 'Proficient level' },
+    Familiar: { color: 'var(--resume-text-secondary)', ariaLabel: 'Familiar level' },
   };
 
 export type CategoryKey =

@@ -25,10 +25,10 @@ type RadialIndicatorProps = {
 
 // Variant color mappings
 const VARIANT_COLORS: Record<IndicatorVariant, string> = {
-  expert: 'var(--accent)',
+  expert: 'var(--resume-accent)',
   proficient: 'var(--text-primary)',
   familiar: 'var(--text-secondary)',
-  custom: 'var(--accent)', // Default fallback
+  custom: 'var(--resume-accent)', // Default fallback
 };
 
 /**

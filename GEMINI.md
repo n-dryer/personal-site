@@ -1,126 +1,63 @@
-# GEMINI.md
+## Project Overview
 
-## Overview
+This is a personal portfolio website for Nathan Dryer, built with React, Vite, TypeScript, and Tailwind CSS. The site features an interactive timeline, a skills showcase, a command menu for quick navigation, and a light/dark theme toggle. The project is designed to be responsive, accessible, and performant.
 
-This guide provides specific instructions for Google Gemini when working on the personal-site repository. For comprehensive agent guidelines, workflows, and project structure, refer to `AGENTS.md`. This document focuses on Gemini-specific patterns, preferences, and optimizations.
+## Building and Running
 
-## Gemini-Specific Preferences
+### Prerequisites
 
-### Code Generation Style
+- Node.js (version 20 or higher)
+- Yarn (version 1)
 
-- **Verbose explanations**: Provide detailed JSDoc comments for complex functions
-- **Step-by-step reasoning**: Break down complex changes into clear, logical steps
-- **Context awareness**: Reference existing patterns when suggesting similar implementations
-- **Safety-first**: Prefer explicit type checking over implicit assumptions
+### Key Commands
 
-### React Component Patterns
+- **Installation:**
+  ```bash
+  yarn install
+  ```
 
-```typescript
-// ✅ Gemini preferred: Explicit prop destructuring with defaults
-type ComponentProps = {
-  data: DataType[];
-  onAction?: () => void;
-  className?: string;
-};
+- **Running the development server:**
+  ```bash
+  yarn start
+  ```
+  This will start the Vite development server at `http://localhost:4000`.
 
-const ComponentName = ({
-  data,
-  onAction,
-  className = ''
-}: ComponentProps) => {
-  // Explicit early return for empty data
-  if (!data.length) {
-    return <div className="text-gray-500">No data available</div>;
-  }
+- **Building for production:**
+  ```bash
+  yarn build
+  ```
+  This will create a production-ready build in the `dist/` directory.
 
-  // Clear separation of concerns
-  const handleAction = useCallback(() => {
-    onAction?.();
-  }, [onAction]);
+- **Previewing the production build:**
+  ```bash
+  yarn preview
+  ```
+  This will serve the `dist/` directory at `http://localhost:4000`.
 
-  return (
-    <div className={`base-styles ${className}`}>
-      {data.map((item) => (
-        <div key={item.id}>
-          {/* Component content */}
-        </div>
-      ))}
-    </div>
-  );
-};
-```
+- **Running tests:**
+  ```bash
+  yarn test
+  ```
 
-### Error Handling Preferences
+- **Linting:**
+  ```bash
+  yarn lint
+  ```
 
-- **Graceful degradation**: Always provide fallback UI states
-- **Explicit error boundaries**: Wrap components that might fail
-- **User-friendly messages**: Avoid technical error details in UI
+- **Type-checking:**
+  ```bash
+  yarn tsc --noEmit
+  ```
 
-### Performance Optimizations
+- **Formatting:**
+  ```bash
+  yarn format
+  ```
 
-- **React.memo usage**: Apply to components with stable props
-- **Callback memoization**: Use useCallback for event handlers passed to children
-- **Computation memoization**: Use useMemo for expensive calculations
-- **Bundle optimization**: Import only what's needed from libraries
+## Development Conventions
 
-## Referencing AGENTS.md
-
-For the following topics, refer to the main `AGENTS.md` documentation:
-
-- **Project structure and organization**
-- **Git workflow and branching strategy**
-- **CI/CD pipeline and quality gates**
-- **Content schema and data management**
-- **Security and privacy guidelines**
-- **General coding standards and conventions**
-
-## Gemini-Specific Workflow
-
-### Planning Phase
-
-1. **Analyze existing patterns** in the codebase before suggesting new approaches
-2. **Identify reusable components** that can be enhanced rather than replaced
-3. **Consider accessibility impact** of all UI changes
-4. **Validate against design system** (tokens.css) before implementing custom styles
-
-### Implementation Phase
-
-1. **Start with TypeScript types** - define interfaces before implementation
-2. **Build incrementally** - create basic structure, then add features
-3. **Test early and often** - verify each step works before proceeding
-4. **Document as you go** - add JSDoc comments during development
-
-### Validation Phase
-
-1. **Cross-browser testing considerations** - note potential compatibility issues
-2. **Performance impact assessment** - identify any bundle size or runtime concerns
-3. **Accessibility verification** - ensure keyboard navigation and screen reader support
-4. **Mobile responsiveness check** - verify behavior across viewport sizes
-
-## Gemini Advantage Areas
-
-### Complex Refactoring
-
-- Breaking down large components into smaller, focused pieces
-- Identifying and extracting reusable logic into custom hooks
-- Modernizing older React patterns to current best practices
-
-### Type Safety Improvements
-
-- Converting any types to proper TypeScript interfaces
-- Adding missing error handling and null checks
-- Implementing discriminated unions for complex state management
-
-### Performance Analysis
-
-- Identifying unnecessary re-renders and optimization opportunities
-- Suggesting code splitting strategies for large components
-- Recommending when to use React.lazy vs eager loading
-
-### Documentation Enhancement
-
-- Creating comprehensive JSDoc comments with examples
-- Writing clear README files for complex components
-- Explaining the reasoning behind architectural decisions
-
-Remember: When in doubt, refer to `AGENTS.md` for the authoritative guidance on project standards and workflows.
+- **Package Manager:** This project uses Yarn v1. Do not use `npm` or commit `package-lock.json`.
+- **Branching:** The project follows a trunk-based development workflow. Create small, focused pull requests into the `main` branch.
+- **Commits:** Use conventional commit messages (e.g., `feat:`, `fix:`, `chore:`, `docs:`).
+- **Styling:** Tailwind CSS is used for styling.
+- **Code Quality:** The project uses ESLint for linting, Prettier for formatting, and TypeScript for type-checking. Continuous integration (CI) runs these checks on every push and pull request.

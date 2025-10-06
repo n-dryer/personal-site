@@ -6,4 +6,4 @@ export * from './CommandMenu';
 export * from './Skills';
 export * from './ThemeToggle';
 export * from './Timeline';
-export * from './FluidBackground';
+export * from './GradientBackground';

@@ -7,7 +7,7 @@ import {
   ScrollDownButton,
   SkillsMatrix,
   TimelineMetro,
-  FluidBackground,
+  GradientBackground,
 } from './components';
 // Import the useTheme hook
 import { useCommandMenu, useTheme } from './hooks'; // Assuming useTheme is in './hooks'
@@ -36,8 +36,10 @@ const App = () => {
   } = useCommandMenu();
 
   return (
-    <div className="relative min-h-screen">
-      <FluidBackground />
+    <main className="relative min-h-screen overflow-hidden">
+      <GradientBackground darkMode={darkMode} />
+      <div className="absolute inset-0 -z-10 bg-resume-overlay" />
+
       <Layout>
         <Header
           userData={userData}
@@ -59,15 +61,17 @@ const App = () => {
             <SkillsMatrix skillsData={skillsData} />
           </ErrorBoundary>
         </main>
-        <Footer userData={userData} />
+        <Footer userData={userData} toggleCommandMenu={toggleCommandMenuFromHook} />
         <CommandMenu isOpen={isCommandMenuOpenFromHook} setIsOpen={setIsCommandMenuOpenFromHook} />
         <ScrollDownButton />
-        <FloatingCommandButton
-          toggleCommandMenu={toggleCommandMenuFromHook}
-          isCommandMenuOpen={isCommandMenuOpenFromHook}
-        />
+        <div className="hidden md:block">
+          <FloatingCommandButton
+            toggleCommandMenu={toggleCommandMenuFromHook}
+            isCommandMenuOpen={isCommandMenuOpenFromHook}
+          />
+        </div>
       </Layout>
-    </div>
+    </main>
   );
 };
 

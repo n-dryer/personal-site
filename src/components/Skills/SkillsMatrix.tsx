@@ -143,25 +143,25 @@ export const SkillsMatrix = React.memo<SkillsMatrixProps>(({ skillsData }) => {
   }, [filteredByTier]);
 
   return (
-    <section id="skills" className="py-[var(--space-section)]">
-      <div className="container mx-auto w-full px-4">
-        <h2 className="mb-6 text-center font-display text-4xl font-semibold tracking-tight">
+    <section id="skills" className="section-spacing-y">
+      <div className="container-padding-x mx-auto w-full">
+        <h2 className="mb-6 text-center font-instrument text-4xl font-semibold tracking-tight text-resume-text-primary">
           Skills Matrix
         </h2>
-        <p className="mx-auto mb-8 max-w-2xl text-center font-light tracking-wide text-text-secondary">
+        <p className="mx-auto mb-10 max-w-2xl text-center font-light tracking-wide text-resume-text-secondary">
           Technical expertise and proficiency levels with proof of work
         </p>
 
         {/* Filter Controls - Same as original */}
-        <div className="mb-10 flex flex-wrap justify-center gap-3">
+        <div className="mb-12 flex flex-wrap justify-center gap-3">
           {CATEGORY_FILTERS.map((filter) => {
             const isActive = activeGroup === filter.id;
             return (
               <motion.button
                 key={filter.id}
                 onClick={() => toggleGroup(filter.id as GroupKey)}
-                className={`bg-surface/80 hover:bg-surface/90 rounded-full border border-white/10 px-[var(--space-5)] py-[var(--space-2)] text-sm font-medium text-text-primary ring-1 ring-white/5 backdrop-blur-xl transition-all md:text-base ${
-                  isActive ? 'bg-accent text-on-accent shadow-lg' : ''
+                className={`bg-resume-card/80 hover:bg-resume-overlay/40 rounded-full border border-resume-card-border px-5 py-2 text-sm font-medium text-resume-text-secondary shadow-lg backdrop-blur-xl transition-all duration-300 hover:text-resume-accent md:text-base ${
+                  isActive ? 'border-resume-accent bg-resume-accent text-resume-text-primary shadow-xl hover:bg-resume-accent' : ''
                 }`}
                 whileHover={{ y: -2 }}
                 whileTap={{ y: 0 }}
@@ -197,8 +197,8 @@ export const SkillsMatrix = React.memo<SkillsMatrixProps>(({ skillsData }) => {
             };
 
             return (
-              <div key={category} className="mb-12">
-                <h3 className="mb-6 text-xl font-semibold tracking-tight">
+              <div key={category} className="mb-14">
+                <h3 className="mb-6 text-xl font-semibold tracking-tight text-resume-text-primary">
                   {sectionTitleMap[category]}
                 </h3>
                 <div className="skills-matrix-grid">
@@ -223,12 +223,12 @@ export const SkillsMatrix = React.memo<SkillsMatrixProps>(({ skillsData }) => {
           ] as CategoryKey[]
         ).every((cat) => (byCategory[cat] || []).length === 0) && (
           <motion.div
-            className="bg-surface/80 rounded-lg border border-white/10 py-10 text-center shadow-inner ring-1 ring-white/5 backdrop-blur-xl"
+            className="bg-resume-card/90 ring-resume-ring/40 rounded-2xl border border-resume-card-border py-12 text-center text-resume-text-secondary shadow-xl ring-1 backdrop-blur-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2 }}
           >
-            <p className="font-medium text-text-secondary">No matching skills.</p>
+            <p className="font-medium">No matching skills.</p>
           </motion.div>
         )}
       </div>
@@ -268,14 +268,14 @@ const SkillMatrixCard = React.memo<{ skill: EnhancedSkill; index: number }>(({ s
         tabIndex={0}
       >
         <div className="flex items-center justify-between">
-          <h4 id={`skill-title-${skill.id}`} className="text-lg font-semibold text-text-primary">
+          <h4 id={`skill-title-${skill.id}`} className="text-lg font-semibold text-resume-text-primary">
             {skill.name}
           </h4>
           <div className="text-right">
-            <div className="font-mono text-sm text-text-primary">
+            <div className="font-mono text-sm text-resume-text-primary">
               {tier === 'Expert' ? '92%' : tier === 'Proficient' ? '78%' : '55%'}
             </div>
-            <div className="text-xs text-text-secondary">{tier}</div>
+            <div className="text-xs text-resume-text-muted">{tier}</div>
           </div>
         </div>
       </Card>

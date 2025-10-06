@@ -6,6 +6,7 @@ import { Mail, Download, Eye, Code, Linkedin, Github, X, Check } from 'lucide-re
 import { useReducedMotion } from 'hooks/useReducedMotion';
 import FocusTrap from 'focus-trap-react';
 import { userData as contentUserData } from 'content/user';
+import { Separator } from '@/components/ui/separator';
 
 /**
  * Props for the CommandMenu component.
@@ -282,7 +283,7 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="bg-bg-primary/60 dark:bg-bg-primary/50 fixed inset-0 z-50 flex items-end backdrop-blur-3xl md:items-start md:justify-center md:p-4 md:pt-[15vh]"
+            className="bg-resume-overlay/70 fixed inset-0 z-50 flex items-end backdrop-blur-3xl md:items-start md:justify-center md:p-6 md:pt-[15vh]"
             variants={backdropVariants}
             initial="hidden"
             animate="visible"
@@ -306,7 +307,7 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
             >
               <motion.div
                 ref={containerRef}
-                className="bg-surface/80 relative h-full w-full overflow-y-auto border-t border-white/10 shadow-lg ring-1 ring-white/5 backdrop-blur-xl md:h-auto md:max-h-[80vh] md:max-w-lg md:rounded-lg md:border lg:max-w-xl xl:max-w-2xl"
+                className="bg-resume-card/95 ring-resume-ring/40 relative h-full w-full overflow-y-auto rounded-t-3xl border-t border-resume-card-border shadow-2xl ring-1 backdrop-blur-2xl md:h-auto md:max-h-[80vh] md:max-w-xl md:rounded-3xl md:border lg:max-w-2xl"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
@@ -320,7 +321,7 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
                 </h2>
                 <div className="absolute right-0 top-0 p-2">
                   <motion.button
-                    className="hover:bg-text-secondary/10 rounded-full p-2 text-text-secondary"
+                    className="hover:bg-resume-overlay/40 rounded-full p-2 text-resume-text-muted transition-colors hover:text-resume-accent"
                     onClick={() => setIsOpen(false)}
                     aria-label="Close command menu"
                     whileHover={{ scale: 1.1, rotate: 90 }}
@@ -329,46 +330,50 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
                     <X className="lucide h-5 w-5" />
                   </motion.button>
                 </div>
-                <Command className="w-full" role="menu" aria-labelledby="command-menu-title">
+                <Command className="w-full text-resume-text-primary" role="menu" aria-labelledby="command-menu-title">
                   <p id="command-menu-description" className="sr-only">
                     Choose an action to perform. Use arrow keys to navigate, Enter to select, or
                     Escape to close.
                   </p>
 
                   {copied && (
-                    <div className="border-accent/20 bg-accent/10 border-b px-4 py-3">
-                      <div className="flex items-center text-accent">
-                        <Check className="mr-2 h-4 w-4" />
+                    <div className="border-resume-accent/40 bg-resume-accent/15 border-b px-5 py-3">
+                      <div className="flex items-center gap-2 text-resume-accent">
+                        <Check className="h-4 w-4" />
                         <p className="text-sm font-medium">Email copied to clipboard</p>
                       </div>
                     </div>
                   )}
 
                   <motion.div layout={!shouldReduceMotion}>
-                    <Command.List className="p-[var(--space-2)]">
+                    <Command.List className="px-4 py-3">
                       {Object.entries(commandGroups).map(([groupName, commands], index) => (
-                        <Command.Group
-                          key={groupName}
-                          className={`pt-2 ${index > 0 ? 'border-text-primary/10 mt-2 border-t' : ''}`}
-                          heading={
-                            <span className="px-[var(--space-2)] pb-[var(--space-3)] text-sm font-semibold uppercase tracking-wider text-text-secondary">
-                              {groupName}
-                            </span>
-                          }
-                        >
-                          {commands.map((command) => (
-                            <Command.Item
-                              key={command.id}
-                              onSelect={command.action}
-                              className="mt-1 flex w-full cursor-pointer items-center justify-between rounded-md p-[var(--space-2)] text-sm text-text-primary hover:bg-accent hover:text-on-accent"
-                            >
-                              <div className="flex items-center gap-[var(--space-2)]">
-                                {command.icon}
-                                <span>{command.name}</span>
-                              </div>
-                            </Command.Item>
-                          ))}
-                        </Command.Group>
+                        <React.Fragment key={groupName}>
+                          {index > 0 && (
+                            <Separator className="my-3" decorative />
+                          )}
+                          <Command.Group
+                            className="pt-3"
+                            heading={
+                              <span className="px-2 pb-2 text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-resume-text-muted">
+                                {groupName}
+                              </span>
+                            }
+                          >
+                            {commands.map((command) => (
+                              <Command.Item
+                                key={command.id}
+                                onSelect={command.action}
+                                className="hover:bg-resume-accent/10 mt-1 flex w-full cursor-pointer items-center justify-between rounded-xl px-4 py-3 text-sm text-resume-text-secondary transition-colors duration-200 hover:text-resume-text-primary"
+                              >
+                                <div className="flex items-center gap-3">
+                                  {command.icon}
+                                  <span>{command.name}</span>
+                                </div>
+                              </Command.Item>
+                            ))}
+                          </Command.Group>
+                        </React.Fragment>
                       ))}
                     </Command.List>
                   </motion.div>

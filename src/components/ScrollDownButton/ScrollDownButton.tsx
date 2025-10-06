@@ -110,7 +110,7 @@ const ScrollDownButtonComponent = (): React.ReactElement | null => {
       }}
     >
       <motion.button
-        className="focus-visible:ring-accent/40 flex items-center justify-center rounded-full bg-accent text-on-accent shadow-lg focus:outline-none focus-visible:ring-2"
+        className="focus-visible:ring-resume-accent/40 flex items-center justify-center rounded-full bg-resume-accent text-resume-text-primary shadow-2xl focus:outline-none focus-visible:ring-2"
         style={{
           width: 'clamp(2.75rem, 4vw, 3.5rem)',
           height: 'clamp(2.75rem, 4vw, 3.5rem)',

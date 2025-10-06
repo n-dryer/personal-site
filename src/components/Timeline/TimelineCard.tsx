@@ -77,12 +77,10 @@ export const TimelineCard = React.memo(
           aria-labelledby={`timeline-title-${id}`}
           onClick={onClick}
         >
-          <Card
-            className={`p-6 ${isActive ? 'border-accent/50 shadow-2xl' : ''} bg-surface/80 ring-1 ring-white/5 backdrop-blur-xl transition-all duration-300`}
-          >
+          <Card className={`p-6 transition-all duration-300 ${isActive ? 'border-resume-accent/50 shadow-2xl' : ''}`}>
             <div className="flex items-start gap-4">
               <motion.div
-                className="bg-surface/80 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-white/10 ring-1 ring-white/5 backdrop-blur-xl"
+                className="flex items-center justify-center flex-shrink-0 w-12 h-12 border rounded-full shadow-inner bg-resume-card/90 border-resume-card-border text-resume-accent"
                 animate={{
                   scale: isActive ? 1.08 : 1,
                 }}
@@ -91,17 +89,18 @@ export const TimelineCard = React.memo(
                   ease: 'easeOut',
                 }}
               >
-                <Icon className="h-6 w-6 text-accent" aria-hidden="true" />
+                <Icon className="w-6 h-6 text-resume-accent" aria-hidden="true" />
               </motion.div>
-              <div className="min-w-0 flex-1">
+              <div className="flex-1 min-w-0">
                 <h3
                   id={`timeline-title-${id}`}
-                  className="text-lg font-semibold leading-tight text-text-primary md:text-xl"
+                  className="text-lg font-semibold leading-tight text-resume-text-primary md:text-xl"
                 >
                   {title}
                 </h3>
-                <p className="text-sm font-medium text-accent md:text-base">{company}</p>
-                <div className="mt-1 flex items-center gap-2 text-xs text-text-secondary md:text-sm">
+                <p className="text-sm font-medium text-resume-accent md:text-base">{company}</p>
+                <p className="mt-1 text-xs text-resume-text-muted md:text-sm">{_date}</p>
+                <div className="flex items-center gap-2 mt-1 text-xs text-resume-text-muted md:text-sm">
                   <span>{location}</span>
                 </div>
 
@@ -122,13 +121,13 @@ export const TimelineCard = React.memo(
                       className="overflow-hidden"
                     >
                       <div className="pt-4">
-                        <p className="mb-4 text-sm leading-relaxed text-text-secondary md:text-base">
+                        <p className="mb-4 text-sm leading-relaxed text-resume-text-secondary md:text-base">
                           {description}
                         </p>
 
                         {kpis.length > 0 && (
                           <div className="mb-4">
-                            <h4 className="text-text-secondary/80 mb-2 text-xs font-semibold uppercase tracking-wider">
+                            <h4 className="mb-2 text-xs font-semibold tracking-wider uppercase text-resume-text-muted">
                               Key Metrics
                             </h4>
                             <div className="flex flex-wrap gap-2">
@@ -143,7 +142,7 @@ export const TimelineCard = React.memo(
 
                         {technologies.length > 0 && (
                           <div className="mb-4">
-                            <h4 className="text-text-secondary/80 mb-2 text-xs font-semibold uppercase tracking-wider">
+                            <h4 className="mb-2 text-xs font-semibold tracking-wider uppercase text-resume-text-muted">
                               Technologies
                             </h4>
                             <div className="flex flex-wrap gap-2">

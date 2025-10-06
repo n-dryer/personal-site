@@ -26,6 +26,64 @@ const toSlug = (exp: Experience): { slug: string; year: string } => {
   return { slug: `${year}-${companySlug}`, year };
 };
 
+type TimelineYearRailProps = {
+  items: TimelineItem[];
+  activeId: string | null;
+  onItemClick: (item: TimelineItem) => void;
+};
+
+/**
+ * Semantic year rail component with radiogroup semantics
+ * Displays date pills in a responsive layout optimized for mobile
+ */
+const TimelineYearRail = React.memo(
+  ({ items, activeId, onItemClick }: TimelineYearRailProps) => {
+    return (
+      <div
+        role="radiogroup"
+        aria-label="Experience periods"
+        className="relative z-0 flex w-full max-w-sm flex-row flex-wrap justify-center gap-2 sm:flex-col sm:flex-nowrap sm:justify-between sm:gap-0"
+      >
+        {/* Central thread - hidden on mobile, visible on tablet+ */}
+        <div
+          className="absolute bottom-0 left-1/2 top-0 hidden -translate-x-1/2 sm:block sm:w-[3px]"
+          aria-hidden="true"
+        >
+          <div className="via-resume-accent/40 h-full w-full bg-gradient-to-b from-transparent to-transparent" />
+        </div>
+
+        {items.map((item) => {
+          const isActive = activeId === item.id;
+
+          return (
+            <div
+              key={`${item.id}-pill`}
+              className="z-10 flex sm:min-h-[12rem] sm:w-full sm:cursor-pointer sm:items-start sm:justify-center sm:pt-6 md:w-auto"
+              onClick={(e) => {
+                e.stopPropagation();
+                onItemClick(item);
+              }}
+              role="radio"
+              aria-checked={isActive}
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onItemClick(item);
+                }
+              }}
+            >
+              <DatePill date={item.date} isActive={isActive} />
+            </div>
+          );
+        })}
+      </div>
+    );
+  },
+);
+
+TimelineYearRail.displayName = 'TimelineYearRail';
+
 /**
  * Metro map style timeline with central vertical thread and alternating cards
  * Features scroll-based active detection and smooth animations
@@ -68,13 +126,13 @@ export const TimelineMetro = ({ experienceData = [] }: TimelineMetroProps) => {
 
   if (!items.length) {
     return (
-      <section id="timeline" className="bg-background overflow-hidden py-[var(--space-section)]">
-        <div className="container mx-auto w-full px-4">
-          <div className="relative mx-auto max-w-4xl">
-            <h2 className="mb-12 text-center font-display text-4xl font-semibold tracking-tight text-text-primary">
+      <section id="timeline" className="section-spacing-y">
+        <div className="container-padding-x mx-auto w-full">
+          <div className="relative mx-auto max-w-4xl text-center">
+            <h2 className="heading-margin font-instrument text-4xl font-semibold tracking-tight text-resume-text-primary">
               Work Experience
             </h2>
-            <p className="text-center text-text-secondary">
+            <p className="text-resume-text-secondary">
               No work experience data available at this time.
             </p>
           </div>
@@ -84,45 +142,26 @@ export const TimelineMetro = ({ experienceData = [] }: TimelineMetroProps) => {
   }
 
   return (
-    <section id="timeline" className="bg-background overflow-hidden py-[var(--space-section)]">
-      <div className="container mx-auto w-full px-4">
-        <div className="relative mx-auto max-w-4xl">
-          <h2 className="mb-12 text-center font-display text-4xl font-semibold tracking-tight text-text-primary">
+    <section id="timeline" className="section-spacing-y">
+      <div className="container-padding-x mx-auto w-full">
+        <div className="relative mx-auto max-w-4xl text-center">
+          <h2 className="heading-margin font-instrument text-4xl font-semibold tracking-tight text-resume-text-primary">
             Work Experience
           </h2>
         </div>
 
-        <div className="relative mx-auto flex max-w-lg flex-col items-center md:max-w-4xl md:flex-row md:items-start md:justify-center">
-          {/* Central Axis */}
-          <div className="relative z-0 flex w-full max-w-sm flex-row justify-between md:flex-col md:items-center">
-            <div
-              className="absolute bottom-0 left-1/2 top-0 -translate-x-1/2 md:w-0.5"
-              aria-hidden="true"
-            >
-              <div className="via-accent/50 h-full w-full bg-gradient-to-b from-transparent to-transparent" />
-            </div>
-            {items.map((item) => (
-              <div
-                key={`${item.id}-pill`}
-                className="z-10 flex min-h-[12rem] w-full cursor-pointer items-start justify-center pt-6 md:w-auto"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleCardClick(item);
-                }}
-              >
-                <DatePill date={item.date} isActive={activeId === item.id} />
-              </div>
-            ))}
-          </div>
+        <div className="relative mx-auto flex max-w-lg flex-col items-center sm:max-w-4xl sm:flex-row sm:items-start sm:justify-center">
+          {/* Year Rail with Date Pills */}
+          <TimelineYearRail items={items} activeId={activeId} onItemClick={handleCardClick} />
 
           {/* Timeline Cards */}
-          <div className="relative z-10 w-full max-w-lg">
+          <ol role="list" className="relative z-10 w-full max-w-lg">
             <AnimatePresence>
               {items.map((item, index) => {
                 const isActive = activeId === item.id;
 
                 return (
-                  <motion.div
+                  <motion.li
                     key={item.id}
                     className="flex min-h-[12rem] items-center"
                     initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 50 }}
@@ -145,11 +184,11 @@ export const TimelineMetro = ({ experienceData = [] }: TimelineMetroProps) => {
                         className={`mb-8 ${isActive ? 'timeline-card--active' : ''}`}
                       />
                     </div>
-                  </motion.div>
+                  </motion.li>
                 );
               })}
             </AnimatePresence>
-          </div>
+          </ol>
         </div>
       </div>
     </section>

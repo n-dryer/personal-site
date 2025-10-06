@@ -23,12 +23,13 @@
       content="AI/ML product leader with a track record of shipping agentic systems and impactful products."
     />
     <meta name="twitter:image" content="https://nathandryer.com/og-card.jpg" />
+    <link rel="preload" href="/profile.jpg" as="image" fetchpriority="high" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/logo192.png" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://use.typekit.net/Mona-Sans.css" />
+    
     <title>Nathan Dryer | Portfolio</title>
     <script>
       (function () {
@@ -36,7 +37,7 @@
           var d = document.documentElement;
           var theme = localStorage.getItem('theme');
           var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          var isDark = theme === 'dark' || (!theme && prefersDark);
+          var isDark = theme ? theme === 'dark' : true;
           d.dataset.theme = isDark ? 'aurora-dark' : 'aurora-light';
           d.classList[isDark ? 'add' : 'remove']('dark');
           d.style.colorScheme = isDark ? 'dark' : 'light';

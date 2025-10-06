@@ -1,10 +1,10 @@
-import { AnimatePresence, easeInOut, motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import { easeInOut, easeOut, motion } from 'framer-motion';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Command } from 'lucide-react';
 import { ThemeToggle } from '..';
+import { Button } from '@/components/ui/button';
 import { UserData } from '../../types';
-import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 /**
  * Props for the Header component.
@@ -19,16 +19,6 @@ type HeaderProps = {
   /** Function to toggle the application theme (light/dark). */
   toggleTheme: () => void;
 };
-
-// Available commands for preview animation
-const availableCommands = [
-  'view timeline',
-  'view skills',
-  'download resume',
-  'copy email',
-  'go to LinkedIn Profile',
-  'go to GitHub Profile',
-];
 
 /**
  * HeaderComponent is the main hero section of the portfolio.
@@ -45,117 +35,95 @@ const HeaderComponent = ({
   darkMode,
   toggleTheme,
 }: HeaderProps): React.ReactElement => {
+  const MotionButton = motion(Button);
   const [isMac, setIsMac] = useState<boolean>(false);
-  const [currentCommandIndex, setCurrentCommandIndex] = useState<number>(0);
-
-  // Use the existing useReducedMotion hook
-  const prefersReducedMotion = useReducedMotion();
 
   // Detect OS for keyboard shortcut display
   useEffect(() => {
     setIsMac(navigator.platform.toUpperCase().indexOf('MAC') >= 0);
   }, []);
 
-  // Cycle through available commands for preview
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      return; // Don't cycle if reduced motion is preferred
-    }
-
-    const cycleInterval = setInterval(() => {
-      setCurrentCommandIndex((prev) => (prev + 1) % availableCommands.length);
-    }, 1800); // Change every 1.8 seconds (faster speed)
-
-    return () => clearInterval(cycleInterval);
-  }, [prefersReducedMotion]);
 
   return (
-    <header
-      className="relative flex min-h-screen items-center justify-center pb-20 pt-[var(--space-section)] text-text-primary md:pb-32"
-      id="top"
-    >
-      {/* Theme Toggle - Positioned in top-right corner */}
+    <header id="top" className="relative section-spacing-top">
       <motion.div
-        className="absolute right-4 top-4 z-20 sm:right-6 sm:top-6"
-        initial={{ opacity: 0, scale: 0.8 }}
+        className="absolute z-20 right-4 top-4 sm:right-6 sm:top-6"
+        initial={{ opacity: 0, scale: 0.85 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
       >
         <ThemeToggle darkMode={darkMode} toggleTheme={toggleTheme} />
       </motion.div>
 
-      <div className="container relative z-10 mx-auto px-6 py-8">
-        <div className="flex h-full flex-col items-center justify-center text-center">
-          {/* Name and Subtitle - Above Command Prompt */}
-          <motion.div
-            className="mb-8 text-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+      <div className="container-padding-x relative z-10 mx-auto flex min-h-[calc(100vh-8rem)] max-w-5xl flex-col items-center text-center">
+        <section className="flex flex-col items-center w-full text-center hero-spacing">
+          {userData.photoUrl ? (
+            <motion.div
+              className="relative overflow-hidden border-4 rounded-full shadow-2xl hero-image-margin ring-resume-ring/60 h-36 w-36 border-resume-card-border bg-resume-card ring-4 sm:h-44 sm:w-44 md:h-52 md:w-52"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: easeInOut }}
+            >
+              <img
+                src={userData.photoUrl}
+                alt={userData.fullName}
+                className="object-cover w-full h-full"
+                fetchpriority="high"
+              />
+            </motion.div>
+          ) : null}
+
+          <motion.h1
+            className="hero-title-margin whitespace-nowrap font-instrument text-[clamp(2.4rem,8vw,5.5rem)] font-normal leading-tight tracking-tight text-resume-text-primary"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3, ease: easeOut }}
           >
-            <motion.h1
-              className="mb-2 font-display text-[clamp(2.75rem,9vw,5rem)] font-extrabold tracking-tight text-text-primary"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              {userData.fullName}
-            </motion.h1>
+            {userData.fullName}
+          </motion.h1>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <p className="text-[clamp(1rem,2.2vw,2rem)] font-medium text-accent md:whitespace-nowrap md:text-[clamp(1.25rem,2.6vw,2.25rem)]">
-                {userData.bioLine}
-              </p>
-            </motion.div>
-          </motion.div>
+          <motion.p
+            className="whitespace-nowrap text-[clamp(0.75rem,4vw,2.4rem)] font-light leading-tight tracking-tight text-resume-accent-light md:text-[clamp(1.25rem,3vw,2.6rem)]"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4, ease: easeOut }}
+          >
+            {userData.bioLine}
+          </motion.p>
+        </section>
 
-          {/* Command Prompt Container */}
-          <div className="w-full max-w-md">
-            {/* Modern Pill-Shaped Command Prompt Field */}
-            <motion.div
-              className="relative w-full"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            >
-              <motion.div
-                className="flex cursor-pointer items-center rounded-full bg-accent px-4 py-3 text-on-accent shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-2 focus-visible:ring-opacity-75"
-                onClick={toggleCommandMenu}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.98, y: 0 }}
-                aria-label="Open command palette"
-                aria-keyshortcuts={isMac ? 'Meta+K' : 'Control+K'}
-              >
-                <Command size={18} className="mr-3" style={{ color: 'currentColor' }} />
-                <div
-                  className="relative flex-1 overflow-hidden text-left"
-                  style={{ minHeight: '1.2em' }}
-                >
-                  <span>Click to </span>
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={currentCommandIndex}
-                      initial={{ y: 15, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: -15, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: easeInOut }}
-                      className="inline-block"
-                    >
-                      {availableCommands[currentCommandIndex]}
-                    </motion.span>
-                  </AnimatePresence>
+        <motion.div
+          className="relative w-full max-w-xl"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5, ease: easeOut }}
+        >
+          <MotionButton
+            className="flex items-center justify-between w-full px-5 py-3 text-left transition-all duration-300 border rounded-full shadow-2xl bg-resume-card/90 hover:border-resume-accent/40 group border-resume-card-border text-resume-text-secondary backdrop-blur-xl hover:bg-resume-card"
+            variant="ghost"
+            onClick={toggleCommandMenu}
+            whileHover={{ scale: 1.02, y: -2 }}
+            whileTap={{ scale: 0.98, y: 0 }}
+            aria-label="Open command palette"
+            aria-keyshortcuts={isMac ? 'Meta+K' : 'Control+K'}
+            type="button"
+          >
+            <div className="flex items-center flex-1 gap-3">
+              <span className="inline-flex items-center justify-center rounded-full bg-resume-accent/15 h-9 w-9 text-resume-accent">
+                <Command size={18} />
+              </span>
+              <div className="relative flex justify-start flex-1">
+                <div className="flex items-center w-full gap-2 px-3 py-1 font-semibold tracking-tight text-left rounded-full from-resume-accent/10 via-resume-accent/20 to-resume-accent/10 bg-gradient-to-r text-resume-text-primary">
+                  <span className="text-resume-text-muted">Tap to </span>
+                  <span className="font-semibold text-resume-accent">explore</span>
                 </div>
-                <span className="hidden items-center justify-center rounded bg-black/20 px-2 py-1 text-xs md:flex">
-                  {`Search (${isMac ? '⌘K' : 'Ctrl+K'})`}
-                </span>
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
+              </div>
+            </div>
+            <span className="items-center hidden px-3 py-1 text-xs border rounded-full border-resume-card-border/60 bg-resume-overlay/40 text-resume-text-muted md:flex">
+              {isMac ? '⌘ K' : 'Ctrl K'}
+            </span>
+          </MotionButton>
+        </motion.div>
       </div>
     </header>
   );

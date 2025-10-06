@@ -7,8 +7,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['var(--ff-display)', 'system-ui', 'sans-serif'],
-        body: ['var(--ff-body)', 'system-ui', 'sans-serif'],
+        display: ['Mona Sans', 'Arial', 'system-ui', 'sans-serif'],
+        body: ['Mona Sans', 'Arial', 'system-ui', 'sans-serif'],
+        mono: ['var(--ff-mono)', 'monospace'],
+        sans: ['Mona Sans', 'Arial', 'system-ui', 'sans-serif'],
+        instrument: ['Mona Sans', 'Arial', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         tight: 'var(--tracking-tight)',
@@ -26,11 +29,22 @@ export default {
       colors: {
         'bg-primary': 'var(--bg-primary)',
         'bg-surface': 'var(--bg-surface)',
-        accent: 'var(--accent)',
-        'accent-2': 'var(--accent-2)',
-        'on-accent': 'var(--on-accent)',
+        accent: 'var(--resume-accent)',
+        'accent-2': 'var(--resume-accent-light)',
+        'on-accent': 'var(--resume-text-primary)',
         'text-primary': 'var(--text-primary)',
         'text-secondary': 'var(--text-secondary)',
+        'resume-overlay': 'var(--resume-overlay)',
+        'resume-card': 'var(--resume-card)',
+        'resume-card-border': 'var(--resume-card-border)',
+        'resume-text-primary': 'var(--resume-text-primary)',
+        'resume-text-secondary': 'var(--resume-text-secondary)',
+        'resume-text-muted': 'var(--resume-text-muted)',
+        'resume-text-subtle': 'var(--resume-text-subtle)',
+        'resume-accent': 'var(--resume-accent)',
+        'resume-accent-light': 'var(--resume-accent-light)',
+        'resume-bullet': 'var(--resume-bullet)',
+        'resume-ring': 'var(--resume-ring)',
       },
       spacing: {
         'space-1': 'var(--space-1)',

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn add:*)",
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(yarn lint)",
+      "Bash(yarn tsc:*)",
+      "Bash(yarn build)",
+      "Bash(yarn lint:*)",
+      "Bash(yarn start)",
+      "Bash(cat:*)",
+      "Bash(pkill:*)",
+      "Bash(yarn start:*)",
+      "Bash(node:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

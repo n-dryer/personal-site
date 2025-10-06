@@ -24,15 +24,15 @@ interface UseThemeReturn {
 export const useTheme = (): UseThemeReturn => {
   // Initialize theme state from localStorage or system preference
   const [darkMode, setDarkMode] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return false;
+    if (typeof window === 'undefined') return true;
 
-    const storedThemeValue = localStorage.getItem('theme'); // e.g., 'light', 'dark'
+    const storedThemeValue = localStorage.getItem('theme');
     if (storedThemeValue) {
       return storedThemeValue === 'dark';
     }
 
-    // Check system preference
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Default to dark mode when no preference is stored
+    return true;
   });
 
   /**

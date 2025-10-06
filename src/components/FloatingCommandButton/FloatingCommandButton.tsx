@@ -1,7 +1,9 @@
 import { AnimatePresence, Variants, easeIn, easeInOut, easeOut, motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Command } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 /**
@@ -13,16 +15,6 @@ type FloatingCommandButtonProps = {
   /** Whether the command menu is currently open. */
   isCommandMenuOpen: boolean;
 };
-
-// Available commands for preview animation
-const availableCommands = [
-  'View Timeline',
-  'View Skills',
-  'Download Resume',
-  'Copy Email',
-  'LinkedIn Profile',
-  'GitHub Profile',
-];
 
 /**
  * FloatingCommandButtonComponent displays a button that opens the command menu.
@@ -39,84 +31,9 @@ const FloatingCommandButtonComponent = ({
   toggleCommandMenu,
   isCommandMenuOpen,
 }: FloatingCommandButtonProps): React.ReactElement | null => {
-  const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [isMac, setIsMac] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [animationPhase, setAnimationPhase] = useState<'hidden' | 'visible' | 'pulse'>('hidden');
-  const [currentCommandIndex, setCurrentCommandIndex] = useState<number>(0);
-  const [tooltipTimer, setTooltipTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
-
-  // Use the existing useReducedMotion hook
-  const prefersReducedMotion = useReducedMotion();
-
-  // Detect OS for keyboard shortcut display
-  useEffect(() => {
-    setIsMac(navigator.platform.toUpperCase().indexOf('MAC') >= 0);
-  }, []);
-
-  // Synchronized delayed appearance with scroll button
-  useEffect(() => {
-    const delayTimer = setTimeout(() => {
-      setIsVisible(true);
-      setAnimationPhase('visible');
-
-      // Start pulse after fade-in completes (0.75s delay + 1s fade-in = 1.75s total)
-      setTimeout(() => {
-        setAnimationPhase('pulse');
-      }, 1000); // Start pulse after fade-in completes
-    }, 750); // 0.75 second delay - synchronized with scroll button
-
-    return () => clearTimeout(delayTimer);
-  }, []);
-
-  // Cycle through available commands for preview
-  useEffect(() => {
-    if (!isVisible || prefersReducedMotion) {
-      return; // Don't cycle if not visible or reduced motion is preferred
-    }
-
-    const cycleInterval = setInterval(() => {
-      setCurrentCommandIndex((prev) => (prev + 1) % availableCommands.length);
-    }, 1500); // Change every 1.5 seconds (faster rotation)
-
-    return () => clearInterval(cycleInterval);
-  }, [isVisible, prefersReducedMotion]);
-
-  // Enhanced tooltip handlers with 250ms delay
-  const handleMouseEnter = (): void => {
-    // Clear any existing timer
-    if (tooltipTimer) {
-      clearTimeout(tooltipTimer);
-    }
-
-    // Set new timer for 250ms delay (quicker display)
-    const timer = setTimeout(() => {
-      setShowTooltip(true);
-    }, 250);
-
-    setTooltipTimer(timer);
-  };
-
-  // Handle mouse leave with immediate hide
-  const handleMouseLeave = (): void => {
-    // Clear any pending timer
-    if (tooltipTimer) {
-      clearTimeout(tooltipTimer);
-      setTooltipTimer(null);
-    }
-
-    // Immediately hide tooltip
-    setShowTooltip(false);
-  };
-
-  // Cleanup tooltip timer on unmount
-  useEffect(() => {
-    return () => {
-      if (tooltipTimer) {
-        clearTimeout(tooltipTimer);
-      }
-    };
-  }, [tooltipTimer]);
 
   const buttonVariants: Variants = {
     visible: {
@@ -175,11 +92,11 @@ const FloatingCommandButtonComponent = ({
   const iconVariants: Variants = {
     open: {
       rotate: 90,
-      scale: 1.1,
+      scale: 1.08,
       transition: {
         type: 'spring',
-        stiffness: 400,
-        damping: 30,
+        stiffness: 520,
+        damping: 32,
       },
     },
     closed: {
@@ -187,11 +104,13 @@ const FloatingCommandButtonComponent = ({
       scale: 1,
       transition: {
         type: 'spring',
-        stiffness: 400,
-        damping: 30,
+        stiffness: 520,
+        damping: 34,
       },
     },
   };
+
+  const MotionButton = motion(Button);
 
   return (
     <AnimatePresence>
@@ -202,110 +121,50 @@ const FloatingCommandButtonComponent = ({
           animate="visible"
           exit="hidden"
           variants={buttonVariants}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
         >
-          <AnimatePresence>
-            {showTooltip && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                transition={{ duration: 0.2 }}
-                className="bg-surface/80 absolute bottom-full right-0 mb-4 whitespace-nowrap rounded-lg border border-white/10 px-4 py-2 text-sm text-text-primary shadow-lg ring-1 ring-white/5 backdrop-blur-xl"
-              >
-                <div className="flex items-center gap-2">
-                  <div
-                    className="relative overflow-hidden font-medium"
-                    style={{ minWidth: '140px', height: '1.2em' }}
-                  >
-                    <AnimatePresence mode="wait">
-                      <motion.span
-                        key={currentCommandIndex}
-                        initial={{
-                          y: prefersReducedMotion ? 0 : 20,
-                          opacity: 0,
-                          rotateX: prefersReducedMotion ? 0 : -90,
-                        }}
-                        animate={{
-                          y: 0,
-                          opacity: 1,
-                          rotateX: 0,
-                          transition: {
-                            duration: prefersReducedMotion ? 0.01 : 0.4,
-                            ease: easeOut, // Spring easing from design tokens
-                          },
-                        }}
-                        exit={{
-                          y: prefersReducedMotion ? 0 : -20,
-                          opacity: 0,
-                          rotateX: prefersReducedMotion ? 0 : 90,
-                          transition: {
-                            duration: prefersReducedMotion ? 0.01 : 0.3,
-                            ease: easeIn,
-                          },
-                        }}
-                        className="absolute inset-0 flex items-center"
-                        style={{
-                          transformStyle: prefersReducedMotion ? 'flat' : 'preserve-3d',
-                          perspective: prefersReducedMotion ? 'none' : '1000px',
-                        }}
-                      >
-                        {availableCommands[currentCommandIndex]}
-                      </motion.span>
-                    </AnimatePresence>
-                  </div>
-                  <span className="text-text-primary/70 text-xs">{isMac ? '⌘K' : 'Ctrl+K'}</span>
-                </div>
-                <div
-                  className="absolute bottom-0 right-4 h-2 w-2 translate-y-1/2 rotate-45 transform"
+          <TooltipProvider delayDuration={prefersReducedMotion ? 0 : 250} disableHoverableContent>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <MotionButton
+                  variant="default"
+                  size="icon-lg"
+                  className="flex items-center justify-center rounded-full bg-resume-accent text-resume-text-primary shadow-2xl"
                   style={{
-                    background: 'var(--token-bg-frosted)',
-                    border: '1px solid color-mix(in srgb, var(--text-primary) 10%, transparent)',
-                    borderTop: 'none',
-                    borderLeft: 'none',
+                    width: 'clamp(2.75rem, 4vw, 3.5rem)',
+                    height: 'clamp(2.75rem, 4vw, 3.5rem)',
                   }}
-                ></div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <motion.button
-            onClick={toggleCommandMenu}
-            className="focus-visible:ring-accent/40 flex items-center justify-center rounded-full bg-accent text-on-accent shadow-lg focus:outline-none focus-visible:ring-2"
-            style={{
-              width: 'clamp(2.75rem, 4vw, 3.5rem)',
-              height: 'clamp(2.75rem, 4vw, 3.5rem)',
-            }}
-            whileHover="hover"
-            whileTap="tap"
-            variants={buttonVariants}
-            animate={prefersReducedMotion ? undefined : animationPhase} // Controlled animation phases
-            aria-label="Open Command Menu"
-            aria-keyshortcuts={isMac ? '⌘+K' : 'Ctrl+K'}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                toggleCommandMenu();
-              }
-            }}
-          >
-            <motion.div
-              variants={iconVariants}
-              animate={isCommandMenuOpen ? 'open' : 'closed'}
-              style={{ display: 'flex' }} // Ensure the div doesn't collapse
-            >
-              <Command
-                style={{
-                  width: 'clamp(1rem, 2.5vw, 1.5rem)',
-                  height: 'clamp(1rem, 2.5vw, 1.5rem)',
-                  color: 'currentColor',
-                }}
-              />
-            </motion.div>
-          </motion.button>
+                  onClick={toggleCommandMenu}
+                  whileHover="hover"
+                  whileTap="tap"
+                  variants={buttonVariants}
+                  animate={prefersReducedMotion ? undefined : animationPhase}
+                  aria-label="Open Command Menu"
+                  aria-keyshortcuts={isMac ? '⌘+K' : 'Ctrl+K'}
+                  type="button"
+                >
+                  <motion.div
+                    variants={iconVariants}
+                    animate={isCommandMenuOpen ? 'open' : 'closed'}
+                    className="flex"
+                  >
+                    <Command
+                      style={{
+                        width: 'clamp(1rem, 2.5vw, 1.5rem)',
+                        height: 'clamp(1rem, 2.5vw, 1.5rem)',
+                        color: 'currentColor',
+                      }}
+                    />
+                  </motion.div>
+                </MotionButton>
+              </TooltipTrigger>
+              <TooltipContent side="top" align="end" className="flex items-center gap-3">
+                <div className="font-medium text-resume-text-primary">
+                  Open Command Menu
+                </div>
+                <span className="text-xs text-resume-text-muted">{isMac ? '⌘K' : 'Ctrl+K'}</span>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </motion.div>
       )}
     </AnimatePresence>
