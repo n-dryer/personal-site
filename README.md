@@ -1,10 +1,10 @@
-# Nathan Dryer - Personal Portfolio
+# Blanche Enterprise Trial - Company Portfolio
 
-[![CI](https://github.com/n-dryer/personal-site/actions/workflows/ci.yml/badge.svg)](https://github.com/n-dryer/personal-site/actions/workflows/ci.yml)
+[![CI](https://github.com/Blanche-Enterprise-Trial/personal-site/actions/workflows/ci.yml/badge.svg)](https://github.com/Blanche-Enterprise-Trial/personal-site/actions/workflows/ci.yml)
 
-React portfolio site.
+React company portfolio site.
 
-**Live Site:** [https://nathandryer.com](https://nathandryer.com)
+**Live Site:** [https://blanche-enterprise-trial.com](https://blanche-enterprise-trial.com)
 
 ## Tech
 
@@ -20,7 +20,7 @@ React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Yarn | Prettier
 
 ## Run Locally
 
-1. `git clone https://github.com/n-dryer/personal-site.git`
+1. `git clone https://github.com/Blanche-Enterprise-Trial/personal-site.git`
 1. `cd personal-site && yarn install`
 1. `yarn start` (Vite dev server at <http://localhost:4000>)
 

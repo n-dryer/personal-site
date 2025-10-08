@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "blanche-enterprise-trial",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -45,11 +45,11 @@
     "format": "prettier --write .",
     "tsc": "tsc -p tsconfig.json"
   },
-  "homepage": "https://nathandryer.com",
+  "homepage": "https://blanche-enterprise-trial.com",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/n-dryer/personal-site.git"
+    "url": "https://github.com/Blanche-Enterprise-Trial/personal-site.git"
   },
   "browserslist": {
     "production": [

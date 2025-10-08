@@ -197,16 +197,16 @@ export const skillsData: Skill[] = [
 
 // Profile photo will be saved and referenced locally
 export const userData: UserData = {
-  fullName: 'Nathan Dryer',
-  bioLine: 'AI/ML Product Manager • Agent Orchestrator',
+  fullName: 'Blanche Enterprise Trial',
+  bioLine: 'AI/ML Solutions Provider • Enterprise Innovation',
   photoUrl: '/profile.jpg', // We'll save this image from the provided photo
-  email: 'nathan.dryer@example.com',
-  phone: '(513) 448-5603',
+  email: 'contact@blanche-enterprise-trial.com',
+  phone: '(555) 123-4567',
   location: 'San Francisco, California',
   socialLinks: [
-    { name: 'GitHub', url: 'https://github.com/nathan-dryer' },
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/nathandryer' },
-    { name: 'Personal Site', url: 'https://nathandryer.com' },
+    { name: 'GitHub', url: 'https://github.com/Blanche-Enterprise-Trial' },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/company/blanche-enterprise-trial' },
+    { name: 'Company Site', url: 'https://blanche-enterprise-trial.com' },
   ],
-  resumeUrl: '/nathan_dryer_resume.pdf',
+  resumeUrl: '/company_overview.pdf',
 };
