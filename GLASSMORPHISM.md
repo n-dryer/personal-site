@@ -7,6 +7,7 @@ This project now includes a complete glassmorphism design system with bluish gra
 ## Background Configuration
 
 ### Gradient Colors (Bluish Scheme)
+
 - **Base Color**: `hsl(220, 20%, 8%)` - Dark blue-gray base
 - **Gradient Colors**:
   - `hsl(210, 100%, 45%)` - Bright blue
@@ -14,6 +15,7 @@ This project now includes a complete glassmorphism design system with bluish gra
   - `hsl(220, 90%, 35%)` - Deep blue
 
 ### Animation Parameters
+
 - **Softness**: 0.85
 - **Intensity**: 0.6
 - **Noise**: 0
@@ -41,6 +43,7 @@ All glassmorphism tokens are defined in [src/styles/tokens.css](src/styles/token
 ## Tailwind CSS Classes
 
 ### Background & Overlay
+
 ```tsx
 <div className="bg-resume-overlay">
   {/* Semi-transparent overlay */}
@@ -52,15 +55,15 @@ All glassmorphism tokens are defined in [src/styles/tokens.css](src/styles/token
 ```
 
 ### Borders
+
 ```tsx
-<div className="border border-resume-card-border">
-  {/* Subtle glass border */}
-</div>
+<div className="border border-resume-card-border">{/* Subtle glass border */}</div>
 ```
 
 ### Text Colors
 
 #### Text Hierarchy
+
 ```tsx
 <h1 className="text-resume-text-primary">Primary Heading</h1>
 <p className="text-resume-text-secondary">Body text</p>
@@ -69,6 +72,7 @@ All glassmorphism tokens are defined in [src/styles/tokens.css](src/styles/token
 ```
 
 #### Accent Colors
+
 ```tsx
 <a className="text-resume-accent">Link</a>
 <button className="text-resume-accent-light">Button</button>
@@ -76,56 +80,47 @@ All glassmorphism tokens are defined in [src/styles/tokens.css](src/styles/token
 ```
 
 ### Ring Effects
+
 ```tsx
-<div className="ring-1 ring-resume-ring">
-  {/* Focus ring effect */}
-</div>
+<div className="ring-1 ring-resume-ring">{/* Focus ring effect */}</div>
 ```
 
 ## Usage Examples
 
 ### Glassmorphism Card
+
 ```tsx
 <section className="bg-resume-card backdrop-blur-md rounded-2xl p-6 md:p-8 mb-8 border border-resume-card-border shadow-xl">
-  <h2 className="text-resume-accent text-2xl font-semibold mb-4">
-    Section Title
-  </h2>
-  <p className="text-resume-text-secondary leading-relaxed">
-    Content text with proper hierarchy
-  </p>
+  <h2 className="text-resume-accent text-2xl font-semibold mb-4">Section Title</h2>
+  <p className="text-resume-text-secondary leading-relaxed">Content text with proper hierarchy</p>
 </section>
 ```
 
 ### Hero Section with Overlay
+
 ```tsx
 <main className="relative min-h-screen overflow-hidden">
   <GradientBackground />
   <div className="absolute inset-0 -z-10 bg-resume-overlay" />
 
   <div className="relative z-10">
-    <h1 className="text-resume-text-primary text-6xl font-bold">
-      Hero Title
-    </h1>
-    <p className="text-resume-text-secondary text-xl">
-      Hero subtitle
-    </p>
+    <h1 className="text-resume-text-primary text-6xl font-bold">Hero Title</h1>
+    <p className="text-resume-text-secondary text-xl">Hero subtitle</p>
   </div>
 </main>
 ```
 
 ### Card with Border and Shadow
+
 ```tsx
 <div className="bg-resume-card backdrop-blur-xl border border-resume-card-border rounded-xl p-6 shadow-xl hover:shadow-2xl transition-all">
-  <h3 className="text-resume-accent-light text-lg font-semibold mb-2">
-    Card Title
-  </h3>
-  <p className="text-resume-text-muted text-sm">
-    Card description
-  </p>
+  <h3 className="text-resume-accent-light text-lg font-semibold mb-2">Card Title</h3>
+  <p className="text-resume-text-muted text-sm">Card description</p>
 </div>
 ```
 
 ### List with Bullets
+
 ```tsx
 <ul className="space-y-2">
   <li className="flex gap-3">
@@ -140,6 +135,7 @@ All glassmorphism tokens are defined in [src/styles/tokens.css](src/styles/token
 ```
 
 ### Interactive Button
+
 ```tsx
 <button className="bg-resume-card backdrop-blur-md px-6 py-3 rounded-xl border border-resume-card-border text-resume-accent hover:bg-resume-accent hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl">
   Click Me
@@ -147,6 +143,7 @@ All glassmorphism tokens are defined in [src/styles/tokens.css](src/styles/token
 ```
 
 ### Navigation Bar
+
 ```tsx
 <nav className="sticky top-0 z-50 bg-resume-card/80 backdrop-blur-md border-b border-resume-card-border">
   <div className="max-w-5xl mx-auto px-6 py-4">
@@ -170,6 +167,7 @@ All glassmorphism tokens are defined in [src/styles/tokens.css](src/styles/token
 ## Component Structure
 
 ### GradientBackground Component
+
 Located at [src/components/GradientBackground.tsx](src/components/GradientBackground.tsx)
 
 ```tsx
@@ -180,15 +178,14 @@ function App() {
     <main className="relative min-h-screen overflow-hidden">
       <GradientBackground />
       <div className="absolute inset-0 -z-10 bg-resume-overlay" />
-      <Layout>
-        {/* Your content */}
-      </Layout>
+      <Layout>{/* Your content */}</Layout>
     </main>
   );
 }
 ```
 
 ### Key Features
+
 - **Shader-driven**: Uses `@paper-design/shaders-react` for animated grain gradients
 - **Consistent Palette**: Shares the same HSL color scheme as the Next.js portfolio
 - **Lightweight**: No additional CSS dependencies or keyframe animations
@@ -196,12 +193,15 @@ function App() {
 ## Browser Support
 
 ### WebGL Requirements
+
 The animated gradient requires WebGL support. The component provides:
+
 - ✅ Animated gradient (WebGL supported)
 - ✅ Static gradient fallback (no WebGL)
 - ✅ Reduced motion fallback
 
 ### Tested Browsers
+
 - ✅ Chrome/Edge (latest)
 - ✅ Firefox (latest)
 - ✅ Safari (latest)
@@ -218,6 +218,7 @@ The animated gradient requires WebGL support. The component provides:
 ## Customization
 
 ### Adjust Overlay Opacity
+
 Update the overlay utility in `src/App.tsx`:
 
 ```tsx
@@ -227,6 +228,7 @@ Update the overlay utility in `src/App.tsx`:
 Change the Tailwind opacity class (for example, `bg-black/10`) to tweak intensity.
 
 ### Change Color Scheme
+
 Update variables in [src/styles/tokens.css](src/styles/tokens.css):
 
 ```css
@@ -236,6 +238,7 @@ Update variables in [src/styles/tokens.css](src/styles/tokens.css):
 ```
 
 ### Modify Animation Speed
+
 Update in [src/components/GradientBackground.tsx](src/components/GradientBackground.tsx):
 
 ```tsx
@@ -248,15 +251,19 @@ Update in [src/components/GradientBackground.tsx](src/components/GradientBackgro
 ## Troubleshooting
 
 ### Issue: Gradient not rendering
+
 **Solution**: Ensure parent has `position: relative` and `GradientBackground` is placed before content
 
 ### Issue: Content hidden behind gradient
+
 **Solution**: Add `relative z-10` to content wrapper
 
 ### Issue: No animation
+
 **Solution**: Check browser WebGL support and prefers-reduced-motion setting
 
 ### Issue: Colors don't match
+
 **Solution**: Verify OKLCH values match exactly in tokens.css and tailwind.config.js
 
 ## Migration Checklist

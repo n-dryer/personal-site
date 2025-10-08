@@ -1,6 +1,6 @@
 ## Project Overview
 
-This is a personal portfolio website for Nathan Dryer, built with React, Vite, TypeScript, and Tailwind CSS. The site features an interactive timeline, a skills showcase, a command menu for quick navigation, and a light/dark theme toggle. The project is designed to be responsive, accessible, and performant.
+This is a personal portfolio website for Nathan Dryer, built with React, Vite, TypeScript, and Tailwind CSS. The site features an interactive and filterable skills showcase, an interactive timeline that dynamically responds to skill selections, a command menu for quick navigation, and a light/dark theme toggle. The project is designed to be responsive, accessible, and performant.
 
 ## Building and Running
 
@@ -12,46 +12,62 @@ This is a personal portfolio website for Nathan Dryer, built with React, Vite, T
 ### Key Commands
 
 - **Installation:**
+
   ```bash
   yarn install
   ```
 
 - **Running the development server:**
+
   ```bash
   yarn start
   ```
+
   This will start the Vite development server at `http://localhost:4000`.
 
 - **Building for production:**
+
   ```bash
   yarn build
   ```
+
   This will create a production-ready build in the `dist/` directory.
 
 - **Previewing the production build:**
+
   ```bash
   yarn preview
   ```
+
   This will serve the `dist/` directory at `http://localhost:4000`.
 
 - **Running tests:**
+
   ```bash
   yarn test
   ```
 
 - **Linting:**
+
   ```bash
   yarn lint
   ```
 
 - **Type-checking:**
+
   ```bash
   yarn tsc --noEmit
   ```
 
 - **Formatting:**
+
   ```bash
   yarn format
+  ```
+
+- **Starting Chrome DevTools MCP server:**
+  ```bash
+  npx chrome-devtools-mcp@latest
   ```
 
 ## Development Conventions

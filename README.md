@@ -12,8 +12,8 @@ React 19 | TypeScript | Vite | Tailwind CSS | Framer Motion | Yarn | Prettier
 
 ## Main Features
 
-- Interactive Timeline: desktop vertical tablist with detail panel and mobile single-column fallback
-- Skills Showcase: categorized skills with proficiency badges
+- Interactive Timeline: desktop vertical tablist with detail panel and mobile single-column fallback, dynamically responding to skill selections
+- Skills Showcase: interactive, filterable, categorized skills with proficiency badges and tooltips
 - Command Menu: quick command palette (Cmd/Ctrl+K or floating button) for navigation and social links
 - Theme Toggle: light/dark mode with token-driven contrast
 - Responsive Design: mobile-first, accessible, performant
@@ -90,25 +90,26 @@ npx serve -s dist -l 4000
 
 ## Content Schema (Skills & Timeline)
 
-- Skills are grouped into categories: Languages & Runtimes; Frameworks & Libraries; AI/ML & Tooling; Infra & DevOps; Design & UX. Each skill has a depth badge: Expert/Proficient/Familiar (legacy Advanced -> Proficient, Intermediate -> Familiar).
-- Timeline entries standardize: role (`title`), `company`, `date`, succinct achievements and technologies.
+- Skills are grouped into categories: Languages & Runtimes; Frameworks & Libraries; AI/ML & Tooling; Infra & DevOps; Design & UX. Each skill has a depth badge: Expert/Proficient/Familiar (legacy Advanced -> Proficient, Intermediate -> Familiar). Skills now include `experienceIds` to link them to relevant timeline entries.
+- Timeline entries standardize: role (`title`), `company`, `date`, succinct achievements and technologies. Timeline entries now include `skillIds` to link them to relevant skills.
 
 Update guidelines are documented in `src/components/Skills/README.md` and `src/components/Timeline/README.md`.
 
 ## Scripts
 
-| Command                  | Purpose                                   |
-| ------------------------ | ----------------------------------------- |
-| `yarn start`             | Vite dev server (<http://localhost:4000>) |
-| `yarn build`             | Production build to `dist/`               |
-| `yarn preview`           | Serves `dist/` at <http://localhost:4000> |
-| `yarn lint`              | ESLint on `src/`                          |
-| `yarn lint:fix`          | ESLint on `src/` with auto-fix            |
-| `yarn test`              | Run unit tests with Vitest                |
-| `yarn tsc --noEmit`      | TypeScript type-check                     |
-| `yarn format`            | Prettier write                            |
-| `yarn format:check`      | Prettier check                            |
-| `yarn ci:guard:lockfile` | Prevent package-lock.json creation        |
+| Command                          | Purpose                                   |
+| -------------------------------- | ----------------------------------------- |
+| `yarn start`                     | Vite dev server (<http://localhost:4000>) |
+| `yarn build`                     | Production build to `dist/`               |
+| `yarn preview`                   | Serves `dist/` at <http://localhost:4000> |
+| `yarn lint`                      | ESLint on `src/`                          |
+| `yarn lint:fix`                  | ESLint on `src/` with auto-fix            |
+| `yarn test`                      | Run unit tests with Vitest                |
+| `yarn tsc --noEmit`              | TypeScript type-check                     |
+| `yarn format`                    | Prettier write                            |
+| `yarn format:check`              | Prettier check                            |
+| `yarn ci:guard:lockfile`         | Prevent package-lock.json creation        |
+| `npx chrome-devtools-mcp@latest` | Start Chrome DevTools MCP server          |
 
 ## Formatting & Editor setup
 
@@ -131,5 +132,6 @@ yarn format:check
 
 ## Agents & Automation
 
+- This project can be interacted with by AI agents using the Chrome DevTools MCP (Model Context Protocol). The MCP server allows agents to control a Chrome browser instance for debugging and testing. See `AGENTS.md` for agent/editor guidance and MCP setup details.
 - See `AGENTS.md` for agent/editor guidance (planning, branching, scripts, CI expectations).
 - See `.cursorrules` for additional editor/agent conventions and guardrails.

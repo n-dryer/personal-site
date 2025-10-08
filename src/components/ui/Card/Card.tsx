@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { motion, type MotionProps } from 'framer-motion';
+import { m, type MotionProps } from 'framer-motion';
 
 import { cn } from '@/utils/cn';
 
@@ -26,23 +26,27 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
     ref,
   ) => {
     const isInteractive = clickable ?? Boolean(onClick);
-    const resolvedWhileHover = whileHover ?? (hover ? { y: -2 } : undefined);
-    const resolvedWhileTap = whileTap ?? (isInteractive ? { scale: 0.98 } : undefined);
+    const resolvedWhileHover = whileHover ?? (hover ? { scale: 1.02, y: -2 } : undefined);
+    const resolvedWhileTap = whileTap ?? (isInteractive ? { scale: 0.98, y: 0 } : undefined);
 
     return (
-      <motion.div
+      <m.div
         ref={ref}
         className={cn(
-          'relative rounded-2xl border border-resume-card-border bg-resume-card text-resume-text-primary shadow-xl ring-1 ring-resume-ring/40 backdrop-blur-xl transition-colors',
-          hover && 'transition-all duration-300',
+          'relative rounded-2xl border border-resume-card-border bg-resume-card/90 text-resume-text-primary shadow-2xl backdrop-blur-xl transition-colors',
+          hover && 'transition-all duration-300 hover:border-resume-accent/40 hover:bg-resume-card',
           isInteractive &&
             'cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-resume-accent focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
           className,
         )}
         onClick={onClick}
         role={role ?? (isInteractive ? 'button' : undefined)}
-        tabIndex={isInteractive ? tabIndex ?? 0 : tabIndex}
-        style={{ minHeight: isInteractive ? '44px' : undefined, ...style }}
+        tabIndex={isInteractive ? (tabIndex ?? 0) : tabIndex}
+        style={{
+          minHeight: isInteractive ? '44px' : undefined,
+          willChange: hover ? 'transform' : undefined,
+          ...style,
+        }}
         whileHover={resolvedWhileHover}
         whileTap={resolvedWhileTap}
         {...props}
@@ -70,11 +74,12 @@ const CardTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTML
 );
 CardTitle.displayName = 'CardTitle';
 
-const CardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
-  ({ className, ...props }, ref) => (
-    <p ref={ref} className={cn('text-sm text-resume-text-secondary', className)} {...props} />
-  ),
-);
+const CardDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <p ref={ref} className={cn('text-sm text-resume-text-secondary', className)} {...props} />
+));
 CardDescription.displayName = 'CardDescription';
 
 const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
@@ -86,7 +91,11 @@ CardContent.displayName = 'CardContent';
 
 const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('flex items-center justify-between gap-2', className)} {...props} />
+    <div
+      ref={ref}
+      className={cn('flex items-center justify-between gap-2', className)}
+      {...props}
+    />
   ),
 );
 CardFooter.displayName = 'CardFooter';

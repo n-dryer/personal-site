@@ -1,5 +1,5 @@
-import { easeInOut, easeOut, motion } from 'framer-motion';
-import React, { useEffect, useMemo, useState } from 'react';
+import { easeInOut, easeOut, m } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
 
 import { Command } from 'lucide-react';
 import { ThemeToggle } from '..';
@@ -35,7 +35,6 @@ const HeaderComponent = ({
   darkMode,
   toggleTheme,
 }: HeaderProps): React.ReactElement => {
-  const MotionButton = motion(Button);
   const [isMac, setIsMac] = useState<boolean>(false);
 
   // Detect OS for keyboard shortcut display
@@ -43,23 +42,22 @@ const HeaderComponent = ({
     setIsMac(navigator.platform.toUpperCase().indexOf('MAC') >= 0);
   }, []);
 
-
   return (
-    <header id="top" className="relative section-spacing-top">
-      <motion.div
-        className="absolute z-20 right-4 top-4 sm:right-6 sm:top-6"
+    <header id="top" className="section-spacing-top relative">
+      <m.div
+        className="absolute right-4 top-4 z-20 sm:right-6 sm:top-6"
         initial={{ opacity: 0, scale: 0.85 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
         <ThemeToggle darkMode={darkMode} toggleTheme={toggleTheme} />
-      </motion.div>
+      </m.div>
 
       <div className="container-padding-x relative z-10 mx-auto flex min-h-[calc(100vh-8rem)] max-w-5xl flex-col items-center text-center">
-        <section className="flex flex-col items-center w-full text-center hero-spacing">
+        <section className="hero-spacing flex w-full flex-col items-center text-center">
           {userData.photoUrl ? (
-            <motion.div
-              className="relative overflow-hidden border-4 rounded-full shadow-2xl hero-image-margin ring-resume-ring/60 h-36 w-36 border-resume-card-border bg-resume-card ring-4 sm:h-44 sm:w-44 md:h-52 md:w-52"
+            <m.div
+              className="hero-image-margin ring-resume-ring/60 relative h-36 w-36 overflow-hidden rounded-full border-4 border-resume-card-border bg-resume-card shadow-2xl ring-4 sm:h-44 sm:w-44 md:h-52 md:w-52"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2, ease: easeInOut }}
@@ -67,63 +65,64 @@ const HeaderComponent = ({
               <img
                 src={userData.photoUrl}
                 alt={userData.fullName}
-                className="object-cover w-full h-full"
-                fetchpriority="high"
+                className="h-full w-full object-cover"
+                fetchPriority="high"
               />
-            </motion.div>
+            </m.div>
           ) : null}
 
-          <motion.h1
+          <m.h1
             className="hero-title-margin whitespace-nowrap font-instrument text-[clamp(2.4rem,8vw,5.5rem)] font-normal leading-tight tracking-tight text-resume-text-primary"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3, ease: easeOut }}
           >
             {userData.fullName}
-          </motion.h1>
+          </m.h1>
 
-          <motion.p
+          <m.p
             className="whitespace-nowrap text-[clamp(0.75rem,4vw,2.4rem)] font-light leading-tight tracking-tight text-resume-accent-light md:text-[clamp(1.25rem,3vw,2.6rem)]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4, ease: easeOut }}
           >
             {userData.bioLine}
-          </motion.p>
+          </m.p>
         </section>
 
-        <motion.div
+        <m.div
           className="relative w-full max-w-xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5, ease: easeOut }}
         >
-          <MotionButton
-            className="flex items-center justify-between w-full px-5 py-3 text-left transition-all duration-300 border rounded-full shadow-2xl bg-resume-card/90 hover:border-resume-accent/40 group border-resume-card-border text-resume-text-secondary backdrop-blur-xl hover:bg-resume-card"
+          <Button
+            asChild
+            className="bg-resume-card/90 hover:border-resume-accent/40 group flex w-full items-center justify-between rounded-full border border-resume-card-border px-5 py-3 text-left text-resume-text-secondary shadow-2xl backdrop-blur-xl transition-all duration-300 hover:bg-resume-card"
             variant="ghost"
             onClick={toggleCommandMenu}
-            whileHover={{ scale: 1.02, y: -2 }}
-            whileTap={{ scale: 0.98, y: 0 }}
             aria-label="Open command palette"
             aria-keyshortcuts={isMac ? 'Meta+K' : 'Control+K'}
             type="button"
           >
-            <div className="flex items-center flex-1 gap-3">
-              <span className="inline-flex items-center justify-center rounded-full bg-resume-accent/15 h-9 w-9 text-resume-accent">
-                <Command size={18} />
-              </span>
-              <div className="relative flex justify-start flex-1">
-                <div className="flex items-center w-full gap-2 px-3 py-1 font-semibold tracking-tight text-left rounded-full from-resume-accent/10 via-resume-accent/20 to-resume-accent/10 bg-gradient-to-r text-resume-text-primary">
-                  <span className="text-resume-text-muted">Tap to </span>
-                  <span className="font-semibold text-resume-accent">explore</span>
+            <m.div whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98, y: 0 }}>
+              <div className="flex flex-1 items-center gap-3">
+                <span className="bg-resume-accent/15 inline-flex h-9 w-9 items-center justify-center rounded-full text-resume-accent">
+                  <Command size={18} />
+                </span>
+                <div className="relative flex flex-1 justify-start">
+                  <div className="from-resume-accent/10 via-resume-accent/20 to-resume-accent/10 flex w-full items-center gap-2 rounded-full bg-gradient-to-r px-3 py-1 text-left font-semibold tracking-tight text-resume-text-primary">
+                    <span className="text-resume-text-muted">Tap to </span>
+                    <span className="font-semibold text-resume-accent">explore</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <span className="items-center hidden px-3 py-1 text-xs border rounded-full border-resume-card-border/60 bg-resume-overlay/40 text-resume-text-muted md:flex">
-              {isMac ? '⌘ K' : 'Ctrl K'}
-            </span>
-          </MotionButton>
-        </motion.div>
+              <span className="border-resume-card-border/60 bg-resume-overlay/40 hidden items-center rounded-full border px-3 py-1 text-xs text-resume-text-muted md:flex">
+                {isMac ? '⌘ K' : 'Ctrl K'}
+              </span>
+            </m.div>
+          </Button>
+        </m.div>
       </div>
     </header>
   );

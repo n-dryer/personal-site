@@ -26,7 +26,7 @@ export function GradientBackground({ darkMode }: GradientBackgroundProps) {
         colorBack={palette.colorBack}
         softness={0.85}
         intensity={palette.intensity}
-        noise={0}
+        noise={0.25}
         shape="corners"
         offsetX={0}
         offsetY={0}

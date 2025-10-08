@@ -115,12 +115,12 @@ type DatePillProps = {
 
 **Examples:**
 
-| Input | Output |
-|-------|--------|
-| `"Jan 2021 - Oct 2022"` | `"2021–2022"` |
-| `"Jan 2021 - Dec 2021"` | `"2021"` |
-| `"Jan 2023 - Present"` | `"2023–Present"` |
-| `"Invalid"` | `"Unknown"` |
+| Input                   | Output           |
+| ----------------------- | ---------------- |
+| `"Jan 2021 - Oct 2022"` | `"2021–2022"`    |
+| `"Jan 2021 - Dec 2021"` | `"2021"`         |
+| `"Jan 2023 - Present"`  | `"2023–Present"` |
+| `"Invalid"`             | `"Unknown"`      |
 
 ### State Management
 

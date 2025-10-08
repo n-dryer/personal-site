@@ -7,11 +7,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['Mona Sans', 'Arial', 'system-ui', 'sans-serif'],
-        body: ['Mona Sans', 'Arial', 'system-ui', 'sans-serif'],
+        display: ['var(--ff-display)', 'serif'],
+        body: ['var(--ff-body)', 'sans-serif'],
         mono: ['var(--ff-mono)', 'monospace'],
-        sans: ['Mona Sans', 'Arial', 'system-ui', 'sans-serif'],
-        instrument: ['Mona Sans', 'Arial', 'system-ui', 'sans-serif'],
+        sans: ['var(--ff-body)', 'sans-serif'],
+        instrument: ['var(--ff-display)', 'serif'],
       },
       letterSpacing: {
         tight: 'var(--tracking-tight)',
@@ -29,11 +29,10 @@ export default {
       colors: {
         'bg-primary': 'var(--bg-primary)',
         'bg-surface': 'var(--bg-surface)',
-        accent: 'var(--resume-accent)',
-        'accent-2': 'var(--resume-accent-light)',
-        'on-accent': 'var(--resume-text-primary)',
         'text-primary': 'var(--text-primary)',
         'text-secondary': 'var(--text-secondary)',
+        'accent-electric': 'var(--accent-electric)',
+        'accent-cosmic': 'var(--accent-cosmic)',
         'resume-overlay': 'var(--resume-overlay)',
         'resume-card': 'var(--resume-card)',
         'resume-card-border': 'var(--resume-card-border)',

@@ -21,6 +21,7 @@ export type Experience = {
   achievements: string[];
   technologies: string[];
   projects: Project[];
+  skillIds?: string[];
 };
 
 export type Skill = {
@@ -38,6 +39,7 @@ export type Skill = {
     | 'ai_ml_tooling'
     | 'infra_devops'
     | 'design_ux';
+  experienceIds?: string[];
 };
 
 export type SocialLink = {

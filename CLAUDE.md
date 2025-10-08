@@ -60,6 +60,7 @@ Import components from the barrel: `import { Header, Footer } from '@/components
 **Note**: Skills and Timeline components are NOT exported from the barrel to enable code splitting via lazy loading in `App.tsx`.
 
 TypeScript baseUrl is set to `src`, enabling path-based imports:
+
 - Relative imports: `hooks/useTheme`, `content/skills`, `types`, etc.
 - Alias imports: `@/components` for the components directory (configured in tsconfig.json and vite.config.ts)
 

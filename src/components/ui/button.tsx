@@ -19,8 +19,7 @@ const buttonVariants = cva(
           'hover:bg-resume-overlay/40 border-transparent bg-transparent text-resume-text-secondary hover:text-resume-accent',
         destructive:
           'border-transparent bg-red-500 text-white shadow-lg hover:bg-red-500/90 focus-visible:ring-red-400',
-        link:
-          'border-transparent bg-transparent text-resume-accent underline-offset-4 hover:underline focus-visible:ring-0 focus-visible:ring-offset-0',
+        link: 'border-transparent bg-transparent text-resume-accent underline-offset-4 hover:underline focus-visible:ring-0 focus-visible:ring-offset-0',
       },
       size: {
         default: 'h-11 px-5 text-sm',
@@ -51,11 +50,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : 'button';
 
     return (
-      <Comp
-        className={cn(buttonVariants({ variant, size }), className)}
-        ref={ref}
-        {...props}
-      />
+      <Comp className={cn(buttonVariants({ variant, size }), className)} ref={ref} {...props} />
     );
   },
 );

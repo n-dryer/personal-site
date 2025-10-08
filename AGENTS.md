@@ -12,9 +12,9 @@
 
 1. Install dependencies:
 
-    ```bash
-    yarn install
-    ```
+   ```bash
+   yarn install
+   ```
 
 ### Development
 
@@ -78,12 +78,12 @@ This section provides specific instructions for me, Gemini, to ensure my contrib
 
 ### Workflow
 
-1. **Analyze**: Analyze existing patterns in the codebase before suggesting new approaches.
-2. **Plan**: Create a clear plan for any changes.
-3. **Implement**: Build incrementally, starting with TypeScript types.
-4. **Test**: Verify each step works before proceeding.
-5. **Document**: Add JSDoc comments during development.
-6. **Validate**: Check for cross-browser compatibility, performance impact, accessibility, and mobile responsiveness.
+1. **Analyze Existing Components**: Before making any changes, thoroughly analyze the relevant React components (e.g., Skills, Timeline) to understand their current JSX structure, state management, and styling. Identify existing patterns and conventions.
+2. **Plan Changes**: Develop a clear, step-by-step plan for implementing new features, such as the skill filtering. This includes identifying where state should be managed, how components will interact, and what styling adjustments are needed.
+3. **Implement Incrementally**: Build features incrementally, starting with TypeScript type definitions, then data structures, and finally component logic and UI. Verify each step before proceeding.
+4. **Test**: Run unit tests (if available) and perform manual checks to verify that each step works as expected and that no regressions have been introduced.
+5. **Document**: Add JSDoc comments for new or modified functions, components, and types during development.
+6. **Validate**: Ensure cross-browser compatibility, performance impact, accessibility, and mobile responsiveness. Verify that all CI checks (format, lint, type-check, build) pass.
 
 ## Chrome DevTools MCP
 

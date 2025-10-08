@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Command } from 'cmdk';
-import { motion, AnimatePresence, LayoutGroup, easeIn, easeOut } from 'framer-motion';
+import { m, AnimatePresence, LayoutGroup, easeIn, easeOut } from 'framer-motion';
 // Clipboard handled via native API
 import { Mail, Download, Eye, Code, Linkedin, Github, X, Check } from 'lucide-react';
 import { useReducedMotion } from 'hooks/useReducedMotion';
@@ -282,7 +282,7 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
     <LayoutGroup id="command-menu">
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <m.div
             className="bg-resume-overlay/70 fixed inset-0 z-50 flex items-end backdrop-blur-3xl md:items-start md:justify-center md:p-6 md:pt-[15vh]"
             variants={backdropVariants}
             initial="hidden"
@@ -305,14 +305,13 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
                 // We close on backdrop mouse down instead to avoid click-through on open
               }}
             >
-              <motion.div
+              <m.div
                 ref={containerRef}
                 className="bg-resume-card/95 ring-resume-ring/40 relative h-full w-full overflow-y-auto rounded-t-3xl border-t border-resume-card-border shadow-2xl ring-1 backdrop-blur-2xl md:h-auto md:max-h-[80vh] md:max-w-xl md:rounded-3xl md:border lg:max-w-2xl"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                layout={!shouldReduceMotion}
                 onClick={(e) => e.stopPropagation()}
                 tabIndex={-1}
               >
@@ -320,7 +319,7 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
                   Command Menu
                 </h2>
                 <div className="absolute right-0 top-0 p-2">
-                  <motion.button
+                  <m.button
                     className="hover:bg-resume-overlay/40 rounded-full p-2 text-resume-text-muted transition-colors hover:text-resume-accent"
                     onClick={() => setIsOpen(false)}
                     aria-label="Close command menu"
@@ -328,9 +327,13 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
                     whileTap={{ scale: 0.9, rotate: 0 }}
                   >
                     <X className="lucide h-5 w-5" />
-                  </motion.button>
+                  </m.button>
                 </div>
-                <Command className="w-full text-resume-text-primary" role="menu" aria-labelledby="command-menu-title">
+                <Command
+                  className="w-full text-resume-text-primary"
+                  role="menu"
+                  aria-labelledby="command-menu-title"
+                >
                   <p id="command-menu-description" className="sr-only">
                     Choose an action to perform. Use arrow keys to navigate, Enter to select, or
                     Escape to close.
@@ -345,13 +348,11 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
                     </div>
                   )}
 
-                  <motion.div layout={!shouldReduceMotion}>
+                  <div>
                     <Command.List className="px-4 py-3">
                       {Object.entries(commandGroups).map(([groupName, commands], index) => (
                         <React.Fragment key={groupName}>
-                          {index > 0 && (
-                            <Separator className="my-3" decorative />
-                          )}
+                          {index > 0 && <Separator className="my-3" decorative />}
                           <Command.Group
                             className="pt-3"
                             heading={
@@ -364,7 +365,7 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
                               <Command.Item
                                 key={command.id}
                                 onSelect={command.action}
-                                className="hover:bg-resume-accent/10 mt-1 flex w-full cursor-pointer items-center justify-between rounded-xl px-4 py-3 text-sm text-resume-text-secondary transition-colors duration-200 hover:text-resume-text-primary"
+                                className="hover:bg-resume-accent/10 mt-1 flex w-full cursor-pointer items-center justify-between rounded-xl px-4 py-3 text-sm text-resume-text-primary transition-colors duration-200 hover:text-resume-accent"
                               >
                                 <div className="flex items-center gap-3">
                                   {command.icon}
@@ -376,11 +377,11 @@ const CommandMenuComponent = ({ isOpen, setIsOpen }: CommandMenuProps) => {
                         </React.Fragment>
                       ))}
                     </Command.List>
-                  </motion.div>
+                  </div>
                 </Command>
-              </motion.div>
+              </m.div>
             </FocusTrap>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </LayoutGroup>

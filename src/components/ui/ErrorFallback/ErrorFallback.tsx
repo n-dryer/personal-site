@@ -40,7 +40,7 @@ export const ErrorFallback = React.memo<ErrorFallbackProps>(
 
           <button
             onClick={handleRetry}
-            className="hover:bg-accent/90 inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 font-medium text-on-accent transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            className="hover:bg-accent/90 bg-accent text-on-accent focus-visible:ring-accent inline-flex items-center gap-2 rounded-lg px-4 py-2 font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
             style={{ minHeight: '44px' }}
             aria-label={`Retry loading ${componentName}`}
           >

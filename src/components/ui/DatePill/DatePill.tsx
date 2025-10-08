@@ -69,11 +69,7 @@ export const DatePill = React.memo(
       return `${startYear} to ${endYear}`;
     }, [startYear, endYear, present, ariaLabel]);
 
-    const content = (
-      <time aria-label={accessibleLabel}>
-        {label}
-      </time>
-    );
+    const content = <time aria-label={accessibleLabel}>{label}</time>;
 
     if (onClick) {
       return (
@@ -81,13 +77,13 @@ export const DatePill = React.memo(
           type="button"
           onClick={onClick}
           aria-label={accessibleLabel}
-          className="focus-visible:ring-offset-resume-bg rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-resume-accent focus-visible:ring-offset-2"
+          className="focus-visible:ring-offset-resume-bg group rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-resume-accent focus-visible:ring-offset-2"
         >
           <Badge
             variant="date"
-            size="xs"
+            size="sm"
             data-active={isActive || undefined}
-            className="md:px-2.5 md:py-1 md:text-xs"
+            className="transition-colors duration-300 group-hover:text-resume-accent md:px-3 md:py-1.5 md:text-sm"
           >
             {content}
           </Badge>
@@ -98,9 +94,9 @@ export const DatePill = React.memo(
     return (
       <Badge
         variant="date"
-        size="xs"
+        size="sm"
         data-active={isActive || undefined}
-        className="md:px-2.5 md:py-1 md:text-xs"
+        className="md:px-3 md:py-1.5 md:text-sm"
       >
         {content}
       </Badge>

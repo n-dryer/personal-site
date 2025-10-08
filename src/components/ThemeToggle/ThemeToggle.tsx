@@ -1,6 +1,6 @@
 import React from 'react';
 import { Sun, Moon } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useViewTransitions } from '../../hooks/useViewTransitions';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -33,9 +33,9 @@ const ThemeToggleComponent = ({ darkMode, toggleTheme }: ThemeToggleProps) => {
   const iconVariants = shouldReduceMotion
     ? undefined
     : {
-        initial: { opacity: 1, rotate: 0, scale: 0.95 },
-        animate: { opacity: 1, rotate: [0, 360], scale: 1 },
-        exit: { opacity: 1, rotate: 0, scale: 0.95 },
+        initial: { opacity: 1, rotate: -45, scale: 0 },
+        animate: { opacity: 1, rotate: 0, scale: 1 },
+        exit: { opacity: 1, rotate: 45, scale: 0 },
       };
 
   return (
@@ -51,31 +51,26 @@ const ThemeToggleComponent = ({ darkMode, toggleTheme }: ThemeToggleProps) => {
       <div className="relative h-8 w-8">
         <AnimatePresence initial={false} mode="wait">
           {darkMode ? (
-            <motion.div
+            <m.div
               key="moon"
               className="absolute inset-0 flex items-center justify-center"
               variants={iconVariants}
               initial={shouldReduceMotion ? undefined : 'initial'}
               animate={shouldReduceMotion ? undefined : 'animate'}
               exit={shouldReduceMotion ? undefined : 'exit'}
-              transition={{ duration: 0.45, ease: 'linear' }}
-              style={{
-                viewTransitionName: 'theme-icon-moon',
-                opacity: shouldReduceMotion ? 1 : undefined,
-                transform: shouldReduceMotion ? 'rotate(0deg) scale(1)' : undefined,
-              }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
             >
               <Moon className="h-8 w-8 text-resume-accent" />
-            </motion.div>
+            </m.div>
           ) : (
-            <motion.div
+            <m.div
               key="sun"
               className="absolute inset-0 flex items-center justify-center"
               variants={iconVariants}
               initial={shouldReduceMotion ? undefined : 'initial'}
               animate={shouldReduceMotion ? undefined : 'animate'}
               exit={shouldReduceMotion ? undefined : 'exit'}
-              transition={{ duration: 0.45, ease: 'linear' }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
               style={{
                 viewTransitionName: 'theme-icon-sun',
                 opacity: shouldReduceMotion ? 1 : undefined,
@@ -83,7 +78,7 @@ const ThemeToggleComponent = ({ darkMode, toggleTheme }: ThemeToggleProps) => {
               }}
             >
               <Sun className="h-8 w-8 text-resume-accent" />
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </div>

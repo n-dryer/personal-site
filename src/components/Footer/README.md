@@ -23,4 +23,4 @@ const FooterExample = () => {
 ## Props
 
 - `userData`: `UserData` - An object containing user information, including `fullName` and `socialLinks`, used to populate the footer content.
-- `toggleCommandMenu`: `() => void` *(optional)* - Handler that toggles the global command menu. When provided, the footer renders a dedicated menu button in the mobile navigation rail so keyboardless users can open the modal.
+- `toggleCommandMenu`: `() => void` _(optional)_ - Handler that toggles the global command menu. When provided, the footer renders a dedicated menu button in the mobile navigation rail so keyboardless users can open the modal.

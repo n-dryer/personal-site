@@ -176,11 +176,7 @@ export const TimelineCard = React.memo(
                                   className="group/skill focus:ring-offset-resume-bg rounded-full transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-resume-accent focus:ring-offset-2"
                                   aria-label={`View ${tech} in Skills section`}
                                 >
-                                  <Badge
-                                    variant="tech"
-                                    size="sm"
-                                    className="cursor-pointer"
-                                  >
+                                  <Badge variant="tech" size="sm" className="cursor-pointer">
                                     {tech}
                                   </Badge>
                                 </button>

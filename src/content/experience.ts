@@ -16,6 +16,7 @@ export const experienceData: Experience[] = [
     ],
     technologies: ['OpenAI', 'ChatGPT', 'Python', 'API Integrations', 'Computer Vision'],
     projects: [],
+    skillIds: ['skill-a1', 'skill-l2', 'skill-a3'],
   },
   {
     id: 'exp-2',
@@ -32,6 +33,7 @@ export const experienceData: Experience[] = [
     ],
     technologies: ['Jira', 'Agile', 'A/B Testing', 'Internal Tooling'],
     projects: [],
+    skillIds: ['skill-d2'],
   },
   {
     id: 'exp-3',
@@ -49,6 +51,7 @@ export const experienceData: Experience[] = [
     ],
     technologies: ['Mobile Apps', 'Sentiment Analysis', 'Predictive Analytics'],
     projects: [],
+    skillIds: [],
   },
   {
     id: 'exp-4',
@@ -65,6 +68,7 @@ export const experienceData: Experience[] = [
     ],
     technologies: ['UX Design', 'EHR Interoperability', 'Data Analysis'],
     projects: [],
+    skillIds: ['skill-d1'],
   },
   {
     id: 'exp-5',
@@ -82,5 +86,6 @@ export const experienceData: Experience[] = [
     ],
     technologies: ['iOS & Android', 'Mobile Banking', 'Scrum'],
     projects: [],
+    skillIds: [],
   },
 ];
