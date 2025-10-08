@@ -8,7 +8,8 @@ export const experienceData: Experience[] = [
     company: 'Current Enterprise Focus',
     location: 'San Francisco, CA',
     date: 'Jan 2022 - Present',
-    description: 'Developing custom AI solutions and enterprise-grade integrations for enterprise clients.',
+    description:
+      'Developing custom AI solutions and enterprise-grade integrations for enterprise clients.',
     icon: Brain,
     achievements: [
       'Delivered fine-tuned LLM and chatbot deployments saving enterprise clients over $300K annually',
@@ -24,8 +25,7 @@ export const experienceData: Experience[] = [
     company: 'Platform Development',
     location: 'San Francisco, CA',
     date: 'Jan 2021 - Oct 2022',
-    description:
-      'Built enterprise collaboration tools and AI-powered resource management systems.',
+    description: 'Built enterprise collaboration tools and AI-powered resource management systems.',
     icon: Car,
     achievements: [
       'Developed scalable collaboration platform securing $500K in initial funding',
@@ -59,7 +59,8 @@ export const experienceData: Experience[] = [
     company: 'HealthTech Platform',
     location: 'Emeryville, CA',
     date: 'Jan 2015 - Mar 2018',
-    description: 'Built healthcare enterprise solutions with focus on user experience and interoperability.',
+    description:
+      'Built healthcare enterprise solutions with focus on user experience and interoperability.',
     icon: Pill,
     achievements: [
       'Reduced enterprise support costs by $1M through improved onboarding experiences',

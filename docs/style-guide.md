@@ -135,6 +135,30 @@ All glass components maintain AA contrast ratios against the gradient background
 - **Desktop**: Full glass effects with enhanced backdrop blur
 - **Reduced motion**: Animations are disabled when `prefers-reduced-motion: reduce`
 
+## Typography
+
+### Overline
+
+The `overline` style is used for section labels and other small, capitalized text elements. It provides a clear visual hierarchy for content sections.
+
+**Tokens:**
+
+- Font Size: `0.75rem` (12px)
+- Line Height: `1.25rem` (20px)
+- Letter Spacing: `0.1em`
+- Font Weight: `700` (Bold)
+- Color: `text-resume-text-secondary`
+
+**Usage:**
+
+Apply the `text-overline` and `uppercase` utility classes to a heading element (e.g., `h4`).
+
+**Example:**
+
+```tsx
+<h4 className="text-overline uppercase text-resume-text-secondary">Section Label</h4>
+```
+
 ## Extensibility
 
 ### Adding New Themes

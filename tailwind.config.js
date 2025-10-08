@@ -13,6 +13,16 @@ export default {
         sans: ['var(--ff-body)', 'sans-serif'],
         instrument: ['var(--ff-display)', 'serif'],
       },
+      fontSize: {
+        overline: [
+          '0.75rem',
+          {
+            lineHeight: '1.25rem',
+            letterSpacing: '0.1em',
+            fontWeight: '700',
+          },
+        ],
+      },
       letterSpacing: {
         tight: 'var(--tracking-tight)',
       },

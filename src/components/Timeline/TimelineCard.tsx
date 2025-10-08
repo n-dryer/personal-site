@@ -140,7 +140,7 @@ export const TimelineCard = React.memo(
 
                         {kpis.length > 0 && (
                           <div className="mb-4">
-                            <h4 className="mb-2.5 text-xs font-bold uppercase tracking-widest text-resume-text-secondary">
+                            <h4 className="mb-2.5 text-overline uppercase text-resume-text-secondary">
                               Metrics
                             </h4>
                             <div className="flex flex-wrap gap-2">
@@ -155,7 +155,7 @@ export const TimelineCard = React.memo(
 
                         {technologies.length > 0 && (
                           <div className="mb-4">
-                            <h4 className="mb-2.5 text-xs font-bold uppercase tracking-widest text-resume-text-secondary">
+                            <h4 className="mb-2.5 text-overline uppercase text-resume-text-secondary">
                               Skills
                             </h4>
                             <div className="flex flex-wrap gap-2">
