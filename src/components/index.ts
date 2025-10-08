@@ -3,7 +3,6 @@ export * from './FloatingCommandButton';
 export * from './Footer';
 export * from './Header';
 export * from './CommandMenu';
-export * from './Skills';
 export * from './ThemeToggle';
-export * from './Timeline';
-export * from './FluidBackground';
+export * from './GradientBackground';
+// Skills and Timeline are not exported here to enable code splitting via lazy loading

@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn add:*)",
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(yarn lint)",
+      "Bash(yarn tsc:*)",
+      "Bash(yarn build)",
+      "Bash(yarn lint:*)",
+      "Bash(yarn start)",
+      "Bash(cat:*)",
+      "Bash(pkill:*)",
+      "Bash(yarn start:*)",
+      "Bash(node:*)",
+      "Bash(npx:*)",
+      "WebFetch(domain:developer.chrome.com)",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__list_pages",
+      "Bash(awk:*)",
+      "mcp__chrome-devtools__click",
+      "mcp__chrome-devtools__evaluate_script",
+      "mcp__chrome-devtools__take_snapshot",
+      "mcp__chrome-devtools__list_console_messages",
+      "mcp__chrome-devtools__take_screenshot"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

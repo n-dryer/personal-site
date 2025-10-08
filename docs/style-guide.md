@@ -43,74 +43,56 @@ Glass components provide elegant overlays that "pop" visually while maintaining 
 
 ## Background System
 
-### FluidBackground Component
+### GradientBackground Component
 
-The background is implemented as a global `FluidBackground` component that provides three layered effects:
+The animated backdrop now uses the Paper Design `GrainGradient` shader to mirror the Next.js portfolio aesthetic.
 
-1. **Base gradient layer**: `--bg-primary-gradient` provides the core color foundation
-2. **Grain texture overlay**: `--bg-grain` adds subtle texture with 15% opacity
-3. **Animated fluid gradient**: CSS-animated gradients creating fluid-like motion
+1. **Shader gradient**: `@paper-design/shaders-react` renders the animated grain gradient with the comet-inspired palette.
+2. **Color overlay**: A Tailwind overlay `bg-resume-overlay` ensures content contrast remains consistent across pages.
 
 #### Integration
 
-The FluidBackground is integrated globally in the main layout:
+The `GradientBackground` component is registered in the global barrel and mounted at the top of the app structure:
 
 ```tsx
-import { FluidBackground } from './components';
+import { GradientBackground } from './components';
 
 function App() {
   return (
-    <div className="relative isolate min-h-screen">
-      <FluidBackground />
-      {/* Your content here with z-10 or higher */}
-    </div>
+    <main className="relative min-h-screen overflow-hidden">
+      <GradientBackground />
+      <div className="absolute inset-0 -z-10 bg-resume-overlay" />
+      {/* Page content lives here */}
+    </main>
   );
 }
 ```
 
 #### Layering Order
 
-- **FluidBackground**: `z-index: -10` (behind all UI content)
-- **Main content**: `z-index: 10` or higher
-- **Modal/overlays**: `z-index: 50+`
+- **GradientBackground**: `-z-10` (animated shader)
+- **Overlay**: `-z-10` `bg-resume-overlay` (contrast pass)
+- **Main content**: `z-10`
+- **Modal/overlays**: `z-50+`
 
-### Palette & Tokens
+### Palette
 
-The background is constructed from CSS custom properties (tokens) that vary between light and dark themes.
-
-#### Dark Theme (Default)
-
-- `--bg-primary-gradient`: `linear-gradient(135deg, #244048 0%, #294855 60%, #325163 100%)`
-- `--bg-grain`: `url('/grain-dark.png')`
-
-#### Light Theme
-
-- `--bg-primary-gradient`: `linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 60%, #80CBC4 100%)`
-- `--bg-grain`: `url('/grain-light.png')`
-
-### Animation
-
-The background features subtle fluid animations:
-
-- **Three rotating gradient layers** with different timing (20s, 25s, 30s)
-- **Subtle opacity** (0.08) for professional appearance
-- **Staggered animation delays** (-7s, -14s) for natural fluid motion
-- **Respects `prefers-reduced-motion`** for accessibility
+The shader keeps a bluish contrast in both modes. Light mode now uses `colorBack` `hsl(212, 78%, 22%)` with color stops `hsl(204, 88%, 52%)`, `hsl(192, 82%, 56%)`, and `hsl(232, 70%, 52%)` so the gradient stands out over the off-white surface. Dark mode retains `colorBack` `hsl(220, 20%, 8%)` with stops `hsl(210, 100%, 45%)`, `hsl(200, 100%, 50%)`, and `hsl(220, 90%, 35%)`. Animation parameters remain `softness 0.85`, `intensity 0.6`, `noise 0`, `shape "corners"`, `speed 1`. The application boots in the dark variant (`data-theme="aurora-dark"`), with the theme toggle exposing the light palette.
 
 ## Glass Components
 
-Glass components provide elegant overlays that work harmoniously with the teal background. All glass components use a consistent styling pattern:
+Glass components provide elegant overlays that stay readable against the shader field. Every glass surface follows the same recipe:
 
 ```css
-bg-surface/80 backdrop-blur-xl rounded-lg border border-white/10 ring-1 ring-white/5
+bg-resume-card/90 backdrop-blur-xl rounded-2xl border border-resume-card-border ring-1 ring-resume-ring/40
 ```
 
 ### Core Glass Styles
 
-- **Background**: `bg-surface/80` - Semi-transparent surface with 80% opacity
-- **Blur**: `backdrop-blur-xl` - Strong blur effect for depth
-- **Border**: `border border-white/10` - Subtle white border
-- **Ring**: `ring-1 ring-white/5` - Enhanced glass effect with white ring
+- **Background**: `bg-resume-card/90` keeps content luminous without losing contrast
+- **Blur**: `backdrop-blur-xl` separates foregrounds from the animated gradient
+- **Border**: `border-resume-card-border` delivers the frosted edge
+- **Ring**: `ring-resume-ring/40` provides a consistent halo/focus treatment
 
 ### Component Examples
 
@@ -126,7 +108,7 @@ bg-surface/80 backdrop-blur-xl rounded-lg border border-white/10 ring-1 ring-whi
 #### Command Menu
 
 ```tsx
-<div className="bg-surface/80 backdrop-blur-xl border-white/10 ring-1 ring-white/5 ...">
+<div className="bg-resume-card/95 backdrop-blur-xl border border-resume-card-border ring-1 ring-resume-ring/40 ...">
   {/* Command menu content */}
 </div>
 ```
@@ -134,24 +116,48 @@ bg-surface/80 backdrop-blur-xl rounded-lg border border-white/10 ring-1 ring-whi
 #### Buttons & Interactive Elements
 
 ```tsx
-<button className="bg-surface/80 backdrop-blur-xl border border-white/10 ring-1 ring-white/5 hover:bg-surface/90">
+<button className="bg-resume-card/90 backdrop-blur-xl border border-resume-card-border ring-1 ring-resume-ring/40 hover:bg-resume-overlay/40">
   Button Text
 </button>
 ```
 
 ### Accessibility & Contrast
 
-All glass components maintain AA contrast ratios against the teal background:
+All glass components maintain AA contrast ratios against the gradient background:
 
-- **Text colors**: Use `--text-primary` for optimal contrast
-- **Interactive states**: Hover states use `bg-surface/90` for better feedback
-- **Focus states**: Maintain `focus-visible:ring-2 focus-visible:ring-accent` for keyboard navigation
+- **Text colors**: Use `--resume-text-primary` for optimal contrast
+- **Interactive states**: Hover states use `bg-resume-overlay/40` for better feedback
+- **Focus states**: Maintain `focus-visible:ring-2 focus-visible:ring-resume-accent` for keyboard navigation
 
 ### Responsive Behavior
 
 - **Mobile**: Glass effects scale appropriately with reduced blur intensity
 - **Desktop**: Full glass effects with enhanced backdrop blur
 - **Reduced motion**: Animations are disabled when `prefers-reduced-motion: reduce`
+
+## Typography
+
+### Overline
+
+The `overline` style is used for section labels and other small, capitalized text elements. It provides a clear visual hierarchy for content sections.
+
+**Tokens:**
+
+- Font Size: `0.75rem` (12px)
+- Line Height: `1.25rem` (20px)
+- Letter Spacing: `0.1em`
+- Font Weight: `700` (Bold)
+- Color: `text-resume-text-secondary`
+
+**Usage:**
+
+Apply the `text-overline` and `uppercase` utility classes to a heading element (e.g., `h4`).
+
+**Example:**
+
+```tsx
+<h4 className="text-overline uppercase text-resume-text-secondary">Section Label</h4>
+```
 
 ## Extensibility
 
@@ -177,9 +183,9 @@ The system is designed to be extensible for other themes (e.g., a "festive" or s
    ```
 
 3. **Test Contrast Ratios:**
-   - Ensure `--text-primary` maintains 4.5:1+ contrast against new background
-   - Verify glass components (`bg-surface/80`) remain readable
-   - Test focus states with new accent colors
+   - Ensure `--resume-text-primary` maintains 4.5:1+ contrast against new background
+   - Verify glass components (`bg-resume-card/90`) remain readable
+   - Test focus states with `focus-visible:ring-resume-accent`
 
 ### Custom Animation Presets
 
@@ -297,11 +303,11 @@ observer.observe({ entryTypes: ['measure'] });
 
 ### Architecture Decisions
 
-- **No manual background classes**: Do not use `.bg-fuzzy-teal` or similar utility classes
-- **Global background**: FluidBackground is always present and positioned behind content
+- **No manual background classes**: Avoid applying static gradients directly to layouts
+- **Global background**: `GradientBackground` remains mounted once at the app shell level
 - **Z-index management**: Content uses `z-10+`, modals use `z-50+`
-- **Performance-first**: Background animations are optimized and respect user preferences
-- **Progressive enhancement**: Core functionality works without animations or grain textures
+- **Performance-first**: Shader runs once per frame and avoids additional CSS animations
+- **Progressive enhancement**: Content remains accessible even if WebGL is unavailable
 
 ### Browser Compatibility Matrix
 
@@ -319,14 +325,14 @@ observer.observe({ entryTypes: ['measure'] });
 - **No Grain Texture:** Clean gradient background, all functionality preserved
 - **CSS Disabled:** Browser default background, content remains accessible
 
-## Fluid Background
+## Gradient Background
 
-The fluid background is a key visual feature of this site, providing a dynamic and interactive backdrop that enhances the user experience. It combines a multi-layered gradient, a subtle noise texture, and a fluid animation that responds to user interaction.
+The gradient background is a core visual element for the portfolio, providing a dynamic shader-driven field inspired by the Next.js glassmorphism demo. It layers the animated grain gradient with a translucent overlay to keep copy readable.
 
 ### Key Features
 
-- **Interactive:** The background subtly reacts to mouse movements, creating an engaging and fluid effect.
-- **Performance-Optimized:** The animation is lightweight and designed to have minimal impact on performance.
-- **Respects User Preferences:** The fluid animation is automatically disabled for users who have enabled "prefers reduced motion" in their system settings, ensuring an accessible experience for everyone.
+- **Shader-based animation:** `GrainGradient` handles motion and noise in WebGL for smooth performance.
+- **Accessible contrast:** The overlay layer maintains contrast regardless of page content.
+- **Graceful fallback:** If WebGL fails, the canvas quietly renders the static base color specified by `colorBack`.
 
-For detailed implementation information, including usage examples and styling, please refer to the [`FluidBackground` component's README file](../src/components/FluidBackground/README.md).
+For implementation details, refer to [`GradientBackground.tsx`](../src/components/GradientBackground.tsx).

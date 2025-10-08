@@ -1,14 +1,17 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import React, { useCallback, useMemo } from 'react';
 import { Experience } from '../../types';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useTimelineObserver } from '../../hooks/useTimelineObserver';
 import { DatePill } from '../ui';
 import { TimelineCard } from './TimelineCard';
+import { TIMELINE_CARD_ID_PREFIX } from './constants';
 
 type TimelineMetroProps = {
   /** Array of experience data to display in the timeline */
   experienceData: Experience[];
+  /** The currently active skill filter */
+  activeSkill: string | null;
 };
 
 type TimelineItem = Experience & { slug: string; year: string };
@@ -30,19 +33,24 @@ const toSlug = (exp: Experience): { slug: string; year: string } => {
  * Metro map style timeline with central vertical thread and alternating cards
  * Features scroll-based active detection and smooth animations
  */
-export const TimelineMetro = ({ experienceData = [] }: TimelineMetroProps) => {
+export const TimelineMetro = ({ experienceData = [], activeSkill }: TimelineMetroProps) => {
   const shouldReduceMotion = useReducedMotion();
   const { activeId, registerCard, setActiveId } = useTimelineObserver();
 
-  const items: TimelineItem[] = useMemo(
-    () => experienceData.map((exp) => ({ ...exp, ...toSlug(exp) })),
-    [experienceData],
-  );
+  const items: TimelineItem[] = useMemo(() => {
+    const allItems = experienceData.map((exp) => ({ ...exp, ...toSlug(exp) }));
+    if (!activeSkill) {
+      return allItems;
+    }
+    return allItems.filter((item) =>
+      item.technologies.some((tech) => tech.toLowerCase() === activeSkill.toLowerCase()),
+    );
+  }, [experienceData, activeSkill]);
 
   const handleCardInViewChange = useCallback(
     (id: string, inView: boolean) => {
       if (inView) {
-        registerCard(id, document.getElementById(`timeline-card-${id}`));
+        registerCard(id, document.getElementById(`${TIMELINE_CARD_ID_PREFIX}${id}`));
       }
     },
     [registerCard],
@@ -68,14 +76,33 @@ export const TimelineMetro = ({ experienceData = [] }: TimelineMetroProps) => {
 
   if (!items.length) {
     return (
-      <section id="timeline" className="bg-background overflow-hidden py-[var(--space-section)]">
-        <div className="container mx-auto w-full px-4">
-          <div className="relative mx-auto max-w-4xl">
-            <h2 className="mb-12 text-center font-display text-4xl font-semibold tracking-tight text-text-primary">
+      <section id="timeline" className="section-spacing-y">
+        <div className="container-padding-x mx-auto w-full">
+          <div className="relative mx-auto max-w-4xl text-center">
+            <h2 className="heading-margin font-instrument text-4xl font-semibold tracking-tight text-resume-text-primary">
               Work Experience
             </h2>
-            <p className="text-center text-text-secondary">
-              No work experience data available at this time.
+            <p className="text-resume-text-secondary">
+              {activeSkill ? (
+                <>
+                  No experience found matching{' '}
+                  <strong className="text-resume-accent">{activeSkill}</strong>.
+                  <br />
+                  <button
+                    onClick={() => {
+                      const skillsSection = document.getElementById('skills');
+                      if (skillsSection) {
+                        skillsSection.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                    className="mt-2 text-resume-accent underline hover:text-resume-accent-light"
+                  >
+                    Try selecting a different skill
+                  </button>
+                </>
+              ) : (
+                'No work experience data available at this time.'
+              )}
             </p>
           </div>
         </div>
@@ -84,47 +111,31 @@ export const TimelineMetro = ({ experienceData = [] }: TimelineMetroProps) => {
   }
 
   return (
-    <section id="timeline" className="bg-background overflow-hidden py-[var(--space-section)]">
-      <div className="container mx-auto w-full px-4">
-        <div className="relative mx-auto max-w-4xl">
-          <h2 className="mb-12 text-center font-display text-4xl font-semibold tracking-tight text-text-primary">
+    <section id="timeline" className="section-spacing-y">
+      <div className="container-padding-x mx-auto w-full">
+        <div className="relative mx-auto max-w-4xl text-center">
+          <h2 className="heading-margin font-instrument text-4xl font-semibold tracking-tight text-resume-text-primary">
             Work Experience
           </h2>
         </div>
 
-        <div className="relative mx-auto flex max-w-lg flex-col items-center md:max-w-4xl md:flex-row md:items-start md:justify-center">
-          {/* Central Axis */}
-          <div className="relative z-0 flex w-full max-w-sm flex-row justify-between md:flex-col md:items-center">
-            <div
-              className="absolute bottom-0 left-1/2 top-0 -translate-x-1/2 md:w-0.5"
-              aria-hidden="true"
-            >
-              <div className="via-accent/50 h-full w-full bg-gradient-to-b from-transparent to-transparent" />
-            </div>
-            {items.map((item) => (
-              <div
-                key={`${item.id}-pill`}
-                className="z-10 flex min-h-[12rem] w-full cursor-pointer items-start justify-center pt-6 md:w-auto"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleCardClick(item);
-                }}
-              >
-                <DatePill date={item.date} isActive={activeId === item.id} />
-              </div>
-            ))}
-          </div>
-
-          {/* Timeline Cards */}
-          <div className="relative z-10 w-full max-w-lg">
+        <div className="relative mx-auto max-w-lg sm:max-w-4xl">
+          {/* Timeline Cards with Date Pills */}
+          <ol role="list" className="relative z-10 w-full">
             <AnimatePresence>
               {items.map((item, index) => {
                 const isActive = activeId === item.id;
+                const isFiltered =
+                  activeSkill &&
+                  !item.technologies.some(
+                    (tech) => tech.toLowerCase() === activeSkill.toLowerCase(),
+                  );
 
                 return (
-                  <motion.div
+                  <m.li
                     key={item.id}
-                    className="flex min-h-[12rem] items-center"
+                    id={`${TIMELINE_CARD_ID_PREFIX}${item.id}`}
+                    className={`flex min-h-[12rem] flex-col items-start sm:flex-row sm:items-start sm:gap-6 ${isFiltered ? 'opacity-40' : ''}`}
                     initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -50 }}
@@ -134,7 +145,21 @@ export const TimelineMetro = ({ experienceData = [] }: TimelineMetroProps) => {
                       ease: 'easeOut',
                     }}
                   >
-                    <div className="w-full">
+                    {/* Date pill - mobile above card, desktop to the left */}
+                    <div className="mb-3 flex w-full justify-center sm:mb-0 sm:w-40 sm:flex-shrink-0 sm:justify-end sm:pt-6">
+                      <DatePill
+                        date={item.date}
+                        isActive={isActive}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCardClick(item);
+                        }}
+                        aria-label={`View details for ${item.company}`}
+                      />
+                    </div>
+
+                    {/* Timeline card */}
+                    <div className="w-full flex-1">
                       <TimelineCard
                         {...item}
                         isActive={isActive}
@@ -145,11 +170,11 @@ export const TimelineMetro = ({ experienceData = [] }: TimelineMetroProps) => {
                         className={`mb-8 ${isActive ? 'timeline-card--active' : ''}`}
                       />
                     </div>
-                  </motion.div>
+                  </m.li>
                 );
               })}
             </AnimatePresence>
-          </div>
+          </ol>
         </div>
       </div>
     </section>

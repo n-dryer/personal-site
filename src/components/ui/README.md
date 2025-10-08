@@ -4,23 +4,23 @@ This directory contains reusable UI components that follow the design system's g
 
 ## Glass Styling Pattern
 
-All overlay and card components use a consistent glass styling pattern for optimal integration with the FluidBackground:
+All overlay and card components use a consistent glass styling pattern for optimal integration with the GradientBackground:
 
 ```css
-bg-surface/80 backdrop-blur-xl rounded-lg border border-white/10 ring-1 ring-white/5
+bg-resume-card/90 backdrop-blur-xl rounded-2xl border border-resume-card-border ring-1 ring-resume-ring/40
 ```
 
 ### Core Glass Properties
 
-- **Background**: `bg-surface/80` - Semi-transparent surface (80% opacity)
-- **Blur**: `backdrop-blur-xl` - Strong backdrop blur for depth
-- **Border**: `border-white/10` - Subtle white border
-- **Ring**: `ring-1 ring-white/5` - Enhanced glass effect
+- **Background**: `bg-resume-card/90` - Semi-transparent glass shell
+- **Blur**: `backdrop-blur-xl` - Strong blur to separate content from the shader
+- **Border**: `border-resume-card-border` - Frosted edge with subtle contrast
+- **Ring**: `ring-1 ring-resume-ring/40` - Depth accent that reads in both themes
 
 ### Hover States
 
-- **Default hover**: `hover:bg-surface/90` - Slightly more opaque on hover
-- **Enhanced hover**: `hover:shadow-xl hover:border-accent/50` - For important interactive elements
+- **Default hover**: `hover:bg-resume-overlay/40` - Slightly more opaque on hover
+- **Enhanced hover**: `hover:shadow-2xl hover:border-resume-accent/40` - For important interactive elements
 
 ### Focus States
 
@@ -90,9 +90,9 @@ import { ErrorFallback } from './components/ui';
 
 All components maintain WCAG AA contrast ratios against the application background:
 
-- Text uses `--text-primary` for optimal contrast
-- Interactive elements have proper focus indicators
-- Color variants maintain accessibility standards
+- Text pulls from `--resume-text-*` tokens for consistent contrast
+- Interactive elements preserve focus-visible rings tied to `--resume-accent`
+- Color variants maintain accessibility standards across light/dark modes
 
 ## Responsive Design
 
@@ -106,9 +106,7 @@ Components are designed mobile-first:
 
 Components automatically adapt to light/dark themes through CSS custom properties:
 
-- `--surface` - Background color
-- `--text-primary` - Primary text color
-- `--text-secondary` - Secondary text color
-- `--accent` - Accent color for highlights</contents>
-  </xai:function_call">ـ<xai:function_call name="todo_write">
-  <parameter name="merge">true
+- `--resume-card` - Glass surface color
+- `--resume-text-primary` / `--resume-text-secondary` - Text hierarchy
+- `--resume-accent` / `--resume-accent-light` - Accent + hover states
+- `--resume-ring` - Focus and halo color for glass elements

@@ -25,10 +25,10 @@ type RadialIndicatorProps = {
 
 // Variant color mappings
 const VARIANT_COLORS: Record<IndicatorVariant, string> = {
-  expert: 'var(--accent)',
+  expert: 'var(--resume-accent)',
   proficient: 'var(--text-primary)',
   familiar: 'var(--text-secondary)',
-  custom: 'var(--accent)', // Default fallback
+  custom: 'var(--resume-accent)', // Default fallback
 };
 
 /**
@@ -108,7 +108,7 @@ export const RadialIndicator = React.memo<RadialIndicatorProps>(
     return (
       <div
         ref={ref}
-        className={`radial-indicator ${className} rounded-full focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2`}
+        className={`radial-indicator ${className} focus:ring-accent rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2`}
         style={indicatorStyle}
         data-animate={hasAnimated}
         role="progressbar"

@@ -1,5 +1,4 @@
 import React from 'react';
-import { FluidBackground } from '../components';
 
 /**
  * Props for the Layout component.
@@ -17,6 +16,8 @@ type LayoutProps = {
  * with background and text colors that respond to theme changes.
  * This component is memoized for performance optimization.
  *
+ * Note: The animated GradientBackground is rendered in App.tsx to avoid duplication.
+ *
  * @param {LayoutProps} props - The properties passed to the component.
  * @returns {React.ReactElement} The rendered layout container with children.
  * @see React.memo
@@ -24,9 +25,8 @@ type LayoutProps = {
 const LayoutComponent = ({ children, className = '' }: LayoutProps): React.ReactElement => {
   return (
     <div
-      className={`relative min-h-screen text-text-primary transition-colors duration-300 ${className}`}
+      className={`relative min-h-screen font-sans text-resume-text-primary transition-colors duration-300 ${className}`}
     >
-      <FluidBackground />
       <div className="relative z-10">{children}</div>
     </div>
   );

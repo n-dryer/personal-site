@@ -1,23 +1,29 @@
 // Updated imports to use barrel exports
+import { lazy, Suspense, useState } from 'react';
 import {
   CommandMenu,
   FloatingCommandButton,
   Footer,
   Header,
   ScrollDownButton,
-  SkillsMatrix,
-  TimelineMetro,
-  FluidBackground,
+  GradientBackground,
 } from './components';
 // Import the useTheme hook
 import { useCommandMenu, useTheme } from './hooks'; // Assuming useTheme is in './hooks'
 
 import { ErrorBoundary } from 'react-error-boundary';
 import { Layout } from './layouts/Layout';
-import React from 'react';
 import { experienceData } from 'content/experience';
 import { skillsData } from 'content/skills';
 import { userData } from 'content/user';
+
+// Lazy load major components for code splitting
+const TimelineMetro = lazy(() =>
+  import('./components/Timeline/TimelineMetro').then((m) => ({ default: m.TimelineMetro })),
+);
+const SkillsMatrix = lazy(() =>
+  import('./components/Skills/SkillsMatrix').then((m) => ({ default: m.SkillsMatrix })),
+);
 
 /**
  * Main application component for the personal portfolio.
@@ -34,10 +40,13 @@ const App = () => {
     setIsOpen: setIsCommandMenuOpenFromHook,
     toggle: toggleCommandMenuFromHook,
   } = useCommandMenu();
+  const [activeSkill, setActiveSkill] = useState<string | null>(null);
 
   return (
-    <div className="relative min-h-screen">
-      <FluidBackground />
+    <main className="relative min-h-screen overflow-hidden">
+      <GradientBackground darkMode={darkMode} />
+      <div className="absolute inset-0 -z-10 bg-resume-overlay" />
+
       <Layout>
         <Header
           userData={userData}
@@ -47,27 +56,49 @@ const App = () => {
         />
         <main>
           <ErrorBoundary
-            fallback={<div className="text-red-500">Something went wrong with the Timeline.</div>}
-          >
-            <TimelineMetro experienceData={experienceData} />
-          </ErrorBoundary>
-          <ErrorBoundary
             fallback={
               <div className="text-red-500">Something went wrong with the Skills section.</div>
             }
           >
-            <SkillsMatrix skillsData={skillsData} />
+            <Suspense
+              fallback={
+                <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+                  <div className="bg-resume-surface-secondary h-96 animate-pulse rounded-lg opacity-50" />
+                </div>
+              }
+            >
+              <SkillsMatrix
+                skillsData={skillsData}
+                activeSkill={activeSkill}
+                setActiveSkill={setActiveSkill}
+              />
+            </Suspense>
+          </ErrorBoundary>
+          <ErrorBoundary
+            fallback={<div className="text-red-500">Something went wrong with the Timeline.</div>}
+          >
+            <Suspense
+              fallback={
+                <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+                  <div className="bg-resume-surface-secondary h-96 animate-pulse rounded-lg opacity-50" />
+                </div>
+              }
+            >
+              <TimelineMetro experienceData={experienceData} activeSkill={activeSkill} />
+            </Suspense>
           </ErrorBoundary>
         </main>
         <Footer userData={userData} />
         <CommandMenu isOpen={isCommandMenuOpenFromHook} setIsOpen={setIsCommandMenuOpenFromHook} />
         <ScrollDownButton />
-        <FloatingCommandButton
-          toggleCommandMenu={toggleCommandMenuFromHook}
-          isCommandMenuOpen={isCommandMenuOpenFromHook}
-        />
+        <div className="hidden md:block">
+          <FloatingCommandButton
+            toggleCommandMenu={toggleCommandMenuFromHook}
+            isCommandMenuOpen={isCommandMenuOpenFromHook}
+          />
+        </div>
       </Layout>
-    </div>
+    </main>
   );
 };
 

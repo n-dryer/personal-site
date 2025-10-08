@@ -4,6 +4,7 @@
 
 - Stack: Vite + React 19 + TypeScript + Tailwind; Vite with SWC for React.
 - Node: 20. Package manager: Yarn v1 only (yarn.lock is source of truth).
+- Features: Interactive and filterable skills showcase, interactive timeline dynamically responding to skill selections.
 - Tests: minimal unit tests only (CSS tokens); keep fast and green.
 - CI: single job “CI / build-and-test” on pull_request (yarn install → build → test).
 - Deploy: manual GitHub Pages workflow (“Deploy (GitHub Pages)”), publishes dist/.
@@ -67,6 +68,7 @@
 
 ## Editor/Agents Guidance
 
+- This project supports interaction with AI agents via the Chrome DevTools MCP. Agents can use MCP to control a Chrome browser instance for debugging and testing purposes.
 - Respect .cursorrules and .cursorignore; do not include binaries/artifacts in context.
 - Propose risky or wide refactors before executing.
 - Explain rationale briefly in PR description for non-trivial changes.

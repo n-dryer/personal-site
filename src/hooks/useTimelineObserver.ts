@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { TIMELINE_CARD_ID_PREFIX } from '../components/Timeline/constants';
 
 export interface UseTimelineObserverOptions {
   /** Root margin for intersection observer (default: "-40% 0px -40% 0px") */
@@ -69,8 +70,12 @@ export const useTimelineObserver = (
           observer.observe(element);
         }
       } else {
-        // Remove element from map
+        // Remove element from map and ensure cleanup
         currentMap.delete(id);
+        // If the element is no longer in the DOM, ensure we're not holding stale references
+        if (previousElement && observer) {
+          observer.unobserve(previousElement);
+        }
       }
     },
     [enabled],
@@ -89,8 +94,11 @@ export const useTimelineObserver = (
       intersectingEntries.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
       const mostVisibleEntry = intersectingEntries[0];
 
-      // Extract ID from element (assuming format: timeline-card-{id})
-      const cardId = (mostVisibleEntry.target as HTMLElement).id.replace('timeline-card-', '');
+      // Extract ID from element (assuming format: TIMELINE_CARD_ID_PREFIX + {id})
+      const cardId = (mostVisibleEntry.target as HTMLElement).id.replace(
+        TIMELINE_CARD_ID_PREFIX,
+        '',
+      );
       _setActiveId(cardId);
     }
   }, []);

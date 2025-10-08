@@ -2,11 +2,11 @@
   "mcpServers": {
     "filesystem": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "/Users/ndryer"
-      ]
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/ndryer"]
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["chrome-devtools-mcp@latest"]
     }
   }
 }

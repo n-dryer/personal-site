@@ -7,91 +7,96 @@
 :root,
 [data-theme='aurora-light'] {
   /* Typography */
-  --ff-display: 'Mona Sans', 'Inter', sans-serif;
-  --ff-body: 'Mona Sans', 'Inter', sans-serif;
+  --ff-display: 'Instrument Serif', serif;
+  --ff-body: 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ff-mono: 'Geist Mono', 'SFMono-Regular', ui-monospace, 'Menlo', monospace;
   --tracking-tight: -0.025em;
   --fw-bold: 700;
   --fw-medium: 500;
   --fw-normal: 400;
 
   /* Light Mode Palette - Cosmic Comet */
-  --bg-primary: hsl(0, 0%, 98%);
-  /* Almost white */
-  --bg-surface: hsl(0, 0%, 100%);
-  /* Pure white for surfaces */
-  --text-primary: hsl(0, 0%, 5%);
-  /* Near black for high contrast */
-  --text-secondary: hsl(0, 0%, 35%);
-  /* Grey for secondary text */
-  --accent: hsl(252, 85%, 58%);
-  /* Comet Purple - Perplexity-inspired */
-  --accent-2: hsl(262, 83%, 65%);
-  /* Lighter comet purple */
-  --accent-electric: hsl(217, 91%, 60%);
-  /* Electric Blue comet trail */
-  --accent-cosmic: hsl(280, 67%, 60%);
-  /* Cosmic violet accent */
-  --on-accent: hsl(0, 0%, 100%);
-  /* White text on accent */
+  --bg-primary: hsl(210 40% 98%);
+  --bg-surface: hsl(210 36% 99%);
+  --text-primary: hsl(220 25% 16%);
+  --text-secondary: hsl(220 18% 36%);
+  --accent: hsl(220 82% 56%);
+  --accent-2: hsl(215 72% 60%);
+  --accent-electric: hsl(200 92% 58%);
+  --accent-cosmic: hsl(260 70% 62%);
+  --on-accent: hsl(0 0% 100%);
 
-  /* Cosmic Comet gradient - Perplexity-inspired */
-  --bg-primary-gradient: radial-gradient(ellipse 120% 80% at 10% 20%,
-      hsla(252, 85%, 58%, 0.06) 0%,
-      hsla(217, 91%, 60%, 0.04) 20%,
-      hsla(280, 67%, 60%, 0.03) 40%,
-      hsla(262, 83%, 65%, 0.02) 60%,
+  /* Cosmic Comet gradient - Light mode tuned darker for contrast */
+  --bg-primary-gradient: radial-gradient(ellipse 120% 80% at 15% 20%,
+      hsla(220, 78%, 36%, 0.35) 0%,
+      hsla(210, 82%, 32%, 0.28) 32%,
+      hsla(200, 85%, 30%, 0.22) 60%,
       transparent 100%),
-    radial-gradient(ellipse 100% 60% at 90% 80%,
-      hsla(217, 91%, 60%, 0.08) 0%,
-      hsla(252, 85%, 58%, 0.04) 30%,
-      hsla(280, 67%, 60%, 0.02) 60%,
+    radial-gradient(ellipse 110% 65% at 85% 80%,
+      hsla(216, 80%, 34%, 0.32) 0%,
+      hsla(205, 82%, 30%, 0.20) 46%,
       transparent 100%),
-    linear-gradient(145deg,
-      hsla(252, 85%, 58%, 0.03) 0%,
-      hsla(217, 91%, 60%, 0.02) 25%,
-      hsla(280, 67%, 60%, 0.01) 50%,
-      transparent 75%);
+    linear-gradient(150deg,
+      hsla(220, 78%, 34%, 0.24) 0%,
+      hsla(210, 76%, 30%, 0.18) 45%,
+      transparent 82%);
   --bg-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+
+  /* Glassmorphism design tokens (light mode) */
+  --resume-overlay: hsl(220 25% 92% / 0.65);
+  --resume-card: oklch(0.98 0.01 220);
+  --resume-card-border: oklch(0.65 0.03 215 / 0.25);
+  --resume-text-primary: oklch(0.2 0.02 220);
+  --resume-text-secondary: oklch(0.1 0.02 220);
+  --resume-text-muted: oklch(0.45 0.02 220 / 0.85);
+  --resume-text-subtle: oklch(0.55 0.02 220 / 0.75);
+  --resume-accent: oklch(0.45 0.18 220);
+  --resume-accent-light: oklch(0.52 0.15 215);
+  --resume-bullet: oklch(0.4 0.2 210);
+  --resume-ring: oklch(0.5 0.15 215 / 0.3);
 }
 
 [data-theme='aurora-dark'] {
   /* Dark Mode Palette - Cosmic Comet */
-  --bg-primary: hsl(252, 15%, 8%);
-  /* Deep cosmic purple-black */
-  --bg-surface: hsl(252, 15%, 12%);
-  /* Slightly lighter cosmic surface */
-  --text-primary: hsl(0, 0%, 95%);
-  /* Off-white for text */
-  --text-secondary: hsl(0, 0%, 60%);
-  /* Lighter grey for secondary */
-  --accent: hsl(252, 85%, 65%);
-  /* Brighter Comet Purple for dark mode */
-  --accent-2: hsl(262, 83%, 70%);
-  --accent-electric: hsl(217, 91%, 65%);
-  /* Electric Blue comet trail */
-  --accent-cosmic: hsl(280, 67%, 65%);
-  /* Cosmic violet accent */
-  --on-accent: hsl(0, 0%, 100%);
-  /* White text on accent */
+  --bg-primary: hsl(252 18% 7%);
+  --bg-surface: hsl(252 18% 11%);
+  --text-primary: hsl(0 0% 96%);
+  --text-secondary: hsl(220 10% 70%);
+  --accent: hsl(220 82% 62%);
+  --accent-2: hsl(215 72% 65%);
+  --accent-electric: hsl(200 90% 60%);
+  --accent-cosmic: hsl(260 70% 65%);
+  --on-accent: hsl(0 0% 100%);
 
   /* Cosmic Comet dark gradient - Perplexity-inspired */
   --bg-primary-gradient: radial-gradient(ellipse 140% 90% at 15% 25%,
-      hsla(252, 85%, 65%, 0.08) 0%,
-      hsla(217, 91%, 65%, 0.06) 15%,
-      hsla(280, 67%, 65%, 0.04) 35%,
-      hsla(262, 83%, 70%, 0.03) 55%,
+      hsla(220, 82%, 62%, 0.10) 0%,
+      hsla(200, 90%, 60%, 0.07) 22%,
+      hsla(260, 70%, 65%, 0.05) 45%,
       transparent 100%),
     radial-gradient(ellipse 110% 70% at 85% 75%,
-      hsla(217, 91%, 65%, 0.10) 0%,
-      hsla(252, 85%, 65%, 0.05) 25%,
-      hsla(280, 67%, 65%, 0.03) 50%,
+      hsla(200, 90%, 60%, 0.12) 0%,
+      hsla(220, 82%, 62%, 0.06) 30%,
+      hsla(260, 70%, 65%, 0.04) 55%,
       transparent 100%),
     linear-gradient(150deg,
-      hsla(252, 85%, 65%, 0.04) 0%,
-      hsla(217, 91%, 65%, 0.03) 20%,
-      hsla(280, 67%, 65%, 0.02) 40%,
-      hsla(252, 15%, 8%, 0) 70%);
+      hsla(220, 82%, 62%, 0.05) 0%,
+      hsla(200, 90%, 60%, 0.04) 25%,
+      transparent 70%);
   --bg-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+
+  /* Glassmorphism design tokens (dark mode) */
+  --resume-overlay: oklch(0.08 0.02 220 / 0.45);
+  --resume-card: oklch(0.05 0.02 220 / 0.5);
+  --resume-card-border: oklch(0.35 0.03 215 / 0.3);
+  --resume-text-primary: oklch(0.98 0.01 220);
+  --resume-text-secondary: oklch(1.0 0.01 220);
+  --resume-text-muted: oklch(0.9 0.01 220 / 0.85);
+  --resume-text-subtle: oklch(0.85 0.01 220 / 0.75);
+  --resume-accent: oklch(0.65 0.18 220);
+  --resume-accent-light: oklch(0.72 0.15 215);
+  --resume-bullet: oklch(0.6 0.2 210);
+  --resume-ring: oklch(0.7 0.15 215 / 0.3);
 }
 
 /* Foundational design tokens */
@@ -116,6 +121,21 @@
   --e-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --e-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
-  --motion-duration: 200ms;
-  --motion-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Motion Design Tokens */
+  --motion-instant: 0.1s;
+  --motion-fast: 0.2s;
+  --motion-base: 0.3s;
+  --motion-slow: 0.5s;
+  --motion-slower: 0.7s;
+
+  /* Motion Easings - Material Design inspired */
+  --ease-standard: cubic-bezier(0.4, 0.0, 0.2, 1);       /* Standard easing for most animations */
+  --ease-emphasized: cubic-bezier(0.4, 0.0, 0.1, 1);     /* Emphasized easing for important UI */
+  --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);            /* Easing out for exits */
+  --ease-in: cubic-bezier(0.4, 0.0, 1, 1);               /* Easing in for entrances */
+  --ease-in-out: cubic-bezier(0.4, 0.0, 0.6, 1);         /* Smooth in and out */
+
+  /* Legacy tokens for backward compatibility */
+  --motion-duration: var(--motion-fast);
+  --motion-easing: var(--ease-standard);
 }

@@ -2,7 +2,9 @@
 
 ## Overview
 
-This document outlines the metro map style timeline, which features a central vertical thread and alternating cards.
+This document outlines the metro map style timeline, which features a central vertical thread and experience cards with year-only date pills.
+
+**Design Philosophy**: Date pills display only years (e.g., "2021–2022" or "2023–Present") to optimize for mobile viewports where full date ranges ("Jan 2021 - Oct 2022") would wrap and create tall, difficult-to-scan pills. Full date information remains visible in the expanded card headers.
 
 ## ✅ Implementation Status
 
@@ -34,17 +36,45 @@ src/
 
 ### Responsive Behavior
 
-- **Desktop (>768px)**: Alternating left/right card layout
-- **Tablet/Mobile (≤768px)**: Single column layout with left-aligned thread
-- **Extra Small (≤480px)**: Optimized spacing and sizing
+- **Mobile (<640px)**:
+  - Date pills wrap horizontally with `flex-wrap` and `gap-2`
+  - Pills centered with `justify-center` for balanced layout
+  - Central thread hidden to reduce visual clutter
+  - Single column card layout
+  - Year-only display prevents pill wrapping
+
+- **Tablet/Desktop (≥640px)**:
+  - Date pills in vertical column layout
+  - Central gradient thread visible
+  - Cards maintain single column (optimized for readability)
+  - Larger pill sizing (md) for better touch targets
+  - Thread positioned with left/right alignment
 
 ### Accessibility Features
 
-- **ARIA Labels**: Complete labeling for screen readers
-- **Keyboard Navigation**: Tab-accessible card interactions
-- **Reduced Motion**: Respects `prefers-reduced-motion`
-- **Focus Management**: Visible focus indicators
-- **Semantic Structure**: Proper heading hierarchy
+- **Semantic HTML**:
+  - Timeline cards wrapped in `<ol role="list">` with `<li>` elements
+  - Each card contains `<article>` element
+  - Date pills grouped in `<div role="radiogroup" aria-label="Experience periods">`
+  - Each pill has `role="radio"` and `aria-checked` state
+  - Year ranges wrapped in `<time>` elements
+
+- **Keyboard Navigation**:
+  - Tab-accessible date pills with Enter/Space activation
+  - Chronological focus order (oldest to newest)
+  - Visible focus rings with 4.5:1 contrast ratio
+  - Card interactions keyboard accessible
+
+- **Screen Reader Support**:
+  - ARIA labels provide context for all interactive elements
+  - Time elements with human-readable labels (e.g., "2021 to 2022")
+  - Article landmarks for each experience
+  - Radiogroup semantics for pill selection state
+
+- **Motion & Contrast**:
+  - Respects `prefers-reduced-motion` for animations
+  - Active state uses color + border (no layout shift)
+  - All text meets WCAG AA contrast requirements
 
 ## 🔧 Technical Architecture
 
@@ -52,9 +82,45 @@ src/
 
 ```text
 TimelineMetro
+│   ├── TimelineYearRail (Semantic date pill container)
+│   │   └── DatePill (Year-only display)
 │   ├── TimelineCard (Individual Cards)
 │   └── useTimelineObserver (Active Detection)
 ```
+
+### DatePill Component API
+
+**Props:**
+
+```typescript
+type DatePillProps = {
+  /** Full date string (e.g., "Jan 2021 - Oct 2022" or "Jan 2021 - Present") */
+  date: string;
+  /** Whether this date pill represents the currently active timeline item */
+  isActive?: boolean;
+  /** Accessible label for the button */
+  'aria-label'?: string;
+  /** Click handler for date pill interaction */
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+};
+```
+
+**Date Parsing Logic:**
+
+- Extracts first and last 4-digit year from date string
+- Handles "Present" case-insensitively (e.g., "2023–Present")
+- Collapses to single year if start === end (e.g., "2021")
+- Uses en dash (–) not hyphen (-) for ranges
+- Falls back to "Unknown" for malformed dates
+
+**Examples:**
+
+| Input                   | Output           |
+| ----------------------- | ---------------- |
+| `"Jan 2021 - Oct 2022"` | `"2021–2022"`    |
+| `"Jan 2021 - Dec 2021"` | `"2021"`         |
+| `"Jan 2023 - Present"`  | `"2023–Present"` |
+| `"Invalid"`             | `"Unknown"`      |
 
 ### State Management
 
@@ -84,19 +150,25 @@ TimelineMetro
 
 #### Mobile Experience
 
-- [ ] Single column layout below 768px
-- [ ] Thread repositions to left side
-- [ ] Cards stack vertically
+- [ ] Date pills wrap horizontally below 640px
+- [ ] Pills display year-only format (no wrapping)
+- [ ] Central thread hidden on mobile
+- [ ] Pills centered with balanced spacing
+- [ ] Single column card layout
 - [ ] Touch interactions work properly
-- [ ] Responsive spacing adjusts correctly
+- [ ] No horizontal scroll needed
+- [ ] Full dates visible in card headers
 
 #### Accessibility
 
-- [ ] Screen reader announcements work
-- [ ] Keyboard navigation functions
-- [ ] Focus indicators are visible
-- [ ] ARIA labels are descriptive
+- [ ] Screen reader announces radiogroup and radio states
+- [ ] Keyboard navigation (Tab, Enter, Space) works
+- [ ] Focus indicators visible with 4.5:1 contrast
+- [ ] ARIA labels describe year ranges clearly
+- [ ] Time elements present for all dates
+- [ ] Semantic HTML structure valid
 - [ ] Reduced motion is respected
+- [ ] No layout shift on pill activation
 
 ### Automated Testing
 
@@ -127,8 +199,16 @@ yarn build
 #### Mobile layout issues
 
 1. Test on actual devices, not just browser dev tools
-2. Verify CSS custom property updates in media queries
+2. Verify Tailwind breakpoints (sm: 640px) working correctly
 3. Check for JavaScript errors on mobile browsers
+4. Ensure no horizontal scrolling at 320px viewport
+
+#### Date pills wrapping or displaying incorrectly
+
+1. Verify year extraction regex in DatePill component
+2. Check for unusual date formats in experience data
+3. Test with "Present" in various cases (present, PRESENT, Present)
+4. Confirm Badge component has 'date' variant and 'xs' size
 
 #### KPIs not extracting properly
 

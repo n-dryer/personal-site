@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Variants, easeInOut, easeOut, motion } from 'framer-motion';
+import { Variants, easeInOut, easeOut, m } from 'framer-motion';
 
 import { ChevronDown } from 'lucide-react';
 import { useReducedMotion } from 'hooks/useReducedMotion';
@@ -73,8 +73,8 @@ const ScrollDownButtonComponent = (): React.ReactElement | null => {
       y: -1,
       transition: {
         type: 'spring',
-        stiffness: 300,
-        damping: 20,
+        stiffness: 200,
+        damping: 15,
       },
     },
     tap: {
@@ -99,21 +99,22 @@ const ScrollDownButtonComponent = (): React.ReactElement | null => {
   }
 
   return (
-    <motion.div
+    <m.div
       className="fixed bottom-6 left-1/2 z-30 -translate-x-1/2 transform"
       initial={{ opacity: 0, scale: 0.4, y: 16 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{
         opacity: { duration: 1.0, ease: easeOut },
-        scale: { type: 'spring', stiffness: 300, damping: 20, duration: 0.5 },
-        y: { type: 'spring', stiffness: 300, damping: 20, duration: 1.0 },
+        scale: { type: 'spring', stiffness: 200, damping: 15, duration: 0.5 },
+        y: { type: 'spring', stiffness: 200, damping: 15, duration: 1.0 },
       }}
     >
-      <motion.button
-        className="focus-visible:ring-accent/40 flex items-center justify-center rounded-full bg-accent text-on-accent shadow-lg focus:outline-none focus-visible:ring-2"
+      <m.button
+        className="focus-visible:ring-resume-accent/40 bg-resume-card/95 flex items-center justify-center rounded-full border border-resume-card-border text-resume-accent shadow-[0_8px_32px_rgba(0,0,0,0.5),0_0_0_1px_rgba(100,149,237,0.1)_inset] backdrop-blur-xl hover:bg-resume-card hover:shadow-[0_8px_32px_rgba(0,0,0,0.6),0_0_20px_rgba(100,149,237,0.2),0_0_0_1px_rgba(100,149,237,0.2)_inset] focus:outline-none focus-visible:ring-2"
         style={{
           width: 'clamp(2.75rem, 4vw, 3.5rem)',
           height: 'clamp(2.75rem, 4vw, 3.5rem)',
+          willChange: 'transform',
         }}
         onClick={handleScrollToTimeline}
         whileHover="hover"
@@ -132,14 +133,14 @@ const ScrollDownButtonComponent = (): React.ReactElement | null => {
       >
         <ChevronDown
           style={{
-            width: 'clamp(1rem, 2.5vw, 1.5rem)',
-            height: 'clamp(1rem, 2.5vw, 1.5rem)',
-            // Inherit from parent (text-on-accent) for contrast in both themes
+            width: 'clamp(1.375rem, 3vw, 1.875rem)',
+            height: 'clamp(1.375rem, 3vw, 1.875rem)',
+            // Inherit from parent (text-resume-accent) for contrast in both themes
             color: 'currentColor',
           }}
         />
-      </motion.button>
-    </motion.div>
+      </m.button>
+    </m.div>
   );
 };
 
